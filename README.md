@@ -1,5 +1,7 @@
 # μ-Bench
 
+Author and maintainer: [Lin Qihao (@lqh1106)](https://github.com/lqh1106).
+
 μ-Bench evaluates a shared voice assistant serving several people in one continuous conversation. It tests whether the assistant preserves each person's requests, constraints, permissions and unfinished work as the conversation changes.
 
 The release contains **800 cases**: **392 tool-free cases across 49 scenarios** and **408 tool-augmented cases across 51 scenarios**. Every scenario has eight combinations of group size, acoustic conditions and recipient comprehension. Cases, the online user simulator, audio protocols, tools, semantic judges and RICE computation are included.

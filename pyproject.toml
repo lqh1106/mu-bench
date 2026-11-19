@@ -5,6 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mubench"
 version = "1.0.0"
+authors = [{name = "Lin Qihao"}]
 description = "Multi-user full-duplex shared-assistant benchmark"
 readme = "README.md"
 requires-python = ">=3.10,<3.13"

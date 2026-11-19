@@ -5,4 +5,5 @@ type: software
 version: 1.0.0
 license: Apache-2.0
 authors:
-  - name: "μ-Bench contributors"
+  - family-names: "Lin"
+    given-names: "Qihao"
