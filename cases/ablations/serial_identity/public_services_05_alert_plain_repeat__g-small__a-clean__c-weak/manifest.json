@@ -1,0 +1,439 @@
+{
+  "schema": "mu-nt-r3-ablation-participants-v3-20261117",
+  "arm": "serial_identity",
+  "case_id": "public_services_05_alert_plain_repeat__g-small__a-clean__c-weak",
+  "source_case_sha256": "f381d1dd691037bff820c6f94f1393d49571724a5f9d2ebc9295f19ec3bc567d",
+  "transformed_case_sha256": "68dae8f80273c6ab3ae7e6b175a2d11b5e7f6e25f134cf3405be72ee891d68bb",
+  "task_contract_sha256": "1a85c3d79b7ab352d763e056d2a983206164bd3a84394431c80a6f80d3a6c9c1",
+  "task_contract_unchanged": true,
+  "event_changes": [
+    {
+      "event_id": "e_open",
+      "original": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Read the service-disruption alert to this room.",
+        "addressee": "assistant",
+        "fixed_utterance": "Read the service-disruption alert to this room.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Read the service-disruption alert to this room.",
+        "addressee": "assistant",
+        "fixed_utterance": "Read the service-disruption alert to this room.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live",
+      "original": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 480,
+          "fallback_at_ms": 12000,
+          "fallback_after_event_id": "e_open"
+        },
+        "intent": "Interrupt the assistant's initial long alert reading and request that the same public alert be reduced to one sentence containing only the affected line and time.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "impatient_skip",
+        "notes": [
+          "Blake is a neighbor, not the original alert recipient; do not transfer Avery's ownership of the alert request to Blake.",
+          "State effect: the assistant should yield to the interruption, preserve the public-alert thread, and shift from verbose reading toward a concise summary using only verified fixture fields."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_open",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Interrupt the assistant's initial long alert reading and request that the same public alert be reduced to one sentence containing only the affected line and time.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "impatient_skip",
+        "notes": [
+          "Blake is a neighbor, not the original alert recipient; do not transfer Avery's ownership of the alert request to Blake.",
+          "State effect: the assistant should yield to the interruption, preserve the public-alert thread, and shift from verbose reading toward a concise summary using only verified fixture fields."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_1",
+      "original": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live",
+          "tool_name": null,
+          "after_ms": 560,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Add that Avery, specifically, needs the accessible replacement shuttle information kept in the answer despite Blake's brevity request.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Cameron is staff adding an accessibility constraint; do not treat Cameron as the affected rider.",
+          "State effect: preserve the accessible-shuttle fact as relevant to Avery while keeping Blake's concise-format constraint separate."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Add that Avery, specifically, needs the accessible replacement shuttle information kept in the answer despite Blake's brevity request.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Cameron is staff adding an accessibility constraint; do not treat Cameron as the affected rider.",
+          "State effect: preserve the accessible-shuttle fact as relevant to Avery while keeping Blake's concise-format constraint separate."
+        ]
+      }
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "original": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 18000,
+          "fallback_after_event_id": "e_extra_1"
+        },
+        "intent": "A short version would help. Please keep the replacement service in it.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_1",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "A short version would help. Please keep the replacement service in it.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live_followup",
+      "original": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 720,
+          "fallback_at_ms": 22000,
+          "fallback_after_event_id": "e_primary_reconcile"
+        },
+        "intent": "Ask not to restart the long wording; request the affected line and time plainly.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_reconcile",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Ask not to restart the long wording; request the affected line and time plainly.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_primary_commit",
+      "original": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 400,
+          "fallback_at_ms": 26000,
+          "fallback_after_event_id": "e_live_followup"
+        },
+        "intent": "Finish the alert so we know what is affected and the alternative.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live_followup",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Finish the alert so we know what is affected and the alternative.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_comprehension_repair",
+      "original": {
+        "event_id": "e_comprehension_repair",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 30000,
+          "fallback_after_event_id": "e_primary_commit"
+        },
+        "intent": "Request a shorter plain-language restatement of the same final public-alert result because Avery still needs an easier version.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 2200,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "State effect: address Avery, do not merely repeat prior wording, and preserve the verified Green Line, 2:00 p.m. to 4:00 p.m., and accessible-shuttle facts."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_comprehension_repair",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_commit",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Request a shorter plain-language restatement of the same final public-alert result because Avery still needs an easier version.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "State effect: address Avery, do not merely repeat prior wording, and preserve the verified Green Line, 2:00 p.m. to 4:00 p.m., and accessible-shuttle facts."
+        ]
+      }
+    }
+  ],
+  "paired_review_reasons": [],
+  "primary_metric": "task_success",
+  "non_comparable_metrics": [
+    "timing",
+    "floor_control",
+    "interruption_recovery",
+    "strict_joint_success"
+  ],
+  "identity_metrics_are_oracle_assisted": true,
+  "semantic_input_is_oracle_assisted": false,
+  "user_audio_preserved": true,
+  "future_event_information_released": false,
+  "task_success_policy": "separate-authorization"
+}

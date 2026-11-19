@@ -1,0 +1,17 @@
+{
+  "output_root": "outputs",
+  "auto_cleanup": true,
+  "text": {
+    "base_url": "http://127.0.0.1:18992/v1",
+    "api_key": {"env": "MUBENCH_GATEWAY_KEY"},
+    "model": "gpt-6-luna"
+  },
+  "speech": {"tts_endpoint": "${REPO_ROOT}/outputs/services/tts.json"},
+  "sut": {
+    "provider": "openai",
+    "model": "gpt-realtime-2",
+    "transport": "audio",
+    "url": "wss://api.openai.com/v1/realtime",
+    "api_key": {"env": "MUBENCH_REALTIME_KEY"}
+  }
+}

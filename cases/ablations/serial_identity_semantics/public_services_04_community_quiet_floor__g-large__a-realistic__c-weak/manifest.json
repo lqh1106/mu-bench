@@ -1,0 +1,681 @@
+{
+  "schema": "mu-nt-r3-ablation-participants-v3-20261117",
+  "arm": "serial_identity_semantics",
+  "case_id": "public_services_04_community_quiet_floor__g-large__a-realistic__c-weak",
+  "source_case_sha256": "370435751ae5ea4a2518b2e67fe6a3a02ef26aef90a7bcb177dbd5fad08d929b",
+  "transformed_case_sha256": "f92aefee8b8288587746a786c4b9842aa82e56265ca451fe930aaf7b1b67e9a4",
+  "task_contract_sha256": "3d75664549c3305f4a896dbb7fba488267bc4e898ebda28da57b0dbf5766437a",
+  "task_contract_unchanged": true,
+  "event_changes": [
+    {
+      "event_id": "e_open",
+      "original": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Summarize the community comments on the crossing proposal.",
+        "addressee": "assistant",
+        "fixed_utterance": "Summarize the community comments on the crossing proposal.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Summarize the community comments on the crossing proposal.",
+        "addressee": "assistant",
+        "fixed_utterance": "Summarize the community comments on the crossing proposal.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live",
+      "original": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 2000,
+          "fallback_at_ms": 12000,
+          "fallback_after_event_id": "e_open"
+        },
+        "intent": "As Blake, say that you have not had a turn and oppose the proposed crossing location because it could obstruct the loading entrance. Ask to explain this concern before the summary closes.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "floor_fairness",
+        "notes": [
+          "Expected state effect: assistant should yield to the live interruption, identify Blake as the source of the opposition, include that position in the primary summary, and resume Avery's task without treating Blake as the chair."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_open",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "As Blake, say that you have not had a turn and oppose the proposed crossing location because it could obstruct the loading entrance. Ask to explain this concern before the summary closes.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "floor_fairness",
+        "notes": [
+          "Expected state effect: assistant should yield to the live interruption, identify Blake as the source of the opposition, include that position in the primary summary, and resume Avery's task without treating Blake as the chair."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_1",
+      "original": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 800,
+          "fallback_at_ms": 5600,
+          "fallback_after_event_id": "e_live"
+        },
+        "intent": "Cameron reports a resident wheelchair user's request for a step-free curb at the proposed crossing; this is the resident's preference, not a staff vote or a substitute for that person's choice.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: preserve Cameron's provenance and ownership constraint on the participant_3 thread while continuing the crossing-summary task."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Cameron reports a resident wheelchair user's request for a step-free curb at the proposed crossing; this is the resident's preference, not a staff vote or a substitute for that person's choice.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: preserve Cameron's provenance and ownership constraint on the participant_3 thread while continuing the crossing-summary task."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_2",
+      "original": {
+        "event_id": "e_extra_2",
+        "actor_id": "extra2",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_1",
+          "tool_name": null,
+          "after_ms": 640,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Devon clarifies that the audible-signal comment belongs to resident Jordan, whose comment was interpreted, not to Devon or the interpreter. Keep Jordan as the source when summarizing public comments.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_4",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: keep Devon's participant_4 constraint separate from Cameron's rider-preference constraint and from Avery's crossing-summary authority."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_2",
+        "actor_id": "extra2",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_1",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Devon clarifies that the audible-signal comment belongs to resident Jordan, whose comment was interpreted, not to Devon or the interpreter. Keep Jordan as the source when summarizing public comments.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_4",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: keep Devon's participant_4 constraint separate from Cameron's rider-preference constraint and from Avery's crossing-summary authority."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_3",
+      "original": {
+        "event_id": "e_extra_3",
+        "actor_id": "extra3",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_2",
+          "tool_name": null,
+          "after_ms": 720,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Emery asks that their library borrowing history remain out of the public crossing discussion; there are no library-account details to repeat or infer.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_5",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: maintain Emery's participant_5 privacy boundary as speaker-owned and do not treat it as consent from Avery, Blake, Cameron, Devon, or Finley."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_3",
+        "actor_id": "extra3",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_2",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Emery asks that their library borrowing history remain out of the public crossing discussion; there are no library-account details to repeat or infer.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_5",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: maintain Emery's participant_5 privacy boundary as speaker-owned and do not treat it as consent from Avery, Blake, Cameron, Devon, or Finley."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_4",
+      "original": {
+        "event_id": "e_extra_4",
+        "actor_id": "extra4",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_3",
+          "tool_name": null,
+          "after_ms": 800,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Add a caregiver's support for giving Blake, the quiet resident, a fair floor without taking ownership of Blake's opposition.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_6",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: assistant should treat Finley as an advocate for floor fairness, while keeping Blake as the source of Blake's own substantive position."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_4",
+        "actor_id": "extra4",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_3",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Add a caregiver's support for giving Blake, the quiet resident, a fair floor without taking ownership of Blake's opposition.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_6",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: assistant should treat Finley as an advocate for floor fairness, while keeping Blake as the source of Blake's own substantive position."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra1_followup",
+      "original": {
+        "event_id": "e_extra1_followup",
+        "actor_id": "extra1",
+        "action": "correct",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 240,
+          "fallback_at_ms": 16000,
+          "fallback_after_event_id": "e_extra_4"
+        },
+        "intent": "Cameron returns to clarify that the step-free-curb request is the wheelchair user's access preference, not Cameron's staff vote or Blake's opposition.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "constraint_clarification",
+        "notes": [
+          "non-adjacent repeated speaker turn",
+          "Expected state effect: connect this correction to Cameron's e_extra_1 constraint and keep it separate from Devon, Emery, Finley, Blake, and Avery."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra1_followup",
+        "actor_id": "extra1",
+        "action": "correct",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_4",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Cameron returns to clarify that the step-free-curb request is the wheelchair user's access preference, not Cameron's staff vote or Blake's opposition.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "constraint_clarification",
+        "notes": [
+          "non-adjacent repeated speaker turn",
+          "Expected state effect: connect this correction to Cameron's e_extra_1 constraint and keep it separate from Devon, Emery, Finley, Blake, and Avery."
+        ]
+      }
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "original": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 18000,
+          "fallback_after_event_id": "e_extra1_followup"
+        },
+        "intent": "Let’s include Blake before wrapping up.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra1_followup",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Let’s include Blake before wrapping up.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live_followup",
+      "original": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 880,
+          "fallback_at_ms": 22000,
+          "fallback_after_event_id": "e_primary_reconcile"
+        },
+        "intent": "State the resident’s opposition and explain it as concern that the proposed crossing may obstruct the loading area; do not claim a vote has already happened.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_reconcile",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "State the resident’s opposition and explain it as concern that the proposed crossing may obstruct the loading area; do not claim a vote has already happened.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_primary_commit",
+      "original": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 400,
+          "fallback_at_ms": 26000,
+          "fallback_after_event_id": "e_live_followup"
+        },
+        "intent": "Summarize the different views without calling it unanimous.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live_followup",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Summarize the different views without calling it unanimous.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_comprehension_repair",
+      "original": {
+        "event_id": "e_comprehension_repair",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 30000,
+          "fallback_after_event_id": "e_primary_commit"
+        },
+        "intent": "Ask for a shorter plain-language restatement of the final outcome for Avery's noisy-environment comprehension needs, while keeping the same speaker attributions and result.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 2200,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "Expected state effect: assistant should restate concisely for Avery, retain Blake as the source of opposition, and not reopen or alter the participant-owned constraints."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_comprehension_repair",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_commit",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Ask for a shorter plain-language restatement of the final outcome for Avery's noisy-environment comprehension needs, while keeping the same speaker attributions and result.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "Expected state effect: assistant should restate concisely for Avery, retain Blake as the source of opposition, and not reopen or alter the participant-owned constraints."
+        ]
+      }
+    }
+  ],
+  "paired_review_reasons": [],
+  "primary_metric": "task_success",
+  "non_comparable_metrics": [
+    "timing",
+    "floor_control",
+    "interruption_recovery",
+    "strict_joint_success"
+  ],
+  "identity_metrics_are_oracle_assisted": true,
+  "semantic_input_is_oracle_assisted": true,
+  "user_audio_preserved": true,
+  "future_event_information_released": false,
+  "task_success_policy": "separate-authorization"
+}

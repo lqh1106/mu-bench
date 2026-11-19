@@ -1,0 +1,433 @@
+{
+  "schema": "mu-nt-r3-ablation-participants-v3-20261117",
+  "arm": "serial_identity",
+  "case_id": "knowledge_qa_04_translated_question__g-small__a-realistic__c-weak",
+  "source_case_sha256": "c5079d43c33e9c6dbb5b8705c9b104598cb8bd4799abe503d4d76c604e2cf877",
+  "transformed_case_sha256": "fe33e3d4797950be868975c2dad3d310445319c4dbb8d3ae8e2b6429dcd6b4ca",
+  "task_contract_sha256": "13861788847761b9f30ccd9c20378753f1b8b08666291a8b1f4f0a29902727bc",
+  "task_contract_unchanged": true,
+  "event_changes": [
+    {
+      "event_id": "e_open",
+      "original": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Let my interpreter ask my question about why seasons happen.",
+        "addressee": "assistant",
+        "fixed_utterance": "Let my interpreter ask my question about why seasons happen.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Let my interpreter ask my question about why seasons happen.",
+        "addressee": "assistant",
+        "fixed_utterance": "Let my interpreter ask my question about why seasons happen.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live",
+      "original": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 1440,
+          "fallback_at_ms": 14000,
+          "fallback_after_event_id": "e_open"
+        },
+        "intent": "Relay Avery's specific question: whether seasons happen because Earth is closer to or farther from the Sun, while preserving Avery as the question owner and Blake as interpreter.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "relay_or_translation",
+        "notes": [
+          "Tests whether the assistant yields to the interpreter's live relay instead of answering the opening request prematurely.",
+          "Expected state effect: the primary thread becomes Avery's seasons question with Blake recorded only as relay/provenance."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_open",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Relay Avery's specific question: whether seasons happen because Earth is closer to or farther from the Sun, while preserving Avery as the question owner and Blake as interpreter.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "relay_or_translation",
+        "notes": [
+          "Tests whether the assistant yields to the interpreter's live relay instead of answering the opening request prematurely.",
+          "Expected state effect: the primary thread becomes Avery's seasons question with Blake recorded only as relay/provenance."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_1",
+      "original": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live",
+          "tool_name": null,
+          "after_ms": 560,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Cameron asks whether the Moon makes its own visible light or reflects it; this is Cameron's separate question, not Avery's seasons question. Do not include the answer in the user utterance.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Cameron asks whether the Moon makes its own visible light or reflects it; this is Cameron's separate question, not Avery's seasons question. Do not include the answer in the user utterance.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "original": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 18000,
+          "fallback_after_event_id": "e_extra_1"
+        },
+        "intent": "That was my question, translated by Blake.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_1",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "That was my question, translated by Blake.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live_followup",
+      "original": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 880,
+          "fallback_at_ms": 22000,
+          "fallback_after_event_id": "e_primary_reconcile"
+        },
+        "intent": "Clarify that the question about Earth’s distance belongs to Avery and Blake is interpreting it.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_reconcile",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Clarify that the question about Earth’s distance belongs to Avery and Blake is interpreting it.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_primary_commit",
+      "original": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 400,
+          "fallback_at_ms": 26000,
+          "fallback_after_event_id": "e_live_followup"
+        },
+        "intent": "Please answer my seasons question.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live_followup",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Please answer my seasons question.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_comprehension_repair",
+      "original": {
+        "event_id": "e_comprehension_repair",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 30000,
+          "fallback_after_event_id": "e_primary_commit"
+        },
+        "intent": "Request a shorter plain-language restatement for Avery of the same seasons answer, keeping the axial-tilt explanation and not changing ownership or thread.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 2200,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "Expected state effect: assistant adapts wording for Avery's comprehension/noisy setting rather than repeating the prior answer verbatim."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_comprehension_repair",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_commit",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Request a shorter plain-language restatement for Avery of the same seasons answer, keeping the axial-tilt explanation and not changing ownership or thread.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "Expected state effect: assistant adapts wording for Avery's comprehension/noisy setting rather than repeating the prior answer verbatim."
+        ]
+      }
+    }
+  ],
+  "paired_review_reasons": [],
+  "primary_metric": "task_success",
+  "non_comparable_metrics": [
+    "timing",
+    "floor_control",
+    "interruption_recovery",
+    "strict_joint_success"
+  ],
+  "identity_metrics_are_oracle_assisted": true,
+  "semantic_input_is_oracle_assisted": false,
+  "user_audio_preserved": true,
+  "future_event_information_released": false,
+  "task_success_policy": "separate-authorization"
+}

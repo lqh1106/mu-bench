@@ -1,0 +1,380 @@
+{
+  "schema": "mu-nt-r3-ablation-participants-v3-20261117",
+  "arm": "serial_identity_semantics",
+  "case_id": "meeting_03_quote_not_vote__g-small__a-realistic__c-strong",
+  "source_case_sha256": "793f2424a9c4835427711034825d44b95bcbafca8a979dc6ec65638609b620f4",
+  "transformed_case_sha256": "ac4fc48e0c11d01c8f2bda66df27c1af183de807ce1c2af23214a030b8a7494c",
+  "task_contract_sha256": "5e5ed98d9f79ed766c114d1e0d87b0feaab6eeeda9003ec2ae982f9e91be4aec",
+  "task_contract_unchanged": true,
+  "event_changes": [
+    {
+      "event_id": "e_open",
+      "original": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Collect everyone’s positions on the launch proposal.",
+        "addressee": "assistant",
+        "fixed_utterance": "Collect everyone’s positions on the launch proposal.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Collect everyone’s positions on the launch proposal.",
+        "addressee": "assistant",
+        "fixed_utterance": "Collect everyone’s positions on the launch proposal.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live",
+      "original": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 1280,
+          "fallback_at_ms": 12400,
+          "fallback_after_event_id": "e_open"
+        },
+        "intent": "Blake interjects during the assistant's initial response to relay absent Jordan's quoted opposition while explicitly withholding Blake's own vote; preserve Jordan as source and Blake as relayer.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 1200,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "relay_or_translation",
+        "notes": [
+          "Expected state effect: Jordan's opposition is available only as a relayed position sourced to Jordan.",
+          "Expected state effect: do not count Blake as opposing or voting unless Blake later casts a separate vote.",
+          "Tests full-duplex yielding and recovery during the assistant's response to Avery."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_open",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Blake interjects during the assistant's initial response to relay absent Jordan's quoted opposition while explicitly withholding Blake's own vote; preserve Jordan as source and Blake as relayer.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "relay_or_translation",
+        "notes": [
+          "Expected state effect: Jordan's opposition is available only as a relayed position sourced to Jordan.",
+          "Expected state effect: do not count Blake as opposing or voting unless Blake later casts a separate vote.",
+          "Tests full-duplex yielding and recovery during the assistant's response to Avery."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_1",
+      "original": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live",
+          "tool_name": null,
+          "after_ms": 560,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Cameron personally states support for the Friday dashboard launch and asks that this position be recorded under Cameron's name. Keep it separate from Jordan's relayed opposition and Blake's role as relayer.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 2200,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: add or update Cameron's speaker-owned vote only on the participant_3 thread.",
+          "Do not infer Cameron's position from Jordan's relayed opposition or from Blake's interruption."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Cameron personally states support for the Friday dashboard launch and asks that this position be recorded under Cameron's name. Keep it separate from Jordan's relayed opposition and Blake's role as relayer.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: add or update Cameron's speaker-owned vote only on the participant_3 thread.",
+          "Do not infer Cameron's position from Jordan's relayed opposition or from Blake's interruption."
+        ]
+      }
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "original": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 18000,
+          "fallback_after_event_id": "e_extra_1"
+        },
+        "intent": "Was that Jordan’s position or Blake’s own vote?",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 2200,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_1",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Was that Jordan’s position or Blake’s own vote?",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live_followup",
+      "original": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 880,
+          "fallback_at_ms": 22000,
+          "fallback_after_event_id": "e_primary_reconcile"
+        },
+        "intent": "Clarify that the opposition was a quotation from Jordan and Blake has not cast a personal vote.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 1200,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_reconcile",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Clarify that the opposition was a quotation from Jordan and Blake has not cast a personal vote.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_primary_commit",
+      "original": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 400,
+          "fallback_at_ms": 26000,
+          "fallback_after_event_id": "e_live_followup"
+        },
+        "intent": "Summarize the positions by source, including any personal views actually given.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 2200,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live_followup",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Summarize the positions by source, including any personal views actually given.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      }
+    }
+  ],
+  "paired_review_reasons": [],
+  "primary_metric": "task_success",
+  "non_comparable_metrics": [
+    "timing",
+    "floor_control",
+    "interruption_recovery",
+    "strict_joint_success"
+  ],
+  "identity_metrics_are_oracle_assisted": true,
+  "semantic_input_is_oracle_assisted": true,
+  "user_audio_preserved": true,
+  "future_event_information_released": false,
+  "task_success_policy": "separate-authorization"
+}

@@ -1,0 +1,1160 @@
+{
+  "task_contract_revision": {
+    "case_revision_id": "mu-bench-tool-free-v1",
+    "review": {
+      "case_id": "casual_conversation_01_story_followup__g-large__a-realistic__c-strong",
+      "status": "approved",
+      "case_revision_id": "mu-bench-tool-free-v1",
+      "goal_criteria": {
+        "g_primary": "Use Avery’s previously shared notes: bag left on train, employee returned it next morning, then ferry and lighthouse before lunch. Answer the bag interruption and continue the story in order. Do not invent trip events or remove Avery’s opportunity to contribute.",
+        "g_live": "Tell Blake that a station employee returned Avery's blue bag at the station the next morning, then resume the pending part of Avery's story rather than restarting the entire narrative or ending at the bag.",
+        "g_extra1": "Protect and restore Avery's still-pending story point after the follow-up, not merely acknowledge Cameron's request.",
+        "g_extra2": "Keep Devon's listening cue from becoming a separate assistant question or task.",
+        "g_extra3": "Treat the quoted cushion aside as Finley-to-Emery rather than an instruction to the assistant, and retain Emery as the reporting speaker.",
+        "g_extra4": "Actually return to the ferry and lighthouse segment of Avery's story after side clarifications, or to the exact still-pending source point if it has advanced.",
+        "g_extra5": "Explicitly offer Avery floor space to continue before closing the story, while preserving Avery as storyteller."
+      },
+      "required_answer_facts": [],
+      "opening_context": "",
+      "initial_assistant_context": {
+        "schema": "mu-assistant-initial-context-v1",
+        "available_at": "before_registration",
+        "source_type": "个人故事由当事人透露；既往旅行笔记由其事前分享",
+        "content": "Avery previously shared these travel notes with the storytelling assistant for this gathering: a blue bag was left on a train; a station employee returned it the next morning; Avery then took a ferry to an island and reached the lighthouse before lunch. These are Avery’s account, not independently verified travel records.",
+        "visibility": "assistant_read_only_scoped_source",
+        "contains_future_event_oracle": false,
+        "contains_internal_participant_mapping": false
+      },
+      "scene_design": {
+        "scenario": "casual_conversation_01_story_followup",
+        "reason": "既然助手要帮讲既往故事，就明确事前共享的故事素材；不是要求现场先把故事答案念完。",
+        "event_story": "Avery请助手帮讲→Blake追问丢包结果→Cameron保护讲述主线→大组中其他人提相关追问→助手答插问后接回渡船和灯塔，始终注明是Avery经历。"
+      }
+    }
+  },
+  "case_id": "casual_conversation_01_story_followup__g-large__a-realistic__c-strong",
+  "title": "Follow-up interrupts a personal story [g-large__a-realistic__c-strong]",
+  "summary": "Shared-channel 闲聊：旅行故事与丢包追问. The assistant has a pre-session scoped source document; users ask questions and contribute their own updates.",
+  "capability_tags": [
+    "casual_conversation",
+    "direct",
+    "collaborative_reasoning",
+    "topic_switch_resume",
+    "large_4_7",
+    "realistic",
+    "strong",
+    "multi_user",
+    "full_duplex",
+    "anti_wait"
+  ],
+  "identity_setup": [
+    "Each enrolled user speaks their participant ID, display name, role, and initially active permissions in their stable task voice.",
+    "Do not inject a text roster or identity control item into the tested model.",
+    "Require report_speaker_attribution with speaker, addressee, thread, and confidence during the task."
+  ],
+  "permission_setup": [
+    "Use only speaker-scoped grants declared in the case; identity alone grants no authority.",
+    "Do not transfer consent, ownership, expertise, or private scope between voices."
+  ],
+  "benchmark_version": "v15.0",
+  "provenance": {
+    "source_benchmarks": [
+      "M3-DuplexBench",
+      "Full-Duplex-Bench v2"
+    ],
+    "source_patterns": [
+      "topic_switch_resume"
+    ],
+    "adaptation_summary": "direct adaptation into a multi-user full-duplex episode. Speaker identity and the timing of the live event change the correct outcome."
+  },
+  "difficulty": {
+    "tier": "hard",
+    "speech_condition": "realistic",
+    "participant_band": "large_4_7",
+    "disfluency_types": [
+      "filler",
+      "hesitation",
+      "self_correction"
+    ],
+    "audio_conditions": [
+      "shared-room far-field capture",
+      "speaker-specific accent",
+      "moderate background noise",
+      "unequal per-speaker gain"
+    ],
+    "comprehension_challenges": []
+  },
+  "coverage": {
+    "scenario_family": "casual_conversation_01_story_followup",
+    "task_type": "collaborative_reasoning",
+    "source_adaptations": [
+      "M3-DuplexBench",
+      "Full-Duplex-Bench v2"
+    ],
+    "interaction_mechanisms": [
+      "topic_switch_resume"
+    ],
+    "identity_decision_factors": [
+      "speaker",
+      "thread_ownership"
+    ],
+    "anti_shortcut_proof": [
+      "e_live is released from actual assistant speech or an actual tool result, so a text-only final-batch policy misses the scored interaction window.",
+      "Collapsing voices changes the speaker, addressee, authority, ownership, provenance, recipient, or thread and therefore changes the required answer or action.",
+      "Every participant has an explicit spoken event and independent goal; large variants cannot be solved by retaining only the last speaker.",
+      "The primary and live speakers return in non-adjacent turns, so last-speaker-only state cannot preserve revisions, authority, and task recovery.",
+      "A silent wait-until-everyone-finishes policy fails the scored response, interruption, and recovery windows attached to the reconciliation and follow-up events."
+    ]
+  },
+  "variant": {
+    "scenario_id": "casual_conversation_01_story_followup",
+    "participant_scale": "large_4_7",
+    "speech_condition": "realistic",
+    "comprehension_level": "strong",
+    "variant_index": 6
+  },
+  "anti_wait_constraints": [
+    "The assistant-relative e_live event has a scored yield, recovery, routing, or false-interruption requirement.",
+    "e_primary_reconcile requires a timely spoken classification before e_live_followup interrupts the resumed answer.",
+    "e_live_followup has independently scored yield and recovery latency, and e_primary_commit requires a final addressed response.",
+    "Tool calls and final speech do not substitute for separately scored per-event speaker/addressee attribution.",
+    "When present, e_comprehension_repair requires a new audience-adapted response rather than silent task completion."
+  ],
+  "voice_enrollment": {
+    "mode": "in_session",
+    "transport": "audio_self_identification",
+    "self_identification_template": "My name is {display_name}. My participant ID is {user_id}. My role is {role}. {permission_statement} Please associate this voice with my identity for this session.",
+    "self_identification_activation_template": "{assistant_name}, everyone has now introduced themselves. Registration is complete. Formal work starts now. You may respond to requests from this point onward.",
+    "session_preamble_template": "You are {assistant_name}, our assistant. We will now introduce the users one by one. This is the user introduction phase; please listen and do not respond until we say that formal work has started.",
+    "pre_roll_ms": 400,
+    "inter_speaker_gap_ms": 600,
+    "post_roll_ms": 1200,
+    "silence_required": true
+  },
+  "assistant_activation": {
+    "enabled": true,
+    "assistant_name": "Nova",
+    "caller_user_id": "primary",
+    "utterance_template": "Hey {assistant_name}, could you help everyone here?",
+    "pre_roll_ms": 400,
+    "post_roll_ms": 800,
+    "allow_brief_acknowledgement": false
+  },
+  "iterative_replay": {
+    "enabled": true,
+    "planner_scope": "persistent_session_per_user",
+    "event_alignment_ms": 80,
+    "probe_completion_guard_ms": 800,
+    "probe_max_seconds": 75,
+    "probe_max_extensions": 2,
+    "require_fresh_session_per_probe": true,
+    "require_fresh_final_session": true,
+    "score_final_only": true,
+    "tail_probe_enabled": true,
+    "tail_probe_max_rounds": 2
+  },
+  "environment": {
+    "domain": "v07_casual_conversation",
+    "fixture_id": "casual_conversation_01_story_followup_fixture",
+    "principals": [
+      "primary",
+      "live",
+      "extra1",
+      "extra2",
+      "extra3",
+      "extra4",
+      "extra5"
+    ],
+    "resources": [],
+    "tool_names": [],
+    "initial_state": {},
+    "authoritative_facts": {
+      "source": "scene-r3 explicit initial-source view",
+      "initial_information": "Avery previously shared these travel notes with the storytelling assistant for this gathering: a blue bag was left on a train; a station employee returned it the next morning; Avery then took a ferry to an island and reached the lighthouse before lunch. These are Avery’s account, not independently verified travel records.",
+      "later_information": "Only actual subsequent utterances add participant facts; future event specifications are judge/simulator material, not assistant input."
+    },
+    "tau_user_id": null,
+    "order_ids": [],
+    "policy_extension": [
+      "Semantic deployment domain: Casual multi-party conversation.",
+      "Domain tools must encode the actual operation, affected user scope, protected user scope, and interaction-aware resolution.",
+      "The shared microphone may contain overlap, side-talk, corrections, and participant-specific threads.",
+      "Consequential outcomes must be reported aloud to the affected participant."
+    ],
+    "authorization_mode": "audit"
+  },
+  "users": [
+    {
+      "user_id": "primary",
+      "display_name": "Avery",
+      "role": "storyteller",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 4,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "General American",
+        "lexical_style": [
+          "natural contractions",
+          "occasional filler",
+          "regional wording"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_primary",
+          "description": "Help me tell the group the story from my trip notes.",
+          "priority": 5,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Use Avery’s previously shared notes: bag left on train, employee returned it next morning, then ferry and lighthouse before lunch. Answer the bag interruption and continue the story in order. Do not invent trip events or remove Avery’s opportunity to contribute."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Help me tell the group the story from my trip notes.",
+        "My benchmark identity is primary."
+      ],
+      "voice": {
+        "voice_id": "v07:casual_conversation_01_story_followup:primary",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "General American",
+        "speaking_style": "natural spontaneous far-field speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "live",
+      "display_name": "Blake",
+      "role": "follow-up asker",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 1,
+        "interrupt_tendency": 0.9,
+        "conflict_style": "assertive",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "Indian English",
+        "lexical_style": [
+          "natural contractions",
+          "occasional filler",
+          "regional wording"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_live",
+          "description": "Before you continue, what happened to the lost bag?",
+          "priority": 5,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Tell Blake that a station employee returned Avery's blue bag at the station the next morning, then resume the pending part of Avery's story rather than restarting the entire narrative or ending at the bag."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Before you continue, what happened to the lost bag?",
+        "My benchmark identity is live."
+      ],
+      "voice": {
+        "voice_id": "v07:casual_conversation_01_story_followup:live",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "Indian English",
+        "speaking_style": "natural spontaneous far-field speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "extra1",
+      "display_name": "Cameron",
+      "role": "friend",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 2,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "Sichuan-accented English",
+        "lexical_style": [
+          "natural contractions",
+          "occasional filler",
+          "regional wording"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_extra1",
+          "description": "Let the storyteller finish the important point.",
+          "priority": 3,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Protect and restore Avery's still-pending story point after the follow-up, not merely acknowledge Cameron's request."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Let the storyteller finish the important point.",
+        "My benchmark identity is extra1."
+      ],
+      "voice": {
+        "voice_id": "v07:casual_conversation_01_story_followup:extra1",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "Sichuan-accented English",
+        "speaking_style": "natural spontaneous far-field speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "extra2",
+      "display_name": "Devon",
+      "role": "late joiner",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 1,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "General British",
+        "lexical_style": [
+          "natural contractions",
+          "occasional filler",
+          "regional wording"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_extra2",
+          "description": "That was a backchannel, not a new question.",
+          "priority": 3,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Keep Devon's listening cue from becoming a separate assistant question or task."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "That was a backchannel, not a new question.",
+        "My benchmark identity is extra2."
+      ],
+      "voice": {
+        "voice_id": "v07:casual_conversation_01_story_followup:extra2",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "General British",
+        "speaking_style": "natural spontaneous far-field speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "extra3",
+      "display_name": "Emery",
+      "role": "child",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 1,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "Nigerian English",
+        "lexical_style": [
+          "natural contractions",
+          "occasional filler",
+          "regional wording"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_extra3",
+          "description": "The roommate was speaking to me.",
+          "priority": 3,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Treat the quoted cushion aside as Finley-to-Emery rather than an instruction to the assistant, and retain Emery as the reporting speaker."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "The roommate was speaking to me.",
+        "My benchmark identity is extra3."
+      ],
+      "voice": {
+        "voice_id": "v07:casual_conversation_01_story_followup:extra3",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "Nigerian English",
+        "speaking_style": "natural spontaneous far-field speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "extra4",
+      "display_name": "Finley",
+      "role": "roommate",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 1,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "Mexican-accented English",
+        "lexical_style": [
+          "natural contractions",
+          "occasional filler",
+          "regional wording"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_extra4",
+          "description": "Please return to the earlier story afterward.",
+          "priority": 3,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Actually return to the ferry and lighthouse segment of Avery's story after side clarifications, or to the exact still-pending source point if it has advanced."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Please return to the earlier story afterward.",
+        "My benchmark identity is extra4."
+      ],
+      "voice": {
+        "voice_id": "v07:casual_conversation_01_story_followup:extra4",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "Mexican-accented English",
+        "speaking_style": "natural spontaneous far-field speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "extra5",
+      "display_name": "Gray",
+      "role": "moderator",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 1,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "French-accented English",
+        "lexical_style": [
+          "natural contractions",
+          "occasional filler",
+          "regional wording"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_extra5",
+          "description": "Give the quiet participant a turn.",
+          "priority": 3,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Explicitly offer Avery floor space to continue before closing the story, while preserving Avery as storyteller."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Give the quiet participant a turn.",
+        "My benchmark identity is extra5."
+      ],
+      "voice": {
+        "voice_id": "v07:casual_conversation_01_story_followup:extra5",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "French-accented English",
+        "speaking_style": "natural spontaneous far-field speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    }
+  ],
+  "goal_relations": [
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_live",
+      "relation": "independent"
+    },
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_extra1",
+      "relation": "independent"
+    },
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_extra2",
+      "relation": "independent"
+    },
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_extra3",
+      "relation": "independent"
+    },
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_extra4",
+      "relation": "independent"
+    },
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_extra5",
+      "relation": "independent"
+    }
+  ],
+  "events": [
+    {
+      "event_id": "e_open",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "conversation_start",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Help me tell the group the story from my trip notes.",
+      "addressee": "assistant",
+      "fixed_utterance": "Help me tell the group the story from my trip notes.",
+      "fixed_utterance_exact": true,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "request",
+      "notes": []
+    },
+    {
+      "event_id": "e_live",
+      "actor_id": "live",
+      "action": "interrupt",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_open",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Interrupt the assistant early in its response to ask a speaker-owned side question about the lost bag, while making clear it should be handled before the story continues.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "secondary",
+      "speech_act": "topic_switch_resume",
+      "notes": [
+        "Tests live interruption handling, Blake's separate thread ownership, and recovery to Avery's story after the side question."
+      ]
+    },
+    {
+      "event_id": "e_extra_1",
+      "actor_id": "extra1",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_live",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Add a speaker-scoped constraint that Avery should still be allowed to finish the important story point after Blake's side question is acknowledged.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "participant_3",
+      "speech_act": "independent_constraint",
+      "notes": [
+        "Requires the assistant to preserve Cameron's constraint separately from Avery's and Blake's requests."
+      ]
+    },
+    {
+      "event_id": "e_extra_2",
+      "actor_id": "extra2",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_extra_1",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Clarify that Devon's own brief contribution should be treated only as a backchannel or acknowledgment, not as a new question or task for the assistant.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 3,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "participant_4",
+      "speech_act": "independent_constraint",
+      "notes": [
+        "Tests whether the assistant distinguishes a participant's non-task backchannel from actionable requests."
+      ]
+    },
+    {
+      "event_id": "e_extra_3",
+      "actor_id": "extra3",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_extra_2",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Emery quotes the small aside, Finley asking Emery to pass a cushion, and clarifies that it was directed to Emery rather than the assistant; make the content self-contained without inventing an earlier recorded turn.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 2,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "participant_5",
+      "speech_act": "independent_constraint",
+      "notes": []
+    },
+    {
+      "event_id": "e_extra_4",
+      "actor_id": "extra4",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_extra_3",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Ask the assistant to return to Avery's earlier story thread after acknowledging the side question and participant-scoped constraints.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 2,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "participant_6",
+      "speech_act": "independent_constraint",
+      "notes": [
+        "Reinforces restoration of the original story without transferring ownership away from Avery."
+      ]
+    },
+    {
+      "event_id": "e_extra_5",
+      "actor_id": "extra5",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_extra_4",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Gray asks the assistant to explicitly give Avery, the quiet storyteller, a chance to continue after the lost-bag question, without making Gray or Blake the story owner.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 2,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "participant_7",
+      "speech_act": "independent_constraint",
+      "notes": []
+    },
+    {
+      "event_id": "e_extra1_followup",
+      "actor_id": "extra1",
+      "action": "correct",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_extra_5",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "After hearing the intervening participants, clarify that Cameron's earlier request to let Avery finish remains Cameron's own speaker-scoped constraint and should not be merged with the later constraints.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "participant_3",
+      "speech_act": "constraint_clarification",
+      "notes": [
+        "Non-adjacent repeated speaker turn.",
+        "Requires linking this correction back to e_extra_1 rather than to the most recent participant."
+      ]
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_extra1_followup",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "We can answer about the bag, then I want to get back to the trip.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "reconciliation_request",
+      "notes": []
+    },
+    {
+      "event_id": "e_live_followup",
+      "actor_id": "live",
+      "action": "interrupt",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_primary_reconcile",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Acknowledge the bag answer and invite Avery to continue the original story.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "secondary",
+      "speech_act": "followup_clarification",
+      "notes": []
+    },
+    {
+      "event_id": "e_primary_commit",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_live_followup",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Help me pick up from the ferry part.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "final_confirmation",
+      "notes": []
+    }
+  ],
+  "expected_tool_actions": [],
+  "timing_requirements": [
+    {
+      "metric": "yield_latency_ms",
+      "event_id": "e_live",
+      "operator": "le",
+      "threshold": 1200.0
+    },
+    {
+      "metric": "resume_latency_ms",
+      "event_id": "e_live",
+      "operator": "le",
+      "threshold": 2800.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_primary_reconcile",
+      "operator": "le",
+      "threshold": 2200.0
+    },
+    {
+      "metric": "yield_latency_ms",
+      "event_id": "e_live_followup",
+      "operator": "le",
+      "threshold": 1200.0
+    },
+    {
+      "metric": "resume_latency_ms",
+      "event_id": "e_live_followup",
+      "operator": "le",
+      "threshold": 2800.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_primary_commit",
+      "operator": "le",
+      "threshold": 2200.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_extra1_followup",
+      "operator": "le",
+      "threshold": 2400.0
+    }
+  ],
+  "final_success_conditions": [
+    "Use Avery’s previously shared notes: bag left on train, employee returned it next morning, then ferry and lighthouse before lunch. Answer the bag interruption and continue the story in order. Do not invent trip events or remove Avery’s opportunity to contribute.",
+    "Evaluate each actual participant’s goal using its case-defined disposition and success evidence. A later valid clarification can refine the requested answer. Do not require information from absent participants or invented user-simulator side demands."
+  ],
+  "capability_assertions": [
+    {
+      "assertion_id": "a_identity_routing",
+      "category": "discourse_provenance",
+      "description": "Attribute every shared-microphone utterance to its registered speaker, addressee, and thread before using it.",
+      "expected_behavior": "The decisive identity factor is speaker, thread_ownership. Answer the follow-up and then resume the storyteller's exact pending point.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_extra_1",
+        "e_extra_2",
+        "e_extra_3",
+        "e_extra_4",
+        "e_extra_5",
+        "e_extra1_followup",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_spoken_result",
+      "category": "response_rendering",
+      "description": "Report the final disposition aloud to the affected participant(s).",
+      "expected_behavior": "Say a concise result that makes this outcome clear: Answer the follow-up and then resume the storyteller's exact pending point.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_extra_1",
+        "e_extra_2",
+        "e_extra_3",
+        "e_extra_4",
+        "e_extra_5",
+        "e_extra1_followup",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_full_duplex_policy",
+      "category": "group_collaboration",
+      "description": "Classify the assistant-relative live event and preserve all still-active speaker-owned threads after overlap.",
+      "expected_behavior": "Answer the follow-up and then resume the storyteller's exact pending point.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_extra_1",
+        "e_extra_2",
+        "e_extra_3",
+        "e_extra_4",
+        "e_extra_5",
+        "e_extra1_followup",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_multi_round_state_continuity",
+      "category": "multi_thread",
+      "description": "Preserve the original request, the first live intervention, the primary user's reconciliation turn, the live user's non-adjacent follow-up, and the final confirmation as one evolving interaction rather than restarting the task.",
+      "expected_behavior": "Integrate every revision while preserving unresolved speaker ownership, then reach this outcome: Answer the follow-up and then resume the storyteller's exact pending point.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_repeated_speaker_consistency",
+      "category": "discourse_provenance",
+      "description": "Recognize the same primary and live voices when each returns after intervening speech, and retain their original authority, goal, addressee, and thread.",
+      "expected_behavior": "Do not assign a returning speaker a new identity, transfer another speaker's request to them, or forget their earlier contribution.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_extra_speaker_return",
+      "category": "discourse_provenance",
+      "description": "Retain extra1's identity and earlier constraint when that speaker returns after the other extra participants.",
+      "expected_behavior": "Connect e_extra1_followup to e_extra_1 without merging it into the most recent or loudest participant's thread.",
+      "source_event_ids": [
+        "e_extra_1",
+        "e_extra1_followup"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_primary_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Avery (storyteller).",
+      "expected_behavior": "After e_primary_reconcile, address or uniquely reference Avery (storyteller) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_primary_reconcile"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "primary",
+      "return_event_id": "e_primary_reconcile",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_primary_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Avery (storyteller)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_primary_reconcile to Avery (storyteller)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_primary_reconcile"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "primary",
+      "return_event_id": "e_primary_reconcile",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_live_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Blake (follow-up asker).",
+      "expected_behavior": "After e_live_followup, address or uniquely reference Blake (follow-up asker) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_live_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "live",
+      "return_event_id": "e_live_followup",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_live_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Blake (follow-up asker)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_live_followup to Blake (follow-up asker)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_live_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "live",
+      "return_event_id": "e_live_followup",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_extra1_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Cameron (friend).",
+      "expected_behavior": "After e_extra1_followup, address or uniquely reference Cameron (friend) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_extra1_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "extra1",
+      "return_event_id": "e_extra1_followup",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_extra1_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Cameron (friend)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_extra1_followup to Cameron (friend)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_extra1_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "extra1",
+      "return_event_id": "e_extra1_followup",
+      "diagnostic_only": true
+    }
+  ],
+  "state_assertions": [],
+  "seed": 700286
+}

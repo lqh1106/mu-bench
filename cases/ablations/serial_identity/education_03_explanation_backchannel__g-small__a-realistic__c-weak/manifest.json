@@ -1,0 +1,376 @@
+{
+  "schema": "mu-nt-r3-ablation-participants-v3-20261117",
+  "arm": "serial_identity",
+  "case_id": "education_03_explanation_backchannel__g-small__a-realistic__c-weak",
+  "source_case_sha256": "9f65c024e1d811e8621cd30ee927c34855e6a59f93fffd8682e091e677a2d302",
+  "transformed_case_sha256": "414e4e45587f8f5f0129f8750925984b7875765d660680119c5943891ffb2f81",
+  "task_contract_sha256": "87feb6b042a8d661efa1f3bc6b7706dfdf01f636acd344e5961b3f024d222100",
+  "task_contract_unchanged": true,
+  "event_changes": [
+    {
+      "event_id": "e_open",
+      "original": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Explain evaporation in two simple steps.",
+        "addressee": "assistant",
+        "fixed_utterance": "Explain evaporation in two simple steps.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Explain evaporation in two simple steps.",
+        "addressee": "assistant",
+        "fixed_utterance": "Explain evaporation in two simple steps.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live",
+      "original": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "backchannel",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 1040,
+          "fallback_at_ms": 12800,
+          "fallback_after_event_id": "e_open"
+        },
+        "intent": "Provide a brief agreement/attention backchannel during the assistant's explanation, without asking a question or changing Avery's original two-step evaporation request.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "backchannel_selectivity",
+        "notes": [
+          "Assistant should recognize this as Blake's non-substantive acknowledgment, not a request to stop, answer Blake, or alter Avery's task.",
+          "Tests false-interruption handling while the original explanation remains active."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "backchannel",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_open",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Provide a brief agreement/attention backchannel during the assistant's explanation, without asking a question or changing Avery's original two-step evaporation request.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "backchannel_selectivity",
+        "notes": [
+          "Assistant should recognize this as Blake's non-substantive acknowledgment, not a request to stop, answer Blake, or alter Avery's task.",
+          "Tests false-interruption handling while the original explanation remains active."
+        ]
+      }
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "original": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 18000,
+          "fallback_after_event_id": "e_live"
+        },
+        "intent": "Please continue the two-step explanation.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Please continue the two-step explanation.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live_followup",
+      "original": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 880,
+          "fallback_at_ms": 22000,
+          "fallback_after_event_id": "e_primary_reconcile"
+        },
+        "intent": "Give a brief acknowledgment without changing the evaporation question.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_reconcile",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Give a brief acknowledgment without changing the evaporation question.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_primary_commit",
+      "original": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 400,
+          "fallback_at_ms": 26000,
+          "fallback_after_event_id": "e_live_followup"
+        },
+        "intent": "Finish the two steps clearly.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live_followup",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Finish the two steps clearly.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_comprehension_repair",
+      "original": {
+        "event_id": "e_comprehension_repair",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 30000,
+          "fallback_after_event_id": "e_primary_commit"
+        },
+        "intent": "Ask for a shorter, plainer restatement of the same evaporation explanation because Avery did not fully understand the previous wording.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 2200,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "Expected state effect: address Avery's comprehension need with simpler wording while preserving the same two-step evaporation content and not restarting Blake's backchannel thread."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_comprehension_repair",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_commit",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Ask for a shorter, plainer restatement of the same evaporation explanation because Avery did not fully understand the previous wording.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "Expected state effect: address Avery's comprehension need with simpler wording while preserving the same two-step evaporation content and not restarting Blake's backchannel thread."
+        ]
+      }
+    }
+  ],
+  "paired_review_reasons": [],
+  "primary_metric": "task_success",
+  "non_comparable_metrics": [
+    "timing",
+    "floor_control",
+    "interruption_recovery",
+    "strict_joint_success"
+  ],
+  "identity_metrics_are_oracle_assisted": true,
+  "semantic_input_is_oracle_assisted": false,
+  "user_audio_preserved": true,
+  "future_event_information_released": false,
+  "task_success_policy": "separate-authorization"
+}

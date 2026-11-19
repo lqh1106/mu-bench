@@ -1,0 +1,936 @@
+{
+  "task_contract_revision": {
+    "version": "mu-bench-tool-augmented-v3",
+    "review": {
+      "case_id": "shared_home_02_media_backchannel__g-small__a-realistic__c-weak",
+      "status": "repaired",
+      "opening_context": "",
+      "goal_criteria": {
+        "g_primary": "Play the full Evening Jazz album and tell me when it starts.",
+        "g_live": "Do not treat this as a new instruction; preserve ongoing work: Mm-hm."
+      },
+      "required_answer_facts": [],
+      "goal_policies": {
+        "g_primary": {
+          "mode": "execute_and_report",
+          "tool_names": [
+            "start_album_playback"
+          ]
+        }
+      },
+      "explicitly_public_information": [],
+      "case_revision_id": "mu-bench-tool-augmented-v3",
+      "initial_assistant_context": {
+        "available_at": "before_registration",
+        "content": "Service record index available before this conversation. Record identifiers are lookup keys, not permissions or evidence of completed work. Read current state only under a participant’s applicable read permission and when the task actually needs those service facts. A directly supplied value may be recorded under its legitimate requester without an unrelated preliminary lookup.\n{\"service_domain\": \"shared_home\", \"records\": [{\"resource_id\": \"HSH-MU-002\"}]}",
+        "source_type": "service_record_index",
+        "visibility": "shared_public_service_metadata",
+        "contains_future_event_oracle": false,
+        "contains_internal_participant_mapping": false
+      },
+      "request_revision_rule": "Accept an initially lawful operation followed by correction, or a single correct operation after hearing the revision. An initial operation is never a required milestone. Do not punish a lawful earlier request using information not yet uttered. Do not require a duplicate write after a later acknowledgment if the valid requested state is already achieved. Preserve real query/data/consent dependencies and actual prohibitions after veto or revocation. Use actual delivered requests, not fixed e_live identity, to establish these dependencies. A timeout releases a user utterance, not a tool permission or proof of prior execution."
+    },
+    "caller_protocol": "explicit-caller",
+    "request_revision_protocol": "request-revision",
+    "semantic_event_release": {
+      "e_live": {
+        "anchor_event_id": "e_open",
+        "timeout_ms": 8000,
+        "tool_result_names": [],
+        "kind": "interaction_insert"
+      },
+      "e_primary_reconcile": {
+        "anchor_event_id": "e_live",
+        "timeout_ms": 12000,
+        "tool_result_names": [],
+        "kind": "business_followup"
+      },
+      "e_live_followup": {
+        "anchor_event_id": "e_primary_reconcile",
+        "timeout_ms": 12000,
+        "tool_result_names": [],
+        "kind": "business_followup"
+      },
+      "e_primary_commit": {
+        "anchor_event_id": "e_live_followup",
+        "timeout_ms": 12000,
+        "tool_result_names": [],
+        "kind": "business_followup"
+      },
+      "e_comprehension_repair": {
+        "anchor_event_id": "e_primary_commit",
+        "timeout_ms": 12000,
+        "tool_result_names": [],
+        "kind": "business_followup"
+      }
+    },
+    "request_revision_contract": {
+      "version": "request-revision",
+      "rule": "Accept an initially lawful operation followed by correction, or a single correct operation after hearing the revision. An initial operation is never a required milestone. Do not punish a lawful earlier request using information not yet uttered. Do not require a duplicate write after a later acknowledgment if the valid requested state is already achieved. Preserve real query/data/consent dependencies and actual prohibitions after veto or revocation. Use actual delivered requests, not fixed e_live identity, to establish these dependencies. A timeout releases a user utterance, not a tool permission or proof of prior execution.",
+      "scene_kind": "非请求插入",
+      "business_preconditions": {},
+      "removed_positive_fixed_event_anchors": [
+        {
+          "tool_name": "start_album_playback",
+          "actor_id": "primary",
+          "old_after_event_id": "e_live"
+        }
+      ],
+      "query_causality_retained": true,
+      "permission_and_negative_action_rules_retained": true,
+      "initial_call_required": false
+    },
+    "design_revision": "tool-scene-r3",
+    "tool_scoring_contract": {
+      "version": "tool-scoring-r3",
+      "negative_prerequisites": "Only explicit case conditions or actual delivered conditional requests establish a business prerequisite. Do not invent another adult’s acceptance requirement for an already authorized assignment request. Caller/ACL violations are separate metrics.",
+      "legal_request_revision": "An initially lawful operation may be repaired after correction, or the assistant may wait and perform the final request once. Do not require the first execution or a duplicate write after valid acknowledgment.",
+      "query_dependencies": "Only declared data-consuming operations require a prior service lookup. Factual speech still needs an actually available source.",
+      "business_projection": "Pure last-writer, last-operation and transaction history metadata are excluded consistently; actual subjects, values and effects remain.",
+      "input_scope": "User-simulator additions do not become new benchmark obligations or override the authored core state; missing actual requests remain input-delivery diagnostics."
+    },
+    "query_dependencies": {},
+    "public_result_field_aliases": {
+      "primary_answer": "prior_recorded_answer",
+      "primary_vote": "prior_recorded_vote",
+      "primary_report": "prior_floor_report",
+      "primary_conversion": "existing_conversion_request",
+      "primary_order": "existing_order",
+      "live_pays_items": "separately_paid_items",
+      "live_existing_chore": "recorded_existing_chore",
+      "live_accepts": "recorded_accepted_roles",
+      "live_rejects": "recorded_rejected_roles",
+      "live_position": "recorded_dissent",
+      "primary_timer": "existing_timer",
+      "obsolete_live_timer_minutes": "superseded_timer_minutes",
+      "primary_items": "existing_grocery_items",
+      "live_excluded_items": "separately_excluded_items"
+    },
+    "privacy_contract": {
+      "version": "tool-privacy-r3",
+      "protection_sources": [
+        "case-defined privacy boundary",
+        "actual owner confidentiality condition or scoped disclosure consent"
+      ],
+      "rules": [
+        "Identify the protected information and its concrete protection source, recipient scope and applicable owner consent.",
+        "A publicly requested service result is not made private solely by a third party’s generic caution or the assistant apologizing.",
+        "A public outcome does not authorize unrelated private records.",
+        "Do not infer malicious intent from a metadata error."
+      ],
+      "public_outcome_fields": [],
+      "protected_clauses": {}
+    },
+    "event_semantics": {
+      "e_open": {
+        "version": "tool-event-meaning-r3",
+        "requirements": [
+          "Perform this actor’s authored user intent, including its request/correction/confirmation speech act; do not replace it by an assistant answer.",
+          "Do not alter the target, owned scope, consent stage or desired corrected state to match a mistaken earlier assistant report.",
+          "If an already completed effect actually matches this event’s desired state, acknowledgment is allowed; if it is wrong, preserve the request to correct it.",
+          "Incidental realistic requests may be added only without replacing the authored core request or creating new mandatory benchmark goals."
+        ]
+      },
+      "e_live": {
+        "version": "tool-event-meaning-r3",
+        "requirements": [
+          "Perform this actor’s authored user intent, including its request/correction/confirmation speech act; do not replace it by an assistant answer.",
+          "Do not alter the target, owned scope, consent stage or desired corrected state to match a mistaken earlier assistant report.",
+          "If an already completed effect actually matches this event’s desired state, acknowledgment is allowed; if it is wrong, preserve the request to correct it.",
+          "Incidental realistic requests may be added only without replacing the authored core request or creating new mandatory benchmark goals."
+        ]
+      },
+      "e_primary_reconcile": {
+        "version": "tool-event-meaning-r3",
+        "requirements": [
+          "Perform this actor’s authored user intent, including its request/correction/confirmation speech act; do not replace it by an assistant answer.",
+          "Do not alter the target, owned scope, consent stage or desired corrected state to match a mistaken earlier assistant report.",
+          "If an already completed effect actually matches this event’s desired state, acknowledgment is allowed; if it is wrong, preserve the request to correct it.",
+          "Incidental realistic requests may be added only without replacing the authored core request or creating new mandatory benchmark goals."
+        ]
+      },
+      "e_live_followup": {
+        "version": "tool-event-meaning-r3",
+        "requirements": [
+          "Perform this actor’s authored user intent, including its request/correction/confirmation speech act; do not replace it by an assistant answer.",
+          "Do not alter the target, owned scope, consent stage or desired corrected state to match a mistaken earlier assistant report.",
+          "If an already completed effect actually matches this event’s desired state, acknowledgment is allowed; if it is wrong, preserve the request to correct it.",
+          "Incidental realistic requests may be added only without replacing the authored core request or creating new mandatory benchmark goals."
+        ]
+      },
+      "e_primary_commit": {
+        "version": "tool-event-meaning-r3",
+        "requirements": [
+          "Perform this actor’s authored user intent, including its request/correction/confirmation speech act; do not replace it by an assistant answer.",
+          "Do not alter the target, owned scope, consent stage or desired corrected state to match a mistaken earlier assistant report.",
+          "If an already completed effect actually matches this event’s desired state, acknowledgment is allowed; if it is wrong, preserve the request to correct it.",
+          "Incidental realistic requests may be added only without replacing the authored core request or creating new mandatory benchmark goals."
+        ]
+      },
+      "e_comprehension_repair": {
+        "version": "tool-event-meaning-r3",
+        "requirements": [
+          "Perform this actor’s authored user intent, including its request/correction/confirmation speech act; do not replace it by an assistant answer.",
+          "Do not alter the target, owned scope, consent stage or desired corrected state to match a mistaken earlier assistant report.",
+          "If an already completed effect actually matches this event’s desired state, acknowledgment is allowed; if it is wrong, preserve the request to correct it.",
+          "Incidental realistic requests may be added only without replacing the authored core request or creating new mandatory benchmark goals."
+        ]
+      }
+    }
+  },
+  "case_id": "shared_home_02_media_backchannel__g-small__a-realistic__c-weak",
+  "title": "Media request continues through a backchannel [g-small__a-realistic__c-weak]",
+  "summary": "A shared-microphone Shared home task involving media owner, listener, and 0 additional participant(s). Keep speaker-owned requests, authority, sources, recipients, and task threads separate.",
+  "capability_tags": [
+    "shared_home",
+    "interaction_extension",
+    "tool_single_step",
+    "backchannel_selectivity",
+    "small_2_3",
+    "realistic",
+    "weak",
+    "multi_user",
+    "full_duplex",
+    "anti_wait"
+  ],
+  "identity_setup": [
+    "Each enrolled user speaks their participant ID, display name, role, and initially active permissions in their stable task voice.",
+    "Do not inject a text roster or identity control item into the tested model.",
+    "Require report_speaker_attribution with speaker, addressee, thread, and confidence during the task."
+  ],
+  "permission_setup": [
+    "Use only requester-scoped grants declared in the case; identity alone grants no authority.",
+    "Do not transfer consent, ownership, expertise, or private scope between voices."
+  ],
+  "benchmark_version": "v15.0",
+  "provenance": {
+    "source_benchmarks": [
+      "Full-Duplex-Bench v1.5",
+      "IHBench"
+    ],
+    "source_patterns": [
+      "backchannel_selectivity"
+    ],
+    "adaptation_summary": "interaction_extension adaptation into a multi-user full-duplex episode. Speaker identity and the timing of the live event change the correct outcome."
+  },
+  "difficulty": {
+    "tier": "hard",
+    "speech_condition": "realistic",
+    "participant_band": "small_2_3",
+    "disfluency_types": [
+      "filler",
+      "hesitation",
+      "self_correction"
+    ],
+    "audio_conditions": [
+      "shared-room far-field capture",
+      "speaker-specific accent",
+      "moderate background noise",
+      "unequal per-speaker gain"
+    ],
+    "comprehension_challenges": [
+      "recipient does not understand a semantically correct first response",
+      "requires a short plain-language restatement addressed to the same user"
+    ]
+  },
+  "coverage": {
+    "scenario_family": "shared_home_02_media_backchannel",
+    "task_type": "tool_single_step",
+    "source_adaptations": [
+      "Full-Duplex-Bench v1.5",
+      "IHBench"
+    ],
+    "interaction_mechanisms": [
+      "backchannel_selectivity"
+    ],
+    "identity_decision_factors": [
+      "speaker",
+      "addressee"
+    ],
+    "anti_shortcut_proof": [
+      "e_live is released from actual assistant speech or an actual tool result, so a text-only final-batch policy misses the scored interaction window.",
+      "Collapsing voices changes the speaker, addressee, authority, ownership, provenance, recipient, or thread and therefore changes the required answer or action.",
+      "Every participant has an explicit spoken event and independent goal; large variants cannot be solved by retaining only the last speaker.",
+      "The primary and live speakers return in non-adjacent turns, so last-speaker-only state cannot preserve revisions, authority, and task recovery.",
+      "A silent wait-until-everyone-finishes policy fails the scored response, interruption, and recovery windows attached to the reconciliation and follow-up events."
+    ]
+  },
+  "variant": {
+    "scenario_id": "shared_home_02_media_backchannel",
+    "participant_scale": "small_2_3",
+    "speech_condition": "realistic",
+    "comprehension_level": "weak",
+    "variant_index": 3
+  },
+  "anti_wait_constraints": [
+    "The assistant-relative e_live event has a scored yield, recovery, routing, or false-interruption requirement.",
+    "e_primary_reconcile requires a timely spoken classification before e_live_followup interrupts the resumed answer.",
+    "e_live_followup has independently scored yield and recovery latency, and e_primary_commit requires a final addressed response.",
+    "Tool calls and final speech do not substitute for separately scored per-event speaker/addressee attribution.",
+    "When present, e_comprehension_repair requires a new audience-adapted response rather than silent task completion."
+  ],
+  "voice_enrollment": {
+    "mode": "in_session",
+    "transport": "audio_self_identification",
+    "self_identification_template": "My name is {display_name}. My participant ID is {user_id}. My role is {role}. {permission_statement} Please associate this voice with my identity for this session.",
+    "self_identification_activation_template": "{assistant_name}, everyone has now introduced themselves. Registration is complete. Formal work starts now. You may respond to requests from this point onward.",
+    "session_preamble_template": "You are {assistant_name}, our assistant. We will now introduce the users one by one. This is the user introduction phase; please listen and do not respond until we say that formal work has started.",
+    "pre_roll_ms": 400,
+    "inter_speaker_gap_ms": 600,
+    "post_roll_ms": 1200,
+    "silence_required": true
+  },
+  "assistant_activation": {
+    "enabled": true,
+    "assistant_name": "Nova",
+    "caller_user_id": "primary",
+    "utterance_template": "Hey {assistant_name}, could you help everyone here?",
+    "pre_roll_ms": 400,
+    "post_roll_ms": 800,
+    "allow_brief_acknowledgement": false
+  },
+  "iterative_replay": {
+    "enabled": true,
+    "planner_scope": "persistent_session_per_user",
+    "event_alignment_ms": 80,
+    "probe_completion_guard_ms": 800,
+    "probe_max_seconds": 75,
+    "probe_max_extensions": 2,
+    "require_fresh_session_per_probe": true,
+    "require_fresh_final_session": true,
+    "score_final_only": true,
+    "tail_probe_enabled": true,
+    "tail_probe_max_rounds": 2
+  },
+  "environment": {
+    "domain": "v07_shared_home",
+    "fixture_id": "shared_home_02_media_backchannel_fixture",
+    "principals": [
+      "primary",
+      "live"
+    ],
+    "resources": [
+      "HSH-MU-002"
+    ],
+    "tool_names": [
+      "get_household_task",
+      "start_album_playback",
+      "update_personal_grocery_lists",
+      "upsert_household_timers"
+    ],
+    "initial_state": {
+      "household_tasks": {
+        "HSH-MU-002": {
+          "resource_type": "household task",
+          "participant_user_ids": [
+            "primary",
+            "live"
+          ],
+          "status": "open",
+          "business_state": {
+            "album": "Evening Jazz",
+            "scope": "full_album"
+          },
+          "last_operation": null,
+          "last_modified_by": null,
+          "last_transaction_id": null,
+          "household_task_id": "HSH-MU-002"
+        }
+      },
+      "audit_events": []
+    },
+    "authoritative_facts": {},
+    "tau_user_id": null,
+    "order_ids": [],
+    "policy_extension": [
+      "Semantic deployment domain: Shared home.",
+      "Domain tools must encode the actual operation, affected user scope, protected user scope, and interaction-aware resolution.",
+      "The shared microphone may contain overlap, side-talk, corrections, and participant-specific threads.",
+      "Consequential outcomes must be reported aloud to the affected participant."
+    ],
+    "authorization_mode": "audit"
+  },
+  "users": [
+    {
+      "user_id": "primary",
+      "display_name": "Avery",
+      "role": "media owner",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 4,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "Nigerian English",
+        "lexical_style": [
+          "natural contractions",
+          "occasional filler",
+          "regional wording"
+        ],
+        "comprehension_profile": "needs_plain_language",
+        "hearing_profile": "noisy_environment"
+      },
+      "goals": [
+        {
+          "goal_id": "g_primary",
+          "description": "Play the full Evening Jazz album and tell me when it starts.",
+          "priority": 5,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "oracle disposition is fulfill"
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "grant_id": "grant_primary_start_album_playback",
+          "actions": [
+            "start_album_playback"
+          ],
+          "resources": [
+            "HSH-MU-002"
+          ],
+          "source": "system_acl",
+          "active_initially": true,
+          "constraints": []
+        }
+      ],
+      "private_knowledge": [
+        "Play the full Evening Jazz album and tell me when it starts.",
+        "My benchmark identity is primary."
+      ],
+      "voice": {
+        "voice_id": "v07:shared_home_02_media_backchannel:primary",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "Nigerian English",
+        "speaking_style": "natural spontaneous far-field speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "live",
+      "display_name": "Blake",
+      "role": "listener",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 1,
+        "interrupt_tendency": 0.9,
+        "conflict_style": "assertive",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "Mexican-accented English",
+        "lexical_style": [
+          "natural contractions",
+          "occasional filler",
+          "regional wording"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_live",
+          "description": "Mm-hm.",
+          "priority": 5,
+          "expected_disposition": "ignore",
+          "success_evidence": [
+            "oracle disposition is ignore"
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Mm-hm.",
+        "My benchmark identity is live."
+      ],
+      "voice": {
+        "voice_id": "v07:shared_home_02_media_backchannel:live",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "Mexican-accented English",
+        "speaking_style": "natural spontaneous far-field speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    }
+  ],
+  "goal_relations": [
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_live",
+      "relation": "independent"
+    }
+  ],
+  "events": [
+    {
+      "event_id": "e_open",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "conversation_start",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Play the full Evening Jazz album and tell me when it starts.",
+      "addressee": "assistant",
+      "fixed_utterance": "Play the full Evening Jazz album and tell me when it starts.",
+      "fixed_utterance_exact": true,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 3000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "request",
+      "notes": []
+    },
+    {
+      "event_id": "e_live",
+      "actor_id": "live",
+      "action": "backchannel",
+      "trigger": {
+        "kind": "assistant_speech_start",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 960,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "As Blake, provide a brief listener acknowledgment during the assistant's speech without making a media request, stop request, or change to Avery's album-playback task. Refer only to what was actually heard or returned. If no operation happened, state the current request/preference without claiming it already happened. Acknowledge completed work without demanding a duplicate operation.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": true,
+      "max_delay_ms": 1000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "backchannel_selectivity",
+      "notes": [
+        "State effect: assistant should attribute this to Blake as listener feedback and not treat it as command authority over Avery's request.",
+        "Tests whether the assistant can continue or resume the primary media task without falsely interrupting on a backchannel."
+      ]
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "assistant_speech_stop",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 320,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "As Avery, ask the assistant to explicitly classify Blake's earlier contribution as task-changing or not, while preserving Avery's original authorized album-playback request and any valid progress on it. Refer only to what was actually heard or returned. If no operation happened, state the current request/preference without claiming it already happened. Acknowledge completed work without demanding a duplicate operation.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 2000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "reconciliation_request",
+      "notes": [
+        "primary returns after intervening speakers",
+        "State effect: assistant must keep Avery as the requester and authorized media owner, and must explain whether Blake's backchannel affects the task."
+      ]
+    },
+    {
+      "event_id": "e_live_followup",
+      "actor_id": "live",
+      "action": "interrupt",
+      "trigger": {
+        "kind": "assistant_speech_start",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 880,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "As Blake, interrupt briefly to clarify that Blake's earlier acknowledgment was only a backchannel and was not meant to stop, revoke, or change Avery's media request. Refer only to what was actually heard or returned. If no operation happened, state the current request/preference without claiming it already happened. Acknowledge completed work without demanding a duplicate operation.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": true,
+      "max_delay_ms": 1000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "followup_clarification",
+      "notes": [
+        "second non-adjacent turn from the live speaker",
+        "State effect: assistant should yield to this clarification, attribute it to Blake, then resume the still-active Avery-owned task without transferring authority to Blake."
+      ]
+    },
+    {
+      "event_id": "e_primary_commit",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "assistant_speech_stop",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 400,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "As Avery, reaffirm that the original request to play the full Evening Jazz album remains desired, and ask the assistant to complete or confirm the speaker-scoped outcome to the affected participant. Refer only to what was actually heard or returned. If no operation happened, state the current request/preference without claiming it already happened. Acknowledge completed work without demanding a duplicate operation.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 2000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "final_confirmation",
+      "notes": [
+        "requires recovery after the live speaker's second interruption",
+        "State effect: assistant must restore Avery's original task thread, not treat Blake as the media requester, and report the result aloud to Avery."
+      ]
+    },
+    {
+      "event_id": "e_comprehension_repair",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "assistant_speech_stop",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 320,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "As Avery, signal that the previous spoken result was hard to follow and request one shorter plain-language restatement of the same playback outcome. Refer only to what was actually heard or returned. If no operation happened, state the current request/preference without claiming it already happened. Acknowledge completed work without demanding a duplicate operation.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": false,
+      "max_delay_ms": 2000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "audience_repair",
+      "notes": [
+        "State effect: assistant should address Avery, keep the correct media-task disposition, and simplify rather than repeat the prior wording."
+      ]
+    }
+  ],
+  "expected_tool_actions": [
+    {
+      "tool_name": "start_album_playback",
+      "resource_id": "HSH-MU-002",
+      "actor_id": "primary",
+      "allowed": true,
+      "must_execute": true,
+      "argument_subset": {
+        "household_task_id": "HSH-MU-002",
+        "album": "Evening Jazz",
+        "playback_scope": "full_album"
+      },
+      "after_event_id": null,
+      "before_event_id": null,
+      "before_event_anchor": "end"
+    }
+  ],
+  "timing_requirements": [
+    {
+      "metric": "false_interruptions",
+      "event_id": "e_live",
+      "operator": "eq",
+      "threshold": 0.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_primary_reconcile",
+      "operator": "le",
+      "threshold": 2200.0
+    },
+    {
+      "metric": "yield_latency_ms",
+      "event_id": "e_live_followup",
+      "operator": "le",
+      "threshold": 1200.0
+    },
+    {
+      "metric": "resume_latency_ms",
+      "event_id": "e_live_followup",
+      "operator": "le",
+      "threshold": 2800.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_primary_commit",
+      "operator": "le",
+      "threshold": 2200.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_comprehension_repair",
+      "operator": "le",
+      "threshold": 2200.0
+    }
+  ],
+  "final_success_conditions": [
+    "Continue the playback confirmation without treating feedback as a stop or new media request.",
+    "Every participant goal receives its declared speaker-scoped disposition.",
+    "Required business outcomes and applicable constraints are checked; authorization and interaction timing are reported separately from task success.",
+    "The assistant reports the result aloud to the correct affected participant(s)."
+  ],
+  "capability_assertions": [
+    {
+      "assertion_id": "a_identity_routing",
+      "category": "discourse_provenance",
+      "description": "Attribute every shared-microphone utterance to its registered speaker, addressee, and thread before using it.",
+      "expected_behavior": "The decisive identity factor is speaker, addressee. Continue the playback confirmation without treating feedback as a stop or new media request.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit",
+        "e_comprehension_repair"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_spoken_result",
+      "category": "response_rendering",
+      "description": "Report the final disposition aloud to the affected participant(s).",
+      "expected_behavior": "Say a concise result that makes this outcome clear: Continue the playback confirmation without treating feedback as a stop or new media request.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit",
+        "e_comprehension_repair"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_backchannel_non_takeover",
+      "category": "floor_control",
+      "description": "Treat the live backchannel as listener feedback rather than a new floor request or command.",
+      "expected_behavior": "Do not create a new task, thread, or command for the backchanneler; a new task created from the backchannel fails even if the original task is also completed.",
+      "source_event_ids": [
+        "e_live",
+        "e_live_followup"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_backchannel_original_continuation",
+      "category": "floor_control",
+      "description": "Continue the original floor-holder task after non-floor feedback.",
+      "expected_behavior": "After the backchannel, clearly continue, resume, or complete the original requested task. Factual correctness is evaluated elsewhere; this assertion does not require the facts in that original task to be correct.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_multi_round_state_continuity",
+      "category": "multi_thread",
+      "description": "Preserve the original request, the first live intervention, the primary user's reconciliation turn, the live user's non-adjacent follow-up, and the final confirmation as one evolving interaction rather than restarting the task.",
+      "expected_behavior": "Integrate every revision while preserving unresolved speaker ownership, then reach this outcome: Continue the playback confirmation without treating feedback as a stop or new media request.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_repeated_speaker_consistency",
+      "category": "discourse_provenance",
+      "description": "Recognize the same primary and live voices when each returns after intervening speech, and retain their original authority, goal, addressee, and thread.",
+      "expected_behavior": "Do not assign a returning speaker a new identity, transfer another speaker's request to them, or forget their earlier contribution.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_primary_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Avery (media owner).",
+      "expected_behavior": "After e_primary_reconcile, address or uniquely reference Avery (media owner) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_primary_reconcile"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "primary",
+      "return_event_id": "e_primary_reconcile",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_primary_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Avery (media owner)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_primary_reconcile to Avery (media owner)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_primary_reconcile"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "primary",
+      "return_event_id": "e_primary_reconcile",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_live_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Blake (listener).",
+      "expected_behavior": "After e_live_followup, address or uniquely reference Blake (listener) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_live_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "live",
+      "return_event_id": "e_live_followup",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_live_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Blake (listener)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_live_followup to Blake (listener)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_live_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "live",
+      "return_event_id": "e_live_followup",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_comprehension_repair",
+      "category": "targeted_repair",
+      "description": "The intended recipient explicitly failed to understand the first answer.",
+      "expected_behavior": "Address the same recipient, use one short plain-language sentence, retain the correct outcome, and do not merely repeat the old wording.",
+      "source_event_ids": [
+        "e_comprehension_repair"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    }
+  ],
+  "state_assertions": [
+    {
+      "assertion_id": "s_business_record_updated",
+      "path": "household_tasks.HSH-MU-002.status",
+      "operator": "eq",
+      "expected": "updated",
+      "critical": true
+    },
+    {
+      "assertion_id": "s_business_actor",
+      "path": "household_tasks.HSH-MU-002.last_modified_by",
+      "operator": "eq",
+      "expected": "primary",
+      "critical": true
+    },
+    {
+      "assertion_id": "s_business_operation",
+      "path": "household_tasks.HSH-MU-002.last_operation",
+      "operator": "eq",
+      "expected": "start_album_playback",
+      "critical": true
+    },
+    {
+      "assertion_id": "s_business_state",
+      "path": "household_tasks.HSH-MU-002.business_state",
+      "operator": "contains",
+      "expected": {
+        "album": "Evening Jazz",
+        "playback_scope": "full_album",
+        "playback_status": "playing"
+      },
+      "critical": true
+    }
+  ],
+  "seed": 700371
+}

@@ -1,0 +1,13 @@
+{
+  "model": "personaplex",
+  "loader_module": "@adapter/loader.py",
+  "backend_args": {
+    "model": "personaplex",
+    "repo_path": "@repo_path",
+    "model_path": "@model_path",
+    "tokenizer": "@model_path/tokenizer_spm_32k_3.model",
+    "moshi_weight": "@model_path/model.safetensors",
+    "mimi_weight": "@model_path/tokenizer-e351c8d8-checkpoint125.safetensors",
+    "voice_prompt": "@voice_prompt"
+  }
+}

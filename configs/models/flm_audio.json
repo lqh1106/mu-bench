@@ -1,0 +1,11 @@
+{
+  "model": "flm_audio",
+  "loader_module": "@adapter/loader.py",
+  "backend_args": {
+    "model": "flm_audio",
+    "repo_path": "@repo_path",
+    "model_path": "@model_path",
+    "mimi_path": "@model_path",
+    "allow_mimi_stub": false
+  }
+}

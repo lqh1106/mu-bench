@@ -1,0 +1,679 @@
+{
+  "schema": "mu-nt-r3-ablation-participants-v3-20261117",
+  "arm": "serial",
+  "case_id": "casual_conversation_01_story_followup__g-large__a-clean__c-strong",
+  "source_case_sha256": "75a58d5475e67f6cc0897ed6c688cad279b53c9d991bd05110e0a4601b1da9c9",
+  "transformed_case_sha256": "7c390e0297a6e3e5909f969fe5580287edae43ef004d26d6d1e87ebd61b24fcc",
+  "task_contract_sha256": "8cfb115e25ef60841f0ffd7e20959cbbd68038ff4b579b2173a683c3d62cf2a2",
+  "task_contract_unchanged": true,
+  "event_changes": [
+    {
+      "event_id": "e_open",
+      "original": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Help me tell the group the story from my trip notes.",
+        "addressee": "assistant",
+        "fixed_utterance": "Help me tell the group the story from my trip notes.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Help me tell the group the story from my trip notes.",
+        "addressee": "assistant",
+        "fixed_utterance": "Help me tell the group the story from my trip notes.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live",
+      "original": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 1200,
+          "fallback_at_ms": 12400,
+          "fallback_after_event_id": "e_open"
+        },
+        "intent": "Interrupt early in the assistant's response to raise Blake's urgent side-question about the trip's lost bag while requiring the assistant to preserve Avery's main story thread for later resumption.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "secondary",
+        "speech_act": "topic_switch_resume",
+        "notes": [
+          "Tests live interruption handling, speaker identity, and restoration of the interrupted primary thread.",
+          "The Probe should not assume the SUT has already stated lost-bag details; the assistant may need to acknowledge the question, ask Avery, or answer only if grounded."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_open",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Interrupt early in the assistant's response to raise Blake's urgent side-question about the trip's lost bag while requiring the assistant to preserve Avery's main story thread for later resumption.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "secondary",
+        "speech_act": "topic_switch_resume",
+        "notes": [
+          "Tests live interruption handling, speaker identity, and restoration of the interrupted primary thread.",
+          "The Probe should not assume the SUT has already stated lost-bag details; the assistant may need to acknowledge the question, ask Avery, or answer only if grounded."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_1",
+      "original": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live",
+          "tool_name": null,
+          "after_ms": 560,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Add Cameron's constraint that Avery should still be allowed to finish the important part of the story after Blake's side-question is handled.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Tests whether the assistant keeps Cameron's moderation preference separate from Avery's ownership and Blake's side-question.",
+          "Does not grant Cameron authority to override Avery; it adds a participant preference the assistant should account for."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Add Cameron's constraint that Avery should still be allowed to finish the important part of the story after Blake's side-question is handled.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Tests whether the assistant keeps Cameron's moderation preference separate from Avery's ownership and Blake's side-question.",
+          "Does not grant Cameron authority to override Avery; it adds a participant preference the assistant should account for."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_2",
+      "original": {
+        "event_id": "e_extra_2",
+        "actor_id": "extra2",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_1",
+          "tool_name": null,
+          "after_ms": 640,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Clarify that Devon's own contribution is only a backchannel or side signal and should not be promoted into a new question or task for the assistant.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_4",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Tests addressee and speech-act classification: the assistant should not answer Devon as if Devon introduced a new substantive request.",
+          "Keeps Devon's late-joiner goal distinct from Blake's actual side-question."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_2",
+        "actor_id": "extra2",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_1",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Clarify that Devon's own contribution is only a backchannel or side signal and should not be promoted into a new question or task for the assistant.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_4",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Tests addressee and speech-act classification: the assistant should not answer Devon as if Devon introduced a new substantive request.",
+          "Keeps Devon's late-joiner goal distinct from Blake's actual side-question."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_3",
+      "original": {
+        "event_id": "e_extra_3",
+        "actor_id": "extra3",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_2",
+          "tool_name": null,
+          "after_ms": 720,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Emery quotes the small aside, Finley asking Emery to pass a cushion, and clarifies that it was directed to Emery rather than the assistant; make the content self-contained without inventing an earlier recorded turn.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_5",
+        "speech_act": "independent_constraint",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_extra_3",
+        "actor_id": "extra3",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_2",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Emery quotes the small aside, Finley asking Emery to pass a cushion, and clarifies that it was directed to Emery rather than the assistant; make the content self-contained without inventing an earlier recorded turn.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_5",
+        "speech_act": "independent_constraint",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_extra_4",
+      "original": {
+        "event_id": "e_extra_4",
+        "actor_id": "extra4",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_3",
+          "tool_name": null,
+          "after_ms": 800,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Ask the assistant to return to Avery's earlier story after handling the intervening side-question and participant constraints.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_6",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Tests whether the assistant recognizes a restoration request from a different participant without transferring Avery's story ownership to Finley."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_4",
+        "actor_id": "extra4",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_3",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Ask the assistant to return to Avery's earlier story after handling the intervening side-question and participant constraints.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_6",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Tests whether the assistant recognizes a restoration request from a different participant without transferring Avery's story ownership to Finley."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_5",
+      "original": {
+        "event_id": "e_extra_5",
+        "actor_id": "extra5",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_4",
+          "tool_name": null,
+          "after_ms": 880,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Gray asks the assistant to explicitly give Avery, the quiet storyteller, a chance to continue after the lost-bag question, without making Gray or Blake the story owner.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_7",
+        "speech_act": "independent_constraint",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_extra_5",
+        "actor_id": "extra5",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_4",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Gray asks the assistant to explicitly give Avery, the quiet storyteller, a chance to continue after the lost-bag question, without making Gray or Blake the story owner.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_7",
+        "speech_act": "independent_constraint",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_extra1_followup",
+      "original": {
+        "event_id": "e_extra1_followup",
+        "actor_id": "extra1",
+        "action": "correct",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 240,
+          "fallback_at_ms": 16000,
+          "fallback_after_event_id": "e_extra_5"
+        },
+        "intent": "After the assistant next stops speaking, clarify that Cameron's earlier request still only concerns letting Avery finish the important point and should not be merged with the later participants' side constraints.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "constraint_clarification",
+        "notes": [
+          "Non-adjacent repeated speaker turn.",
+          "Tests retention of Cameron's identity and earlier constraint after several other speakers."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra1_followup",
+        "actor_id": "extra1",
+        "action": "correct",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_5",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "After the assistant next stops speaking, clarify that Cameron's earlier request still only concerns letting Avery finish the important point and should not be merged with the later participants' side constraints.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "constraint_clarification",
+        "notes": [
+          "Non-adjacent repeated speaker turn.",
+          "Tests retention of Cameron's identity and earlier constraint after several other speakers."
+        ]
+      }
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "original": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 18000,
+          "fallback_after_event_id": "e_extra1_followup"
+        },
+        "intent": "We can answer about the bag, then I want to get back to the trip.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra1_followup",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "We can answer about the bag, then I want to get back to the trip.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live_followup",
+      "original": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 720,
+          "fallback_at_ms": 22000,
+          "fallback_after_event_id": "e_primary_reconcile"
+        },
+        "intent": "Acknowledge the bag answer and invite Avery to continue the original story.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "secondary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_reconcile",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Acknowledge the bag answer and invite Avery to continue the original story.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "secondary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_primary_commit",
+      "original": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 400,
+          "fallback_at_ms": 26000,
+          "fallback_after_event_id": "e_live_followup"
+        },
+        "intent": "Help me pick up from the ferry part.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live_followup",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Help me pick up from the ferry part.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      }
+    }
+  ],
+  "paired_review_reasons": [],
+  "primary_metric": "task_success",
+  "non_comparable_metrics": [
+    "timing",
+    "floor_control",
+    "interruption_recovery",
+    "strict_joint_success"
+  ],
+  "identity_metrics_are_oracle_assisted": false,
+  "semantic_input_is_oracle_assisted": false,
+  "user_audio_preserved": true,
+  "future_event_information_released": false,
+  "task_success_policy": "separate-authorization"
+}

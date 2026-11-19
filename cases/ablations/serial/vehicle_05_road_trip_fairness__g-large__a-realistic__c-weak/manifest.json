@@ -1,0 +1,695 @@
+{
+  "schema": "mu-nt-r3-ablation-participants-v3-20261117",
+  "arm": "serial",
+  "case_id": "vehicle_05_road_trip_fairness__g-large__a-realistic__c-weak",
+  "source_case_sha256": "50482638f42bf871bc782ed16c4b4204976498ab741cb4e2482f2487854bf728",
+  "transformed_case_sha256": "4315fd58819bacfc557f287eac4a00d0f6f37d8c3aa63275474d35927e541823",
+  "task_contract_sha256": "4f6b04f33b93fe23141781824040ebe898ac1de3f7abc569233950633269066e",
+  "task_contract_unchanged": true,
+  "event_changes": [
+    {
+      "event_id": "e_open",
+      "original": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Keep the current route while helping everyone with their separate questions.",
+        "addressee": "assistant",
+        "fixed_utterance": "Keep the current route while helping everyone with their separate questions.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Keep the current route while helping everyone with their separate questions.",
+        "addressee": "assistant",
+        "fixed_utterance": "Keep the current route while helping everyone with their separate questions.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live",
+      "original": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 1840,
+          "fallback_at_ms": 13600,
+          "fallback_after_event_id": "e_open"
+        },
+        "intent": "Blake loudly interrupts to demand taking Hill Road instead of River Road, arguing that the louder passenger should get the choice. Do not supply driver consent or claim a route change has happened.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "floor_fairness",
+        "notes": [
+          "Expected state effect: record Blake's route preference as passenger input, not as authorization to override Avery.",
+          "Assistant should promptly yield or acknowledge the interruption, then resume the unresolved driver-authority task."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_open",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Blake loudly interrupts to demand taking Hill Road instead of River Road, arguing that the louder passenger should get the choice. Do not supply driver consent or claim a route change has happened.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "floor_fairness",
+        "notes": [
+          "Expected state effect: record Blake's route preference as passenger input, not as authorization to override Avery.",
+          "Assistant should promptly yield or acknowledge the interruption, then resume the unresolved driver-authority task."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_1",
+      "original": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 800,
+          "fallback_at_ms": 5600,
+          "fallback_after_event_id": "e_live"
+        },
+        "intent": "Have Cameron add a rear-passenger constraint that the active route remains controlled by the driver, not by the loudest passenger.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: attribute this driver-authority constraint to Cameron and keep it distinct from Avery's own request and Blake's route-change demand.",
+          "Tests overlap handling and provenance during an assistant response."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Have Cameron add a rear-passenger constraint that the active route remains controlled by the driver, not by the loudest passenger.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: attribute this driver-authority constraint to Cameron and keep it distinct from Avery's own request and Blake's route-change demand.",
+          "Tests overlap handling and provenance during an assistant response."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_2",
+      "original": {
+        "event_id": "e_extra_2",
+        "actor_id": "extra2",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_1",
+          "tool_name": null,
+          "after_ms": 640,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Devon asks to discuss a music choice separately from navigation; the music preference is for acoustic music, but it is not a request to change the route or claim the player has been operated.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_4",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: maintain a distinct media thread and do not let Devon's media preference alter route authority or navigation.",
+          "Tests that the assistant does not collapse unrelated passenger goals into one action."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_2",
+        "actor_id": "extra2",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_1",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Devon asks to discuss a music choice separately from navigation; the music preference is for acoustic music, but it is not a request to change the route or claim the player has been operated.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_4",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: maintain a distinct media thread and do not let Devon's media preference alter route authority or navigation.",
+          "Tests that the assistant does not collapse unrelated passenger goals into one action."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_3",
+      "original": {
+        "event_id": "e_extra_3",
+        "actor_id": "extra3",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_2",
+          "tool_name": null,
+          "after_ms": 720,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Have Emery clarify provenance by saying the earlier driver-authority warning or constraint came from Cameron in the rear, not from Emery or the latest speaker.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_5",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: preserve source attribution for Cameron's constraint while recording Emery only as the clarifier/interpreter.",
+          "Tests that the assistant does not misattribute a prior speaker-owned constraint."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_3",
+        "actor_id": "extra3",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_2",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Have Emery clarify provenance by saying the earlier driver-authority warning or constraint came from Cameron in the rear, not from Emery or the latest speaker.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_5",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: preserve source attribution for Cameron's constraint while recording Emery only as the clarifier/interpreter.",
+          "Tests that the assistant does not misattribute a prior speaker-owned constraint."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_4",
+      "original": {
+        "event_id": "e_extra_4",
+        "actor_id": "extra4",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_3",
+          "tool_name": null,
+          "after_ms": 800,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Have Finley, the late rider, ask to receive only the shared route status and not other riders' private or unrelated preference details.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_6",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: provide Finley only shared route-state information, preserving speaker-owned media preferences and authority reasoning as separate unless needed for the shared decision.",
+          "Tests recipient-scoped reporting."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_4",
+        "actor_id": "extra4",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_3",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Have Finley, the late rider, ask to receive only the shared route status and not other riders' private or unrelated preference details.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_6",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: provide Finley only shared route-state information, preserving speaker-owned media preferences and authority reasoning as separate unless needed for the shared decision.",
+          "Tests recipient-scoped reporting."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra1_followup",
+      "original": {
+        "event_id": "e_extra1_followup",
+        "actor_id": "extra1",
+        "action": "correct",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 240,
+          "fallback_at_ms": 16000,
+          "fallback_after_event_id": "e_extra_4"
+        },
+        "intent": "Have Cameron correct or clarify that his earlier driver-authority constraint still applies after the other riders' separate media, provenance, and recap requests.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "constraint_clarification",
+        "notes": [
+          "non-adjacent repeated speaker turn",
+          "Expected state effect: connect this correction to Cameron's e_extra_1 constraint, not to Devon, Emery, Finley, or Blake.",
+          "Do not broaden Cameron's constraint beyond the active route-authority issue."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra1_followup",
+        "actor_id": "extra1",
+        "action": "correct",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_4",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Have Cameron correct or clarify that his earlier driver-authority constraint still applies after the other riders' separate media, provenance, and recap requests.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "constraint_clarification",
+        "notes": [
+          "non-adjacent repeated speaker turn",
+          "Expected state effect: connect this correction to Cameron's e_extra_1 constraint, not to Devon, Emery, Finley, or Blake.",
+          "Do not broaden Cameron's constraint beyond the active route-authority issue."
+        ]
+      }
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "original": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 18000,
+          "fallback_after_event_id": "e_extra1_followup"
+        },
+        "intent": "I am keeping the current route unless we agree otherwise.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra1_followup",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "I am keeping the current route unless we agree otherwise.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live_followup",
+      "original": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 880,
+          "fallback_at_ms": 22000,
+          "fallback_after_event_id": "e_primary_reconcile"
+        },
+        "intent": "Repeat the passenger’s route preference without claiming driver consent.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_reconcile",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Repeat the passenger’s route preference without claiming driver consent.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_primary_commit",
+      "original": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 400,
+          "fallback_at_ms": 26000,
+          "fallback_after_event_id": "e_live_followup"
+        },
+        "intent": "Help with the passengers’ questions while leaving my route choice intact.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live_followup",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Help with the passengers’ questions while leaving my route choice intact.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_comprehension_repair",
+      "original": {
+        "event_id": "e_comprehension_repair",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 30000,
+          "fallback_after_event_id": "e_primary_commit"
+        },
+        "intent": "Have Avery request a shorter plain-language restatement of the same final route-authority and rider-scope outcome because the prior answer was hard to follow in the noisy car.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 2200,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "Expected state effect: assistant should answer Avery with a brief plain-language restatement that preserves the same decision and speaker attributions.",
+          "Do not repeat the previous wording verbatim or reopen the route-authority decision."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_comprehension_repair",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_commit",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Have Avery request a shorter plain-language restatement of the same final route-authority and rider-scope outcome because the prior answer was hard to follow in the noisy car.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "Expected state effect: assistant should answer Avery with a brief plain-language restatement that preserves the same decision and speaker attributions.",
+          "Do not repeat the previous wording verbatim or reopen the route-authority decision."
+        ]
+      }
+    }
+  ],
+  "paired_review_reasons": [],
+  "primary_metric": "task_success",
+  "non_comparable_metrics": [
+    "timing",
+    "floor_control",
+    "interruption_recovery",
+    "strict_joint_success"
+  ],
+  "identity_metrics_are_oracle_assisted": false,
+  "semantic_input_is_oracle_assisted": false,
+  "user_audio_preserved": true,
+  "future_event_information_released": false,
+  "task_success_policy": "separate-authorization"
+}

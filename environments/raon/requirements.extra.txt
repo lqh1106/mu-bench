@@ -1,0 +1,8 @@
+omegaconf
+librosa
+huggingface-hub
+torchvision
+timm
+s3tokenizer==0.2.0
+onnx
+onnxruntime-gpu

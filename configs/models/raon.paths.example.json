@@ -1,0 +1,4 @@
+{
+  "repo_path": "${REPO_ROOT}/third_party/models/Raon-Speech/source",
+  "model_path": "${REPO_ROOT}/external/weights/raon"
+}

@@ -1,0 +1,4 @@
+sphn>=0.1.4,<0.2
+sounddevice==0.5
+aiohttp>=3.10,<3.12
+huggingface-hub>=0.24,<1

@@ -1,0 +1,17 @@
+μ-Bench
+Copyright 2026 μ-Bench contributors
+
+Original benchmark code and authored case content are licensed under Apache-2.0.
+Third-party components retain their original copyright and license terms.
+
+This distribution includes a τ²/τ-Voice source snapshot from the existing
+integration. See third_party/tau2/LICENSE (MIT) and its per-file notices.
+Model source snapshots, integration helpers, model checkpoints and audio
+references have their own licenses; see docs/THIRD_PARTY.md.
+
+GLOBE reference recordings are attributed to Wenbin Wang, Yang Song and Sanjay
+Jha, GLOBE: A High-quality English Corpus with Global Accents for Zero-shot
+Speaker Adaptive Text-to-Speech. The upstream dataset is marked CC0-1.0.
+Source: https://huggingface.co/datasets/MushanW/GLOBE
+The catalog uses pseudonymous speaker identifiers. They are voice reference
+identifiers, not claims about the identity of benchmark participants.

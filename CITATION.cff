@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "Please cite the μ-Bench benchmark and the upstream models/datasets used."
+title: "μ-Bench: Shared Multi-User Voice Assistant Evaluation"
+type: software
+version: 1.0.0
+license: Apache-2.0
+authors:
+  - name: "μ-Bench contributors"

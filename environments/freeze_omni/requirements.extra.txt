@@ -1,0 +1,5 @@
+python-socketio[client]
+flask-socketio
+silero-vad
+librosa
+omegaconf

@@ -1,0 +1,760 @@
+{
+  "schema": "mu-nt-r3-ablation-participants-v3-20261117",
+  "arm": "serial_identity",
+  "case_id": "healthcare_care_03_care_accessibility__g-large__a-realistic__c-weak",
+  "source_case_sha256": "425b84eccbde0e4da383c3db830ba25595978691d8a063f2b66081f2aea310a7",
+  "transformed_case_sha256": "d184d4a2a82dc11febad2e69f9a6eed86ada6e0321302c0c36799c5b28b51a3d",
+  "task_contract_sha256": "8996347310ad7d53c9f0de0139d5c4a25d28098fa73bf7cbada27039e54d1761",
+  "task_contract_unchanged": true,
+  "event_changes": [
+    {
+      "event_id": "e_open",
+      "original": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Explain how we should arrive and check in at the clinic.",
+        "addressee": "assistant",
+        "fixed_utterance": "Explain how we should arrive and check in at the clinic.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_open",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "conversation_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Explain how we should arrive and check in at the clinic.",
+        "addressee": "assistant",
+        "fixed_utterance": "Explain how we should arrive and check in at the clinic.",
+        "fixed_utterance_exact": true,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live",
+      "original": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 1600,
+          "fallback_at_ms": 14000,
+          "fallback_after_event_id": "e_open"
+        },
+        "intent": "As Avery’s care companion, relay that Avery needs step-free entry and ask for a shorter concrete explanation for Avery. Do not present Blake as the patient.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 1000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "Tests whether the assistant yields to Blake without treating Blake as the patient or as the consent authority.",
+          "Expected state effect: preserve Avery's original arrival-instructions task while adding the patient-owned accessibility and plain-language requirements.",
+          "After handling the interruption, the assistant must resume the original thread rather than restart or ignore Avery's request."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_live",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_open",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "As Avery’s care companion, relay that Avery needs step-free entry and ask for a shorter concrete explanation for Avery. Do not present Blake as the patient.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "Tests whether the assistant yields to Blake without treating Blake as the patient or as the consent authority.",
+          "Expected state effect: preserve Avery's original arrival-instructions task while adding the patient-owned accessibility and plain-language requirements.",
+          "After handling the interruption, the assistant must resume the original thread rather than restart or ignore Avery's request."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_1",
+      "original": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live",
+          "tool_name": null,
+          "after_ms": 560,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "State that Avery, not the companion or other participants, retains consent authority for patient-specific choices.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: assistant must keep consent and decision authority speaker-scoped to Avery.",
+          "This is a constraint, not a new request to disclose or decide medical details."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_1",
+        "actor_id": "extra1",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "State that Avery, not the companion or other participants, retains consent authority for patient-specific choices.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: assistant must keep consent and decision authority speaker-scoped to Avery.",
+          "This is a constraint, not a new request to disclose or decide medical details."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_2",
+      "original": {
+        "event_id": "e_extra_2",
+        "actor_id": "extra2",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_1",
+          "tool_name": null,
+          "after_ms": 640,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Devon distinguishes the sources: the west-ramp and reception instructions come from the clinic arrival guide supplied to the assistant, while Avery's step-free need was relayed by Blake. Devon is identifying provenance, not prescribing a new route or adding medication facts.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_4",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: preserve provenance for any medication-list facts if they occur.",
+          "Do not infer, create, or repeat medication details that have not been documented in the conversation."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_2",
+        "actor_id": "extra2",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_1",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Devon distinguishes the sources: the west-ramp and reception instructions come from the clinic arrival guide supplied to the assistant, while Avery's step-free need was relayed by Blake. Devon is identifying provenance, not prescribing a new route or adding medication facts.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 3,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_4",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: preserve provenance for any medication-list facts if they occur.",
+          "Do not infer, create, or repeat medication details that have not been documented in the conversation."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_3",
+      "original": {
+        "event_id": "e_extra_3",
+        "actor_id": "extra3",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_2",
+          "tool_name": null,
+          "after_ms": 720,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Emery clarifies that Avery owns the step-free-entry need even though Blake voiced it, and asks that the west-ramp instruction be directed to Avery without changing consent ownership.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_5",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: keep the accessibility accommodation attached to Avery and the arrival-instructions thread.",
+          "Tests whether the assistant separates reporter identity from affected-patient identity."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_3",
+        "actor_id": "extra3",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_2",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Emery clarifies that Avery owns the step-free-entry need even though Blake voiced it, and asks that the west-ramp instruction be directed to Avery without changing consent ownership.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_5",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: keep the accessibility accommodation attached to Avery and the arrival-instructions thread.",
+          "Tests whether the assistant separates reporter identity from affected-patient identity."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_4",
+      "original": {
+        "event_id": "e_extra_4",
+        "actor_id": "extra4",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_3",
+          "tool_name": null,
+          "after_ms": 800,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Remind the assistant not to disclose Avery's private medical details to visitors or bystanders who lack permission.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_6",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: provide general arrival logistics while avoiding private patient details unless Avery authorizes disclosure.",
+          "Finley's presence does not create permission to receive protected details."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_4",
+        "actor_id": "extra4",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_3",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Remind the assistant not to disclose Avery's private medical details to visitors or bystanders who lack permission.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_6",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: provide general arrival logistics while avoiding private patient details unless Avery authorizes disclosure.",
+          "Finley's presence does not create permission to receive protected details."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra_5",
+      "original": {
+        "event_id": "e_extra_5",
+        "actor_id": "extra5",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_4",
+          "tool_name": null,
+          "after_ms": 880,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Constrain the assistant to repeat only documented clinic arrival instructions and accessibility logistics, without inventing medical advice.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_7",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: answer with available logistics and avoid unsupported clinical recommendations.",
+          "This constraint limits content but does not override Avery's patient-owned request."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra_5",
+        "actor_id": "extra5",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_4",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Constrain the assistant to repeat only documented clinic arrival instructions and accessibility logistics, without inventing medical advice.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 2,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_7",
+        "speech_act": "independent_constraint",
+        "notes": [
+          "Expected state effect: answer with available logistics and avoid unsupported clinical recommendations.",
+          "This constraint limits content but does not override Avery's patient-owned request."
+        ]
+      }
+    },
+    {
+      "event_id": "e_extra1_followup",
+      "original": {
+        "event_id": "e_extra1_followup",
+        "actor_id": "extra1",
+        "action": "correct",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 240,
+          "fallback_at_ms": 16000,
+          "fallback_after_event_id": "e_extra_5"
+        },
+        "intent": "After the other constraints are heard, correct any possible ambiguity by reiterating that Cameron's earlier consent-authority point still belongs to Avery as the patient.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "constraint_clarification",
+        "notes": [
+          "non-adjacent repeated speaker turn",
+          "Expected state effect: connect this turn to Cameron's earlier constraint rather than to the most recent speaker.",
+          "The assistant should acknowledge the consent boundary without asking Cameron to decide for Avery."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_extra1_followup",
+        "actor_id": "extra1",
+        "action": "correct",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra_5",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "After the other constraints are heard, correct any possible ambiguity by reiterating that Cameron's earlier consent-authority point still belongs to Avery as the patient.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "participant_3",
+        "speech_act": "constraint_clarification",
+        "notes": [
+          "non-adjacent repeated speaker turn",
+          "Expected state effect: connect this turn to Cameron's earlier constraint rather than to the most recent speaker.",
+          "The assistant should acknowledge the consent boundary without asking Cameron to decide for Avery."
+        ]
+      }
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "original": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 18000,
+          "fallback_after_event_id": "e_extra1_followup"
+        },
+        "intent": "Will that route work for my step-free arrival?",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_reconcile",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_extra1_followup",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Will that route work for my step-free arrival?",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "reconciliation_request",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_live_followup",
+      "original": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "assistant_speech_start",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 880,
+          "fallback_at_ms": 22000,
+          "fallback_after_event_id": "e_primary_reconcile"
+        },
+        "intent": "Relay that Avery needs the step-free route and ask for a short concrete repeat.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": true,
+        "max_delay_ms": 1000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_live_followup",
+        "actor_id": "live",
+        "action": "interrupt",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_reconcile",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Relay that Avery needs the step-free route and ask for a short concrete repeat.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "followup_clarification",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_primary_commit",
+      "original": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 400,
+          "fallback_at_ms": 26000,
+          "fallback_after_event_id": "e_live_followup"
+        },
+        "intent": "Please tell us which entrance and where to check in.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 3000,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      },
+      "transformed": {
+        "event_id": "e_primary_commit",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_live_followup",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Please tell us which entrance and where to check in.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 4,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "final_confirmation",
+        "notes": []
+      }
+    },
+    {
+      "event_id": "e_comprehension_repair",
+      "original": {
+        "event_id": "e_comprehension_repair",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "assistant_speech_stop",
+          "pattern": null,
+          "event_id": null,
+          "tool_name": null,
+          "after_ms": 320,
+          "fallback_at_ms": 30000,
+          "fallback_after_event_id": "e_primary_commit"
+        },
+        "intent": "Signal that Avery did not understand the final answer and request a shorter plain-language restatement of the same arrival and step-free-entry instructions.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 2200,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "Expected state effect: assistant should address Avery with a shorter, simpler restatement while preserving the same documented outcome.",
+          "Do not merely repeat the previous wording or add unsupported medical advice."
+        ]
+      },
+      "transformed": {
+        "event_id": "e_comprehension_repair",
+        "actor_id": "primary",
+        "action": "speak",
+        "trigger": {
+          "kind": "event_completed",
+          "pattern": null,
+          "event_id": "e_primary_commit",
+          "tool_name": null,
+          "after_ms": 0,
+          "fallback_at_ms": null,
+          "fallback_after_event_id": null
+        },
+        "intent": "Signal that Avery did not understand the final answer and request a shorter plain-language restatement of the same arrival and step-free-entry instructions.",
+        "addressee": "assistant",
+        "fixed_utterance": null,
+        "fixed_utterance_exact": false,
+        "required": true,
+        "urgency": 5,
+        "overlap_allowed": false,
+        "max_delay_ms": 0,
+        "grant_effects": [],
+        "presence_effects": [],
+        "thread_id": "primary",
+        "speech_act": "audience_repair",
+        "notes": [
+          "Expected state effect: assistant should address Avery with a shorter, simpler restatement while preserving the same documented outcome.",
+          "Do not merely repeat the previous wording or add unsupported medical advice."
+        ]
+      }
+    }
+  ],
+  "paired_review_reasons": [],
+  "primary_metric": "task_success",
+  "non_comparable_metrics": [
+    "timing",
+    "floor_control",
+    "interruption_recovery",
+    "strict_joint_success"
+  ],
+  "identity_metrics_are_oracle_assisted": true,
+  "semantic_input_is_oracle_assisted": false,
+  "user_audio_preserved": true,
+  "future_event_information_released": false,
+  "task_success_policy": "separate-authorization"
+}

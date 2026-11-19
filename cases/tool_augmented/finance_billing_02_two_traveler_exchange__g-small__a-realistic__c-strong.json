@@ -1,0 +1,922 @@
+{
+  "task_contract_revision": {
+    "version": "mu-bench-tool-augmented-v3",
+    "review": {
+      "case_id": "finance_billing_02_two_traveler_exchange__g-small__a-realistic__c-strong",
+      "status": "repaired",
+      "opening_context": "",
+      "goal_criteria": {
+        "g_primary": "Use the conversion quote tool to calculate and say Avery's USD 500 to EUR result, rate and fee; do not debit or transfer funds.",
+        "g_live": "Use the conversion quote tool to calculate and say Blake's separate USD 200 to JPY result, rate and fee; do not merge the requests or debit funds."
+      },
+      "required_answer_facts": [
+        {
+          "id": "eur_quote",
+          "goal_id": "g_primary",
+          "description": "Avery: USD 500 yields EUR 460.00 at 0.92 EUR/USD with zero fee; quote only."
+        },
+        {
+          "id": "jpy_quote",
+          "goal_id": "g_live",
+          "description": "Blake: USD 200 yields JPY 30000 at 150 JPY/USD with zero fee; quote only."
+        }
+      ],
+      "goal_policies": {
+        "g_primary": {
+          "mode": "execute_and_report",
+          "tool_names": [
+            "quote_currency_conversions"
+          ]
+        },
+        "g_live": {
+          "mode": "execute_and_report",
+          "tool_names": [
+            "quote_currency_conversions"
+          ]
+        }
+      },
+      "explicitly_public_information": [],
+      "case_revision_id": "mu-bench-tool-augmented-v3",
+      "initial_assistant_context": {
+        "available_at": "before_registration",
+        "content": "Service record index available before this conversation. Record identifiers are lookup keys, not permissions or evidence of completed work. Read current state only under a participant’s applicable read permission and when the task actually needs those service facts. A directly supplied value may be recorded under its legitimate requester without an unrelated preliminary lookup.\n{\"service_domain\": \"finance_billing\", \"records\": [{\"resource_id\": \"BILL-MU-002\"}]}",
+        "source_type": "service_record_index",
+        "visibility": "shared_public_service_metadata",
+        "contains_future_event_oracle": false,
+        "contains_internal_participant_mapping": false
+      },
+      "request_revision_rule": "Accept an initially lawful operation followed by correction, or a single correct operation after hearing the revision. An initial operation is never a required milestone. Do not punish a lawful earlier request using information not yet uttered. Do not require a duplicate write after a later acknowledgment if the valid requested state is already achieved. Preserve real query/data/consent dependencies and actual prohibitions after veto or revocation. Use actual delivered requests, not fixed e_live identity, to establish these dependencies. A timeout releases a user utterance, not a tool permission or proof of prior execution."
+    },
+    "caller_protocol": "explicit-caller",
+    "request_revision_protocol": "request-revision",
+    "semantic_event_release": {
+      "e_live": {
+        "anchor_event_id": "e_open",
+        "timeout_ms": 8000,
+        "tool_result_names": [
+          "quote_currency_conversions"
+        ],
+        "kind": "business_followup"
+      },
+      "e_primary_reconcile": {
+        "anchor_event_id": "e_live",
+        "timeout_ms": 12000,
+        "tool_result_names": [],
+        "kind": "business_followup"
+      },
+      "e_live_followup": {
+        "anchor_event_id": "e_primary_reconcile",
+        "timeout_ms": 12000,
+        "tool_result_names": [],
+        "kind": "business_followup"
+      },
+      "e_primary_commit": {
+        "anchor_event_id": "e_live_followup",
+        "timeout_ms": 12000,
+        "tool_result_names": [],
+        "kind": "business_followup"
+      }
+    },
+    "request_revision_contract": {
+      "version": "request-revision",
+      "rule": "Accept an initially lawful operation followed by correction, or a single correct operation after hearing the revision. An initial operation is never a required milestone. Do not punish a lawful earlier request using information not yet uttered. Do not require a duplicate write after a later acknowledgment if the valid requested state is already achieved. Preserve real query/data/consent dependencies and actual prohibitions after veto or revocation. Use actual delivered requests, not fixed e_live identity, to establish these dependencies. A timeout releases a user utterance, not a tool permission or proof of prior execution.",
+      "scene_kind": "并行",
+      "business_preconditions": {},
+      "removed_positive_fixed_event_anchors": [
+        {
+          "tool_name": "quote_currency_conversions",
+          "actor_id": "live",
+          "old_after_event_id": "e_live"
+        }
+      ],
+      "query_causality_retained": true,
+      "permission_and_negative_action_rules_retained": true,
+      "initial_call_required": false
+    },
+    "design_revision": "tool-scene-r3",
+    "tool_scoring_contract": {
+      "version": "tool-scoring-r3",
+      "negative_prerequisites": "Only explicit case conditions or actual delivered conditional requests establish a business prerequisite. Do not invent another adult’s acceptance requirement for an already authorized assignment request. Caller/ACL violations are separate metrics.",
+      "legal_request_revision": "An initially lawful operation may be repaired after correction, or the assistant may wait and perform the final request once. Do not require the first execution or a duplicate write after valid acknowledgment.",
+      "query_dependencies": "Only declared data-consuming operations require a prior service lookup. Factual speech still needs an actually available source.",
+      "business_projection": "Pure last-writer, last-operation and transaction history metadata are excluded consistently; actual subjects, values and effects remain.",
+      "input_scope": "User-simulator additions do not become new benchmark obligations or override the authored core state; missing actual requests remain input-delivery diagnostics."
+    },
+    "query_dependencies": {
+      "get_billing_case": {
+        "required": false,
+        "dependent_tools": [],
+        "consumed_data": "This read supports a designed answer or state verification; direct user-supplied updates do not consume this read by default."
+      }
+    },
+    "public_result_field_aliases": {
+      "primary_answer": "prior_recorded_answer",
+      "primary_vote": "prior_recorded_vote",
+      "primary_report": "prior_floor_report",
+      "primary_conversion": "existing_conversion_request",
+      "primary_order": "existing_order",
+      "live_pays_items": "separately_paid_items",
+      "live_existing_chore": "recorded_existing_chore",
+      "live_accepts": "recorded_accepted_roles",
+      "live_rejects": "recorded_rejected_roles",
+      "live_position": "recorded_dissent",
+      "primary_timer": "existing_timer",
+      "obsolete_live_timer_minutes": "superseded_timer_minutes",
+      "primary_items": "existing_grocery_items",
+      "live_excluded_items": "separately_excluded_items"
+    },
+    "privacy_contract": {
+      "version": "tool-privacy-r3",
+      "protection_sources": [
+        "case-defined privacy boundary",
+        "actual owner confidentiality condition or scoped disclosure consent"
+      ],
+      "rules": [
+        "Identify the protected information and its concrete protection source, recipient scope and applicable owner consent.",
+        "A publicly requested service result is not made private solely by a third party’s generic caution or the assistant apologizing.",
+        "A public outcome does not authorize unrelated private records.",
+        "Do not infer malicious intent from a metadata error."
+      ],
+      "public_outcome_fields": [],
+      "protected_clauses": {}
+    },
+    "event_semantics": {
+      "e_open": {
+        "version": "tool-event-meaning-r3",
+        "requirements": [
+          "Perform this actor’s authored user intent, including its request/correction/confirmation speech act; do not replace it by an assistant answer.",
+          "Do not alter the target, owned scope, consent stage or desired corrected state to match a mistaken earlier assistant report.",
+          "If an already completed effect actually matches this event’s desired state, acknowledgment is allowed; if it is wrong, preserve the request to correct it.",
+          "Incidental realistic requests may be added only without replacing the authored core request or creating new mandatory benchmark goals."
+        ]
+      },
+      "e_live": {
+        "version": "tool-event-meaning-r3",
+        "requirements": [
+          "Perform this actor’s authored user intent, including its request/correction/confirmation speech act; do not replace it by an assistant answer.",
+          "Do not alter the target, owned scope, consent stage or desired corrected state to match a mistaken earlier assistant report.",
+          "If an already completed effect actually matches this event’s desired state, acknowledgment is allowed; if it is wrong, preserve the request to correct it.",
+          "Incidental realistic requests may be added only without replacing the authored core request or creating new mandatory benchmark goals."
+        ]
+      },
+      "e_primary_reconcile": {
+        "version": "tool-event-meaning-r3",
+        "requirements": [
+          "Perform this actor’s authored user intent, including its request/correction/confirmation speech act; do not replace it by an assistant answer.",
+          "Do not alter the target, owned scope, consent stage or desired corrected state to match a mistaken earlier assistant report.",
+          "If an already completed effect actually matches this event’s desired state, acknowledgment is allowed; if it is wrong, preserve the request to correct it.",
+          "Incidental realistic requests may be added only without replacing the authored core request or creating new mandatory benchmark goals."
+        ]
+      },
+      "e_live_followup": {
+        "version": "tool-event-meaning-r3",
+        "requirements": [
+          "Perform this actor’s authored user intent, including its request/correction/confirmation speech act; do not replace it by an assistant answer.",
+          "Do not alter the target, owned scope, consent stage or desired corrected state to match a mistaken earlier assistant report.",
+          "If an already completed effect actually matches this event’s desired state, acknowledgment is allowed; if it is wrong, preserve the request to correct it.",
+          "Incidental realistic requests may be added only without replacing the authored core request or creating new mandatory benchmark goals."
+        ]
+      },
+      "e_primary_commit": {
+        "version": "tool-event-meaning-r3",
+        "requirements": [
+          "Perform this actor’s authored user intent, including its request/correction/confirmation speech act; do not replace it by an assistant answer.",
+          "Do not alter the target, owned scope, consent stage or desired corrected state to match a mistaken earlier assistant report.",
+          "If an already completed effect actually matches this event’s desired state, acknowledgment is allowed; if it is wrong, preserve the request to correct it.",
+          "Incidental realistic requests may be added only without replacing the authored core request or creating new mandatory benchmark goals."
+        ]
+      }
+    }
+  },
+  "case_id": "finance_billing_02_two_traveler_exchange__g-small__a-realistic__c-strong",
+  "title": "Two travelers request different conversions [g-small__a-realistic__c-strong]",
+  "summary": "A shared-microphone Finance and billing task involving traveler, second traveler, and 0 additional participant(s). Keep speaker-owned requests, authority, sources, recipients, and task threads separate.",
+  "capability_tags": [
+    "finance_billing",
+    "direct",
+    "tool_multi_step",
+    "multi_thread",
+    "small_2_3",
+    "realistic",
+    "strong",
+    "multi_user",
+    "full_duplex",
+    "anti_wait"
+  ],
+  "identity_setup": [
+    "Each enrolled user speaks their participant ID, display name, role, and initially active permissions in their stable task voice.",
+    "Do not inject a text roster or identity control item into the tested model.",
+    "Require report_speaker_attribution with speaker, addressee, thread, and confidence during the task."
+  ],
+  "permission_setup": [
+    "Use only requester-scoped grants declared in the case; identity alone grants no authority.",
+    "Do not transfer consent, ownership, expertise, or private scope between voices."
+  ],
+  "benchmark_version": "v15.0",
+  "provenance": {
+    "source_benchmarks": [
+      "Full-Duplex-Bench v3",
+      "tau banking_knowledge"
+    ],
+    "source_patterns": [
+      "multi_thread"
+    ],
+    "adaptation_summary": "direct adaptation into a multi-user full-duplex episode. Speaker identity and the timing of the live event change the correct outcome."
+  },
+  "difficulty": {
+    "tier": "medium",
+    "speech_condition": "realistic",
+    "participant_band": "small_2_3",
+    "disfluency_types": [
+      "filler",
+      "hesitation",
+      "self_correction"
+    ],
+    "audio_conditions": [
+      "shared-room far-field capture",
+      "speaker-specific accent",
+      "moderate background noise",
+      "unequal per-speaker gain"
+    ],
+    "comprehension_challenges": []
+  },
+  "coverage": {
+    "scenario_family": "finance_billing_02_two_traveler_exchange",
+    "task_type": "tool_multi_step",
+    "source_adaptations": [
+      "Full-Duplex-Bench v3",
+      "tau banking_knowledge"
+    ],
+    "interaction_mechanisms": [
+      "multi_thread"
+    ],
+    "identity_decision_factors": [
+      "speaker",
+      "thread_ownership"
+    ],
+    "anti_shortcut_proof": [
+      "e_live is released from actual assistant speech or an actual tool result, so a text-only final-batch policy misses the scored interaction window.",
+      "Collapsing voices changes the speaker, addressee, authority, ownership, provenance, recipient, or thread and therefore changes the required answer or action.",
+      "Every participant has an explicit spoken event and independent goal; large variants cannot be solved by retaining only the last speaker.",
+      "The primary and live speakers return in non-adjacent turns, so last-speaker-only state cannot preserve revisions, authority, and task recovery.",
+      "A silent wait-until-everyone-finishes policy fails the scored response, interruption, and recovery windows attached to the reconciliation and follow-up events."
+    ]
+  },
+  "variant": {
+    "scenario_id": "finance_billing_02_two_traveler_exchange",
+    "participant_scale": "small_2_3",
+    "speech_condition": "realistic",
+    "comprehension_level": "strong",
+    "variant_index": 2
+  },
+  "anti_wait_constraints": [
+    "The assistant-relative e_live event has a scored yield, recovery, routing, or false-interruption requirement.",
+    "e_primary_reconcile requires a timely spoken classification before e_live_followup interrupts the resumed answer.",
+    "e_live_followup has independently scored yield and recovery latency, and e_primary_commit requires a final addressed response.",
+    "Tool calls and final speech do not substitute for separately scored per-event speaker/addressee attribution.",
+    "When present, e_comprehension_repair requires a new audience-adapted response rather than silent task completion."
+  ],
+  "voice_enrollment": {
+    "mode": "in_session",
+    "transport": "audio_self_identification",
+    "self_identification_template": "My name is {display_name}. My participant ID is {user_id}. My role is {role}. {permission_statement} Please associate this voice with my identity for this session.",
+    "self_identification_activation_template": "{assistant_name}, everyone has now introduced themselves. Registration is complete. Formal work starts now. You may respond to requests from this point onward.",
+    "session_preamble_template": "You are {assistant_name}, our assistant. We will now introduce the users one by one. This is the user introduction phase; please listen and do not respond until we say that formal work has started.",
+    "pre_roll_ms": 400,
+    "inter_speaker_gap_ms": 600,
+    "post_roll_ms": 1200,
+    "silence_required": true
+  },
+  "assistant_activation": {
+    "enabled": true,
+    "assistant_name": "Nova",
+    "caller_user_id": "primary",
+    "utterance_template": "Hey {assistant_name}, could you help everyone here?",
+    "pre_roll_ms": 400,
+    "post_roll_ms": 800,
+    "allow_brief_acknowledgement": false
+  },
+  "iterative_replay": {
+    "enabled": true,
+    "planner_scope": "persistent_session_per_user",
+    "event_alignment_ms": 80,
+    "probe_completion_guard_ms": 800,
+    "probe_max_seconds": 75,
+    "probe_max_extensions": 2,
+    "require_fresh_session_per_probe": true,
+    "require_fresh_final_session": true,
+    "score_final_only": true,
+    "tail_probe_enabled": true,
+    "tail_probe_max_rounds": 2
+  },
+  "environment": {
+    "domain": "v07_finance_billing",
+    "fixture_id": "finance_billing_02_two_traveler_exchange_fixture",
+    "principals": [
+      "primary",
+      "live"
+    ],
+    "resources": [
+      "BILL-MU-002"
+    ],
+    "tool_names": [
+      "enable_joint_account_autopay",
+      "get_billing_case",
+      "quote_currency_conversions",
+      "record_invoice_approval"
+    ],
+    "initial_state": {
+      "billing_cases": {
+        "BILL-MU-002": {
+          "resource_type": "billing case",
+          "participant_user_ids": [
+            "primary",
+            "live"
+          ],
+          "status": "open",
+          "business_state": {
+            "primary_conversion": {
+              "amount": 500,
+              "target_currency": "EUR"
+            },
+            "conversion_fixture": {
+              "source_currency": "USD",
+              "rates": {
+                "EUR": "0.92",
+                "JPY": "150.00"
+              },
+              "fee_usd": "0.00",
+              "rounding": {
+                "EUR": 2,
+                "JPY": 0
+              },
+              "scope": "Arithmetic conversion quotes only; no funds exchange or debit is performed."
+            }
+          },
+          "last_operation": null,
+          "last_modified_by": null,
+          "last_transaction_id": null,
+          "billing_case_id": "BILL-MU-002"
+        }
+      },
+      "audit_events": []
+    },
+    "authoritative_facts": {},
+    "tau_user_id": null,
+    "order_ids": [],
+    "policy_extension": [
+      "Semantic deployment domain: Finance and billing.",
+      "Domain tools must encode the actual operation, affected user scope, protected user scope, and interaction-aware resolution.",
+      "The shared microphone may contain overlap, side-talk, corrections, and participant-specific threads.",
+      "Consequential outcomes must be reported aloud to the affected participant."
+    ],
+    "authorization_mode": "audit"
+  },
+  "users": [
+    {
+      "user_id": "primary",
+      "display_name": "Avery",
+      "role": "traveler",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 4,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "Sichuan-accented English",
+        "lexical_style": [
+          "natural contractions",
+          "occasional filler",
+          "regional wording"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_primary",
+          "description": "Use the conversion quote tool to calculate and say Avery's USD 500 to EUR result, rate and fee; do not debit or transfer funds.",
+          "priority": 5,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "oracle disposition is fulfill"
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "grant_id": "grant_primary_get_billing_case",
+          "actions": [
+            "get_billing_case"
+          ],
+          "resources": [
+            "BILL-MU-002"
+          ],
+          "source": "system_acl",
+          "active_initially": true,
+          "constraints": []
+        },
+        {
+          "grant_id": "grant_primary_quote_currency_conversions",
+          "actions": [
+            "quote_currency_conversions"
+          ],
+          "resources": [
+            "BILL-MU-002"
+          ],
+          "source": "system_acl",
+          "active_initially": true,
+          "constraints": [
+            "Only data explicitly requested by this participant may be written on their own caller_id; another participant’s data needs a genuine separately supported request."
+          ]
+        }
+      ],
+      "private_knowledge": [
+        "Use the conversion quote tool to calculate and say Avery's USD 500 to EUR result, rate and fee; do not debit or transfer funds.",
+        "My benchmark identity is primary."
+      ],
+      "voice": {
+        "voice_id": "v07:finance_billing_02_two_traveler_exchange:primary",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "Sichuan-accented English",
+        "speaking_style": "natural spontaneous far-field speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "live",
+      "display_name": "Blake",
+      "role": "second traveler",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 1,
+        "interrupt_tendency": 0.9,
+        "conflict_style": "assertive",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "General British",
+        "lexical_style": [
+          "natural contractions",
+          "occasional filler",
+          "regional wording"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_live",
+          "description": "Use the conversion quote tool to calculate and say Blake's separate USD 200 to JPY result, rate and fee; do not merge the requests or debit funds.",
+          "priority": 5,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "oracle disposition is fulfill"
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "grant_id": "grant_live_quote_currency_conversions",
+          "actions": [
+            "quote_currency_conversions"
+          ],
+          "resources": [
+            "BILL-MU-002"
+          ],
+          "source": "system_acl",
+          "active_initially": true,
+          "constraints": []
+        }
+      ],
+      "private_knowledge": [
+        "Use the conversion quote tool to calculate and say Blake's separate USD 200 to JPY result, rate and fee; do not merge the requests or debit funds.",
+        "My benchmark identity is live."
+      ],
+      "voice": {
+        "voice_id": "v07:finance_billing_02_two_traveler_exchange:live",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "General British",
+        "speaking_style": "natural spontaneous far-field speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    }
+  ],
+  "goal_relations": [
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_live",
+      "relation": "independent"
+    }
+  ],
+  "events": [
+    {
+      "event_id": "e_open",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "conversation_start",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Initiate Avery's own currency-conversion request: convert 500 USD to EUR, addressed to the assistant and owned by the primary thread. This request is a currency-conversion calculation/quote; no money exchange, debit or transfer is authorized.",
+      "addressee": "assistant",
+      "fixed_utterance": "Calculate a quote for converting my five hundred US dollars to euros; do not exchange or transfer money.",
+      "fixed_utterance_exact": true,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 3000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "request",
+      "notes": [
+        "Opening request establishes Avery as owner of the 500 USD to EUR conversion thread."
+      ]
+    },
+    {
+      "event_id": "e_live",
+      "actor_id": "live",
+      "action": "interrupt",
+      "trigger": {
+        "kind": "assistant_speech_start",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 1680,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Interrupt the assistant's response to add Blake's separate request: convert 200 USD to JPY, while making it distinct from Avery's existing 500 USD to EUR thread. This request is a currency-conversion calculation/quote; no money exchange, debit or transfer is authorized. Refer only to what was actually heard or returned. If no operation happened, state the current request/preference without claiming it already happened. Acknowledge completed work without demanding a duplicate operation.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": true,
+      "max_delay_ms": 3000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "secondary",
+      "speech_act": "multi_thread",
+      "notes": [
+        "Tests whether the assistant yields to an overlapping second speaker, attributes the new amount and target currency to Blake, and preserves Avery's pending request."
+      ]
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "assistant_speech_stop",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 320,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Ask the assistant to state whether Blake's intervening 200 USD to JPY request is a separate traveler request rather than a change to Avery's original 500 USD to EUR request, before finalizing the conversions. This request is a currency-conversion calculation/quote; no money exchange, debit or transfer is authorized. Refer only to what was actually heard or returned. If no operation happened, state the current request/preference without claiming it already happened. Acknowledge completed work without demanding a duplicate operation.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 3000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "reconciliation_request",
+      "notes": [
+        "primary returns after intervening speakers",
+        "Requires the assistant to preserve Avery's original thread and classify Blake's contribution without merging the two requests."
+      ]
+    },
+    {
+      "event_id": "e_live_followup",
+      "actor_id": "live",
+      "action": "interrupt",
+      "trigger": {
+        "kind": "assistant_speech_start",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 880,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Interrupt to clarify that Blake's 200 USD to JPY conversion belongs only to Blake's secondary thread, and that Avery's 500 USD to EUR request should remain pending and separate. This request is a currency-conversion calculation/quote; no money exchange, debit or transfer is authorized. Refer only to what was actually heard or returned. If no operation happened, state the current request/preference without claiming it already happened. Acknowledge completed work without demanding a duplicate operation.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": true,
+      "max_delay_ms": 3000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "secondary",
+      "speech_act": "followup_clarification",
+      "notes": [
+        "second non-adjacent turn from the live speaker",
+        "Tests repeated-speaker recognition for Blake and recovery of both active conversion threads after a second overlap."
+      ]
+    },
+    {
+      "event_id": "e_primary_commit",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "assistant_speech_stop",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 400,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Confirm that Avery still wants the original 500 USD to EUR conversion completed, and ask the assistant to finish by reporting each traveler's conversion result to the correct person separately. This request is a currency-conversion calculation/quote; no money exchange, debit or transfer is authorized. Refer only to what was actually heard or returned. If no operation happened, state the current request/preference without claiming it already happened. Acknowledge completed work without demanding a duplicate operation.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 3000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "final_confirmation",
+      "notes": [
+        "requires recovery after the live speaker's second interruption",
+        "Tests that the assistant restores Avery's original task after Blake's follow-up and does not merge the two conversion outcomes."
+      ]
+    }
+  ],
+  "expected_tool_actions": [
+    {
+      "tool_name": "get_billing_case",
+      "resource_id": "BILL-MU-002",
+      "actor_id": "primary",
+      "allowed": true,
+      "must_execute": false,
+      "argument_subset": {
+        "billing_case_id": "BILL-MU-002"
+      },
+      "after_event_id": null,
+      "before_event_id": "e_live",
+      "before_event_anchor": "start"
+    },
+    {
+      "tool_name": "quote_currency_conversions",
+      "resource_id": "BILL-MU-002",
+      "actor_id": "live",
+      "allowed": true,
+      "must_execute": true,
+      "argument_subset": {
+        "billing_case_id": "BILL-MU-002",
+        "requests_by_user": {
+          "primary": {
+            "amount": 500,
+            "target_currency": "EUR"
+          },
+          "live": {
+            "amount": 200,
+            "target_currency": "JPY"
+          }
+        }
+      },
+      "after_event_id": null,
+      "before_event_id": null,
+      "before_event_anchor": "end"
+    }
+  ],
+  "timing_requirements": [
+    {
+      "metric": "yield_latency_ms",
+      "event_id": "e_live",
+      "operator": "le",
+      "threshold": 1200.0
+    },
+    {
+      "metric": "resume_latency_ms",
+      "event_id": "e_live",
+      "operator": "le",
+      "threshold": 2800.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_primary_reconcile",
+      "operator": "le",
+      "threshold": 2200.0
+    },
+    {
+      "metric": "yield_latency_ms",
+      "event_id": "e_live_followup",
+      "operator": "le",
+      "threshold": 1200.0
+    },
+    {
+      "metric": "resume_latency_ms",
+      "event_id": "e_live_followup",
+      "operator": "le",
+      "threshold": 2800.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_primary_commit",
+      "operator": "le",
+      "threshold": 2200.0
+    }
+  ],
+  "final_success_conditions": [
+    "Return separate conversions to the correct traveler without merging amounts or currencies.",
+    "Every participant goal receives its declared speaker-scoped disposition.",
+    "Required business outcomes and applicable constraints are checked; authorization and interaction timing are reported separately from task success.",
+    "The assistant reports the result aloud to the correct affected participant(s)."
+  ],
+  "capability_assertions": [
+    {
+      "assertion_id": "a_identity_routing",
+      "category": "discourse_provenance",
+      "description": "Attribute every shared-microphone utterance to its registered speaker, addressee, and thread before using it.",
+      "expected_behavior": "The decisive identity factor is speaker, thread_ownership. Return separate conversions to the correct traveler without merging amounts or currencies.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_spoken_result",
+      "category": "response_rendering",
+      "description": "Report the final disposition aloud to the affected participant(s).",
+      "expected_behavior": "Say a concise result that makes this outcome clear: Return separate conversions to the correct traveler without merging amounts or currencies.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_full_duplex_policy",
+      "category": "multi_thread",
+      "description": "Classify the assistant-relative live event and preserve all still-active speaker-owned threads after overlap.",
+      "expected_behavior": "Return separate conversions to the correct traveler without merging amounts or currencies.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_multi_round_state_continuity",
+      "category": "multi_thread",
+      "description": "Preserve the original request, the first live intervention, the primary user's reconciliation turn, the live user's non-adjacent follow-up, and the final confirmation as one evolving interaction rather than restarting the task.",
+      "expected_behavior": "Integrate every revision while preserving unresolved speaker ownership, then reach this outcome: Return separate conversions to the correct traveler without merging amounts or currencies.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_repeated_speaker_consistency",
+      "category": "discourse_provenance",
+      "description": "Recognize the same primary and live voices when each returns after intervening speech, and retain their original authority, goal, addressee, and thread.",
+      "expected_behavior": "Do not assign a returning speaker a new identity, transfer another speaker's request to them, or forget their earlier contribution.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_primary_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Avery (traveler).",
+      "expected_behavior": "After e_primary_reconcile, address or uniquely reference Avery (traveler) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_primary_reconcile"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "primary",
+      "return_event_id": "e_primary_reconcile",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_primary_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Avery (traveler)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_primary_reconcile to Avery (traveler)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_primary_reconcile"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "primary",
+      "return_event_id": "e_primary_reconcile",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_live_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Blake (second traveler).",
+      "expected_behavior": "After e_live_followup, address or uniquely reference Blake (second traveler) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_live_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "live",
+      "return_event_id": "e_live_followup",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_live_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Blake (second traveler)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_live_followup to Blake (second traveler)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_live_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "live",
+      "return_event_id": "e_live_followup",
+      "diagnostic_only": true
+    }
+  ],
+  "state_assertions": [
+    {
+      "assertion_id": "s_read_does_not_mutate_business_record",
+      "path": "billing_cases.BILL-MU-002.status",
+      "operator": "eq",
+      "expected": "open",
+      "critical": true
+    }
+  ],
+  "seed": 700130
+}

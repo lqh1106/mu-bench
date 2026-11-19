@@ -1,0 +1,683 @@
+{
+  "task_contract_revision": {
+    "case_revision_id": "mu-bench-tool-free-v1",
+    "review": {
+      "case_id": "it_support_05_incident_bridge_threads__g-small__a-realistic__c-weak",
+      "status": "approved",
+      "case_revision_id": "mu-bench-tool-free-v1",
+      "goal_criteria": {
+        "g_primary": "Summarize database/Blake, network/Avery, security/security team and communications/Avery from the handover. Apply Blake’s healthy-replication update only to database checks; network remains open and communications draft absent an actual update. If Cameron speaks as security owner, preserve that source; no need to name an absent participant. No global closure or system action may be invented.",
+        "g_live": "The assistant must audibly incorporate Blake's replication-healthy update into the database thread only, without closing the network investigation or transferring its owner. A bare acknowledgment without a later integrated handover is insufficient."
+      },
+      "required_answer_facts": [],
+      "opening_context": "",
+      "initial_assistant_context": {
+        "schema": "mu-assistant-initial-context-v1",
+        "available_at": "before_registration",
+        "source_type": "事故系统既有交接单；不预置后续健康报告",
+        "content": "Incident handover at session start: office connections drop intermittently. Database checks assigned to Blake, result pending. Network investigation led by Avery, open. Security review open with the security team. Staff update owned by Avery, draft. These are read-only handover notes; no system-changing tools are available.",
+        "visibility": "assistant_read_only_scoped_source",
+        "contains_future_event_oracle": false,
+        "contains_internal_participant_mapping": false
+      },
+      "scene_design": {
+        "scenario": "it_support_05_incident_bridge_threads",
+        "reason": "交接资料属于事故助手上下文；数据库后续恢复报告不能提前给出。",
+        "event_story": "指挥Avery要求跟踪→Blake报告复制健康但不能关闭网络线程→大组各负责人报告真实进展→助手只更新对应工作流，指出仍待解决事项。"
+      }
+    }
+  },
+  "case_id": "it_support_05_incident_bridge_threads__g-small__a-realistic__c-weak",
+  "title": "Incident bridge maintains multiple owners [g-small__a-realistic__c-weak]",
+  "summary": "Shared-channel IT：事故桥多工作流. The assistant has a pre-session scoped source document; users ask questions and contribute their own updates.",
+  "capability_tags": [
+    "it_support",
+    "interaction_extension",
+    "collaborative_reasoning",
+    "multi_thread",
+    "small_2_3",
+    "realistic",
+    "weak",
+    "multi_user",
+    "full_duplex",
+    "anti_wait"
+  ],
+  "identity_setup": [
+    "Each enrolled user speaks their participant ID, display name, role, and initially active permissions in their stable task voice.",
+    "Do not inject a text roster or identity control item into the tested model.",
+    "Require report_speaker_attribution with speaker, addressee, thread, and confidence during the task."
+  ],
+  "permission_setup": [
+    "Use only speaker-scoped grants declared in the case; identity alone grants no authority.",
+    "Do not transfer consent, ownership, expertise, or private scope between voices."
+  ],
+  "benchmark_version": "v15.0",
+  "provenance": {
+    "source_benchmarks": [
+      "Full-Duplex-Bench v3",
+      "IHBench"
+    ],
+    "source_patterns": [
+      "multi_thread"
+    ],
+    "adaptation_summary": "interaction_extension adaptation into a multi-user full-duplex episode. Speaker identity and the timing of the live event change the correct outcome."
+  },
+  "difficulty": {
+    "tier": "hard",
+    "speech_condition": "realistic",
+    "participant_band": "small_2_3",
+    "disfluency_types": [
+      "filler",
+      "hesitation",
+      "self_correction"
+    ],
+    "audio_conditions": [
+      "shared-room far-field capture",
+      "speaker-specific accent",
+      "moderate background noise",
+      "unequal per-speaker gain"
+    ],
+    "comprehension_challenges": [
+      "recipient does not understand a semantically correct first response",
+      "requires a short plain-language restatement addressed to the same user"
+    ]
+  },
+  "coverage": {
+    "scenario_family": "it_support_05_incident_bridge_threads",
+    "task_type": "collaborative_reasoning",
+    "source_adaptations": [
+      "Full-Duplex-Bench v3",
+      "IHBench"
+    ],
+    "interaction_mechanisms": [
+      "multi_thread"
+    ],
+    "identity_decision_factors": [
+      "speaker",
+      "thread_ownership"
+    ],
+    "anti_shortcut_proof": [
+      "e_live is released from actual assistant speech or an actual tool result, so a text-only final-batch policy misses the scored interaction window.",
+      "Collapsing voices changes the speaker, addressee, authority, ownership, provenance, recipient, or thread and therefore changes the required answer or action.",
+      "Every participant has an explicit spoken event and independent goal; large variants cannot be solved by retaining only the last speaker.",
+      "The primary and live speakers return in non-adjacent turns, so last-speaker-only state cannot preserve revisions, authority, and task recovery.",
+      "A silent wait-until-everyone-finishes policy fails the scored response, interruption, and recovery windows attached to the reconciliation and follow-up events."
+    ]
+  },
+  "variant": {
+    "scenario_id": "it_support_05_incident_bridge_threads",
+    "participant_scale": "small_2_3",
+    "speech_condition": "realistic",
+    "comprehension_level": "weak",
+    "variant_index": 3
+  },
+  "anti_wait_constraints": [
+    "The assistant-relative e_live event has a scored yield, recovery, routing, or false-interruption requirement.",
+    "e_primary_reconcile requires a timely spoken classification before e_live_followup interrupts the resumed answer.",
+    "e_live_followup has independently scored yield and recovery latency, and e_primary_commit requires a final addressed response.",
+    "Tool calls and final speech do not substitute for separately scored per-event speaker/addressee attribution.",
+    "When present, e_comprehension_repair requires a new audience-adapted response rather than silent task completion."
+  ],
+  "voice_enrollment": {
+    "mode": "in_session",
+    "transport": "audio_self_identification",
+    "self_identification_template": "My name is {display_name}. My participant ID is {user_id}. My role is {role}. {permission_statement} Please associate this voice with my identity for this session.",
+    "self_identification_activation_template": "{assistant_name}, everyone has now introduced themselves. Registration is complete. Formal work starts now. You may respond to requests from this point onward.",
+    "session_preamble_template": "You are {assistant_name}, our assistant. We will now introduce the users one by one. This is the user introduction phase; please listen and do not respond until we say that formal work has started.",
+    "pre_roll_ms": 400,
+    "inter_speaker_gap_ms": 600,
+    "post_roll_ms": 1200,
+    "silence_required": true
+  },
+  "assistant_activation": {
+    "enabled": true,
+    "assistant_name": "Nova",
+    "caller_user_id": "primary",
+    "utterance_template": "Hey {assistant_name}, could you help everyone here?",
+    "pre_roll_ms": 400,
+    "post_roll_ms": 800,
+    "allow_brief_acknowledgement": false
+  },
+  "iterative_replay": {
+    "enabled": true,
+    "planner_scope": "persistent_session_per_user",
+    "event_alignment_ms": 80,
+    "probe_completion_guard_ms": 800,
+    "probe_max_seconds": 75,
+    "probe_max_extensions": 2,
+    "require_fresh_session_per_probe": true,
+    "require_fresh_final_session": true,
+    "score_final_only": true,
+    "tail_probe_enabled": true,
+    "tail_probe_max_rounds": 2
+  },
+  "environment": {
+    "domain": "v07_it_support",
+    "fixture_id": "it_support_05_incident_bridge_threads_fixture",
+    "principals": [
+      "primary",
+      "live"
+    ],
+    "resources": [],
+    "tool_names": [],
+    "initial_state": {},
+    "authoritative_facts": {
+      "source": "scene-r3 explicit initial-source view",
+      "initial_information": "Incident handover at session start: office connections drop intermittently. Database checks assigned to Blake, result pending. Network investigation led by Avery, open. Security review open with the security team. Staff update owned by Avery, draft. These are read-only handover notes; no system-changing tools are available.",
+      "later_information": "Only actual subsequent utterances add participant facts; future event specifications are judge/simulator material, not assistant input."
+    },
+    "tau_user_id": null,
+    "order_ids": [],
+    "policy_extension": [
+      "Semantic deployment domain: IT support and incident response.",
+      "Domain tools must encode the actual operation, affected user scope, protected user scope, and interaction-aware resolution.",
+      "The shared microphone may contain overlap, side-talk, corrections, and participant-specific threads.",
+      "Consequential outcomes must be reported aloud to the affected participant."
+    ],
+    "authorization_mode": "audit"
+  },
+  "users": [
+    {
+      "user_id": "primary",
+      "display_name": "Avery",
+      "role": "incident commander",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 4,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "General American",
+        "lexical_style": [
+          "natural contractions",
+          "occasional filler",
+          "regional wording"
+        ],
+        "comprehension_profile": "needs_plain_language",
+        "hearing_profile": "noisy_environment"
+      },
+      "goals": [
+        {
+          "goal_id": "g_primary",
+          "description": "Track the database, network, security, and communications workstreams for this incident.",
+          "priority": 5,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Summarize database/Blake, network/Avery, security/security team and communications/Avery from the handover. Apply Blake’s healthy-replication update only to database checks; network remains open and communications draft absent an actual update. If Cameron speaks as security owner, preserve that source; no need to name an absent participant. No global closure or system action may be invented."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Track the database, network, security, and communications workstreams for this incident.",
+        "My benchmark identity is primary."
+      ],
+      "voice": {
+        "voice_id": "v07:it_support_05_incident_bridge_threads:primary",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "General American",
+        "speaking_style": "natural spontaneous far-field speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "live",
+      "display_name": "Blake",
+      "role": "database lead",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 1,
+        "interrupt_tendency": 0.9,
+        "conflict_style": "assertive",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "Indian English",
+        "lexical_style": [
+          "natural contractions",
+          "occasional filler",
+          "regional wording"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_live",
+          "description": "Database update: replication is healthy; do not close the network thread.",
+          "priority": 5,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "The assistant must audibly incorporate Blake's replication-healthy update into the database thread only, without closing the network investigation or transferring its owner. A bare acknowledgment without a later integrated handover is insufficient."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Database update: replication is healthy; do not close the network thread.",
+        "My benchmark identity is live."
+      ],
+      "voice": {
+        "voice_id": "v07:it_support_05_incident_bridge_threads:live",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "Indian English",
+        "speaking_style": "natural spontaneous far-field speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    }
+  ],
+  "goal_relations": [
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_live",
+      "relation": "independent"
+    }
+  ],
+  "events": [
+    {
+      "event_id": "e_open",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "conversation_start",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Track the database, network, security, and communications workstreams for this incident.",
+      "addressee": "assistant",
+      "fixed_utterance": "Track the database, network, security, and communications workstreams for this incident.",
+      "fixed_utterance_exact": true,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 3000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "request",
+      "notes": []
+    },
+    {
+      "event_id": "e_live",
+      "actor_id": "live",
+      "action": "interrupt",
+      "trigger": {
+        "kind": "assistant_speech_start",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 1600,
+        "fallback_at_ms": 13200,
+        "fallback_after_event_id": "e_open"
+      },
+      "intent": "As database lead, provide a live database-thread update that replication is healthy, while explicitly preserving the separate network thread as unresolved and not closed by this update.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": true,
+      "max_delay_ms": 3000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "secondary",
+      "speech_act": "multi_thread",
+      "notes": [
+        "Blake's contribution is authoritative only for the database workstream.",
+        "Expected state effect: mark or summarize database replication as healthy, but keep network separate and still open.",
+        "Assistant should yield to and route the interruption without losing Avery's original multi-workstream task."
+      ]
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "assistant_speech_stop",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 320,
+        "fallback_at_ms": 18000,
+        "fallback_after_event_id": "e_live"
+      },
+      "intent": "Which workstreams are still open after that database update?",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 3000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "reconciliation_request",
+      "notes": []
+    },
+    {
+      "event_id": "e_live_followup",
+      "actor_id": "live",
+      "action": "interrupt",
+      "trigger": {
+        "kind": "assistant_speech_start",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 880,
+        "fallback_at_ms": 22000,
+        "fallback_after_event_id": "e_primary_reconcile"
+      },
+      "intent": "Reaffirm that healthy replication only reports the database check; network and other workstreams have not been closed by Blake.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": true,
+      "max_delay_ms": 3000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "secondary",
+      "speech_act": "followup_clarification",
+      "notes": []
+    },
+    {
+      "event_id": "e_primary_commit",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "assistant_speech_stop",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 400,
+        "fallback_at_ms": 26000,
+        "fallback_after_event_id": "e_live_followup"
+      },
+      "intent": "Give me the current workstream summary and outstanding items.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 3000,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "final_confirmation",
+      "notes": []
+    },
+    {
+      "event_id": "e_comprehension_repair",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "assistant_speech_stop",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 320,
+        "fallback_at_ms": 30000,
+        "fallback_after_event_id": "e_primary_commit"
+      },
+      "intent": "Request a shorter plain-language restatement of the just-given incident outcome for Avery, preserving the same database, network, and unresolved-workstream disposition.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": false,
+      "max_delay_ms": 2200,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "audience_repair",
+      "notes": [
+        "Avery has a needs-plain-language comprehension profile and is in a noisy environment.",
+        "Expected state effect: re-render the same outcome in simpler language for the same recipient, without changing ownership or task status."
+      ]
+    }
+  ],
+  "expected_tool_actions": [],
+  "timing_requirements": [
+    {
+      "metric": "yield_latency_ms",
+      "event_id": "e_live",
+      "operator": "le",
+      "threshold": 1200.0
+    },
+    {
+      "metric": "resume_latency_ms",
+      "event_id": "e_live",
+      "operator": "le",
+      "threshold": 2800.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_primary_reconcile",
+      "operator": "le",
+      "threshold": 2200.0
+    },
+    {
+      "metric": "yield_latency_ms",
+      "event_id": "e_live_followup",
+      "operator": "le",
+      "threshold": 1200.0
+    },
+    {
+      "metric": "resume_latency_ms",
+      "event_id": "e_live_followup",
+      "operator": "le",
+      "threshold": 2800.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_primary_commit",
+      "operator": "le",
+      "threshold": 2200.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_comprehension_repair",
+      "operator": "le",
+      "threshold": 2200.0
+    }
+  ],
+  "final_success_conditions": [
+    "Summarize database/Blake, network/Avery, security/security team and communications/Avery from the handover. Apply Blake’s healthy-replication update only to database checks; network remains open and communications draft absent an actual update. If Cameron speaks as security owner, preserve that source; no need to name an absent participant. No global closure or system action may be invented.",
+    "Evaluate each actual participant’s goal using its case-defined disposition and success evidence. A later valid clarification can refine the requested answer. Do not require information from absent participants or invented user-simulator side demands."
+  ],
+  "capability_assertions": [
+    {
+      "assertion_id": "a_identity_routing",
+      "category": "discourse_provenance",
+      "description": "Attribute every shared-microphone utterance to its registered speaker, addressee, and thread before using it.",
+      "expected_behavior": "The decisive identity factor is speaker, thread_ownership. Preserve every owner and workstream, update only database state, and report unresolved threads.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit",
+        "e_comprehension_repair"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_spoken_result",
+      "category": "response_rendering",
+      "description": "Report the final disposition aloud to the affected participant(s).",
+      "expected_behavior": "Say a concise result that makes this outcome clear: Preserve every owner and workstream, update only database state, and report unresolved threads.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit",
+        "e_comprehension_repair"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_full_duplex_policy",
+      "category": "multi_thread",
+      "description": "Classify the assistant-relative live event and preserve all still-active speaker-owned threads after overlap.",
+      "expected_behavior": "Preserve every owner and workstream, update only database state, and report unresolved threads.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit",
+        "e_comprehension_repair"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_multi_round_state_continuity",
+      "category": "multi_thread",
+      "description": "Preserve the original request, the first live intervention, the primary user's reconciliation turn, the live user's non-adjacent follow-up, and the final confirmation as one evolving interaction rather than restarting the task.",
+      "expected_behavior": "Integrate every revision while preserving unresolved speaker ownership, then reach this outcome: Preserve every owner and workstream, update only database state, and report unresolved threads.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_repeated_speaker_consistency",
+      "category": "discourse_provenance",
+      "description": "Recognize the same primary and live voices when each returns after intervening speech, and retain their original authority, goal, addressee, and thread.",
+      "expected_behavior": "Do not assign a returning speaker a new identity, transfer another speaker's request to them, or forget their earlier contribution.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_primary_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Avery (incident commander).",
+      "expected_behavior": "After e_primary_reconcile, address or uniquely reference Avery (incident commander) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_primary_reconcile"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "primary",
+      "return_event_id": "e_primary_reconcile",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_primary_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Avery (incident commander)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_primary_reconcile to Avery (incident commander)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_primary_reconcile"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "primary",
+      "return_event_id": "e_primary_reconcile",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_live_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Blake (database lead).",
+      "expected_behavior": "After e_live_followup, address or uniquely reference Blake (database lead) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_live_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "live",
+      "return_event_id": "e_live_followup",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_live_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Blake (database lead)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_live_followup to Blake (database lead)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_live_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "live",
+      "return_event_id": "e_live_followup",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_comprehension_repair",
+      "category": "targeted_repair",
+      "description": "The intended recipient explicitly failed to understand the first answer.",
+      "expected_behavior": "Address the same recipient, use one short plain-language sentence, retain the correct outcome, and do not merely repeat the old wording.",
+      "source_event_ids": [
+        "e_comprehension_repair"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    }
+  ],
+  "state_assertions": [],
+  "seed": 700675
+}

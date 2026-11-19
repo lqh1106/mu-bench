@@ -1,0 +1,5 @@
+{
+  "repo_path": "${REPO_ROOT}/third_party/models/Freeze-Omni/source",
+  "model_path": "${REPO_ROOT}/external/weights/freeze_omni",
+  "llm_path": "${REPO_ROOT}/external/weights/Qwen2-7B-Instruct"
+}

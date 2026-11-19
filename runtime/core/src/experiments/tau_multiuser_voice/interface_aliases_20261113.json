@@ -1,0 +1,67 @@
+{
+  "retail_02_shared_address_correction": {
+    "confirmation_status": {
+      "awaiting_owner_confirmation": "pending_owner_confirmation"
+    }
+  },
+  "telecom_02_lost_phone_number_fix": {
+    "reason": {
+      "lost_phone": "lost_device"
+    }
+  },
+  "telecom_03_router_restart_pushback": {
+    "until_condition": {
+      "active_emergency_video_call_ends": "active_emergency_video_call_finishes"
+    }
+  },
+  "telecom_05_credit_during_result": {
+    "credit_basis": {
+      "documented outage policy": "documented_outage_policy"
+    }
+  },
+  "housing_location_01_couple_filter_conflict": {
+    "downtown": {
+      "preferred, not mandatory": "preferred_not_mandatory"
+    }
+  },
+  "travel_identity_01_passport_digit_correction": {
+    "verification_status": {
+      "awaiting_owner_verification": "pending_owner_verification"
+    }
+  },
+  "meeting_02_assignee_correction": {
+    "task_name": {
+      "report edit": "report_edit"
+    }
+  },
+  "hospitality_04_bill_split": {
+    "items": {
+      "entrée": "entree"
+    }
+  },
+  "public_services_01_transit_accessibility": {
+    "entrance": {
+      "lift-equipped": "lift_equipped"
+    }
+  },
+  "it_support_01_service_owner_incident": {
+    "until_condition": {
+      "active_transaction_ends": "active_transaction_finishes"
+    }
+  },
+  "events_entertainment_03_accessible_seat": {
+    "seat_requirement": {
+      "wheelchair-accessible row": "wheelchair_accessible_row"
+    }
+  },
+  "family_coordination_03_chore_quiet_child": {
+    "existing_chore": {
+      "dishes every day": "dishes_daily"
+    }
+  },
+  "emergency_incident_03_roll_call_overlap": {
+    "reports_by_user": {
+      "one_person_unaccounted_for": "one_unaccounted_for"
+    }
+  }
+}

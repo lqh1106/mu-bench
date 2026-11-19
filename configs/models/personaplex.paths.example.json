@@ -1,0 +1,5 @@
+{
+  "repo_path": "${REPO_ROOT}/third_party/models/personaplex/source",
+  "model_path": "${REPO_ROOT}/external/weights/personaplex",
+  "voice_prompt": "${REPO_ROOT}/external/personaplex/NATF0.pt"
+}

@@ -1,0 +1,11 @@
+{
+  "model": "freeze_omni",
+  "loader_module": "@adapter/loader.py",
+  "backend_args": {
+    "model": "freeze_omni",
+    "repo_path": "@repo_path",
+    "model_path": "@model_path",
+    "llm_path": "@llm_path",
+    "socketio_url": "https://127.0.0.1:8226"
+  }
+}

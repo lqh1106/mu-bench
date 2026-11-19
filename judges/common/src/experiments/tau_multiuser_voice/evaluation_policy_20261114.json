@@ -1,0 +1,6677 @@
+{
+  "version": "mu-business-causal-v1-20261114",
+  "cases": {
+    "airline_01_split_rebooking__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_01_split_rebooking__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_01_split_rebooking__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_01_split_rebooking__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_01_split_rebooking__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_01_split_rebooking__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_01_split_rebooking__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_01_split_rebooking__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_02_child_seat_correction__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "airline_02_child_seat_correction__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "airline_02_child_seat_correction__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "airline_02_child_seat_correction__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "airline_02_child_seat_correction__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "airline_02_child_seat_correction__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "airline_02_child_seat_correction__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "airline_02_child_seat_correction__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "airline_03_payer_traveler_cancel__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_03_payer_traveler_cancel__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_03_payer_traveler_cancel__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_03_payer_traveler_cancel__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_03_payer_traveler_cancel__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_03_payer_traveler_cancel__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_03_payer_traveler_cancel__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "airline_03_payer_traveler_cancel__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "bookings",
+          "BK-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_booking_context",
+          "resource_id": "BK-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "retail_01_gift_cancel_revoke__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_01_gift_cancel_revoke__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_01_gift_cancel_revoke__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_01_gift_cancel_revoke__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_01_gift_cancel_revoke__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_01_gift_cancel_revoke__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_01_gift_cancel_revoke__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_01_gift_cancel_revoke__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_02_shared_address_correction__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "retail_02_shared_address_correction__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "retail_02_shared_address_correction__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "retail_02_shared_address_correction__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "retail_02_shared_address_correction__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "retail_02_shared_address_correction__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "retail_02_shared_address_correction__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "retail_02_shared_address_correction__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "retail_04_return_side_talk__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "create_return_request",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "retail_04_return_side_talk__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "create_return_request",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "retail_04_return_side_talk__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "create_return_request",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "retail_04_return_side_talk__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "create_return_request",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "retail_04_return_side_talk__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "create_return_request",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "retail_04_return_side_talk__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "create_return_request",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "retail_04_return_side_talk__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "create_return_request",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "retail_04_return_side_talk__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_order_context",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "create_return_request",
+          "resource_id": "ORD-MU-004",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "retail_05_cart_quantity_revision__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_05_cart_quantity_revision__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_05_cart_quantity_revision__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_05_cart_quantity_revision__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_05_cart_quantity_revision__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_05_cart_quantity_revision__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_05_cart_quantity_revision__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "retail_05_cart_quantity_revision__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "orders",
+          "ORD-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_01_family_data_lines__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_01_family_data_lines__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_01_family_data_lines__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_01_family_data_lines__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_01_family_data_lines__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_01_family_data_lines__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_01_family_data_lines__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_01_family_data_lines__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_02_lost_phone_number_fix__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_02_lost_phone_number_fix__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_02_lost_phone_number_fix__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_02_lost_phone_number_fix__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_02_lost_phone_number_fix__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_02_lost_phone_number_fix__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_02_lost_phone_number_fix__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_02_lost_phone_number_fix__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_03_router_restart_pushback__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_03_router_restart_pushback__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_03_router_restart_pushback__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_03_router_restart_pushback__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_03_router_restart_pushback__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_03_router_restart_pushback__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_03_router_restart_pushback__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_03_router_restart_pushback__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_04_roaming_interpreter__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_04_roaming_interpreter__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_04_roaming_interpreter__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_04_roaming_interpreter__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_04_roaming_interpreter__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_04_roaming_interpreter__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_04_roaming_interpreter__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_04_roaming_interpreter__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "telecom_05_credit_during_result__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_05_credit_during_result__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_05_credit_during_result__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_05_credit_during_result__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_05_credit_during_result__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_05_credit_during_result__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_05_credit_during_result__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "telecom_05_credit_during_result__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_accounts",
+          "TEL-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_service_account_context",
+          "resource_id": "TEL-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_01_joint_autopay_conflict__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "finance_billing_01_joint_autopay_conflict__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "finance_billing_01_joint_autopay_conflict__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "finance_billing_01_joint_autopay_conflict__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "finance_billing_01_joint_autopay_conflict__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "finance_billing_01_joint_autopay_conflict__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "finance_billing_01_joint_autopay_conflict__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "finance_billing_01_joint_autopay_conflict__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "finance_billing_02_two_traveler_exchange__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_02_two_traveler_exchange__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_02_two_traveler_exchange__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_02_two_traveler_exchange__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_02_two_traveler_exchange__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_02_two_traveler_exchange__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_02_two_traveler_exchange__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_02_two_traveler_exchange__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_04_invoice_amount_revision__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_04_invoice_amount_revision__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_04_invoice_amount_revision__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_04_invoice_amount_revision__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_04_invoice_amount_revision__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_04_invoice_amount_revision__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_04_invoice_amount_revision__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "finance_billing_04_invoice_amount_revision__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "billing_cases",
+          "BILL-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_billing_case",
+          "resource_id": "BILL-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_01_couple_filter_conflict__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_01_couple_filter_conflict__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_01_couple_filter_conflict__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_01_couple_filter_conflict__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_01_couple_filter_conflict__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_01_couple_filter_conflict__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_01_couple_filter_conflict__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_01_couple_filter_conflict__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_02_roommate_commutes__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_02_roommate_commutes__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_02_roommate_commutes__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_02_roommate_commutes__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_02_roommate_commutes__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_02_roommate_commutes__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_02_roommate_commutes__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_02_roommate_commutes__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_03_accessibility_late_correction__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "housing_location_03_accessibility_late_correction__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "housing_location_03_accessibility_late_correction__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "housing_location_03_accessibility_late_correction__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "housing_location_03_accessibility_late_correction__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "housing_location_03_accessibility_late_correction__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "housing_location_03_accessibility_late_correction__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "housing_location_03_accessibility_late_correction__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "housing_location_05_group_viewing_schedule__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_05_group_viewing_schedule__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_05_group_viewing_schedule__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_05_group_viewing_schedule__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_05_group_viewing_schedule__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_05_group_viewing_schedule__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_05_group_viewing_schedule__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "housing_location_05_group_viewing_schedule__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "property_searches",
+          "HOME-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_property_search",
+          "resource_id": "HOME-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_01_passport_digit_correction__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "travel_identity_01_passport_digit_correction__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "travel_identity_01_passport_digit_correction__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "travel_identity_01_passport_digit_correction__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "travel_identity_01_passport_digit_correction__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "travel_identity_01_passport_digit_correction__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "travel_identity_01_passport_digit_correction__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "travel_identity_01_passport_digit_correction__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "travel_identity_02_multi_traveler_documents__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_02_multi_traveler_documents__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_02_multi_traveler_documents__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_02_multi_traveler_documents__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_02_multi_traveler_documents__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_02_multi_traveler_documents__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_02_multi_traveler_documents__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_02_multi_traveler_documents__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_03_document_interpreter__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_03_document_interpreter__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_03_document_interpreter__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_03_document_interpreter__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_03_document_interpreter__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_03_document_interpreter__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_03_document_interpreter__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "travel_identity_03_document_interpreter__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "document_cases",
+          "DOC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_document_case",
+          "resource_id": "DOC-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_01_parallel_timers__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_01_parallel_timers__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_01_parallel_timers__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_01_parallel_timers__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_01_parallel_timers__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_01_parallel_timers__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_01_parallel_timers__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_01_parallel_timers__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_02_media_backchannel__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_album_playback",
+          "resource_id": "HSH-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "shared_home_02_media_backchannel__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_album_playback",
+          "resource_id": "HSH-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "shared_home_02_media_backchannel__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_album_playback",
+          "resource_id": "HSH-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "shared_home_02_media_backchannel__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_album_playback",
+          "resource_id": "HSH-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "shared_home_02_media_backchannel__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_album_playback",
+          "resource_id": "HSH-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "shared_home_02_media_backchannel__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_album_playback",
+          "resource_id": "HSH-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "shared_home_02_media_backchannel__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_album_playback",
+          "resource_id": "HSH-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "shared_home_02_media_backchannel__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_album_playback",
+          "resource_id": "HSH-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "shared_home_03_grocery_threads__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_03_grocery_threads__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_03_grocery_threads__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_03_grocery_threads__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_03_grocery_threads__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_03_grocery_threads__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_03_grocery_threads__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "shared_home_03_grocery_threads__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "household_tasks",
+          "HSH-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_household_task",
+          "resource_id": "HSH-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_01_driver_destination__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "vehicle_01_driver_destination__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "vehicle_01_driver_destination__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "vehicle_01_driver_destination__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "vehicle_01_driver_destination__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "vehicle_01_driver_destination__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "vehicle_01_driver_destination__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "vehicle_01_driver_destination__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "vehicle_02_music_side_talk__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_02_music_side_talk__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_02_music_side_talk__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_02_music_side_talk__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_02_music_side_talk__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_02_music_side_talk__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_02_music_side_talk__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_02_music_side_talk__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_03_warning_provenance__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_03_warning_provenance__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_03_warning_provenance__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_03_warning_provenance__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_03_warning_provenance__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_03_warning_provenance__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_03_warning_provenance__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "vehicle_03_warning_provenance__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "trips",
+          "TRIP-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_active_route_eta",
+          "resource_id": "TRIP-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_01_overlap_votes__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_01_overlap_votes__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_01_overlap_votes__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_01_overlap_votes__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_01_overlap_votes__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_01_overlap_votes__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_01_overlap_votes__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_01_overlap_votes__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_02_assignee_correction__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "meeting_02_assignee_correction__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "meeting_02_assignee_correction__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "meeting_02_assignee_correction__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "meeting_02_assignee_correction__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "meeting_02_assignee_correction__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "meeting_02_assignee_correction__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "meeting_02_assignee_correction__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "meeting_04_quiet_dissenter__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_04_quiet_dissenter__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_04_quiet_dissenter__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_04_quiet_dissenter__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_04_quiet_dissenter__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_04_quiet_dissenter__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_04_quiet_dissenter__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_04_quiet_dissenter__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_05_result_due_date_update__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_05_result_due_date_update__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_05_result_due_date_update__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_05_result_due_date_update__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_05_result_due_date_update__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_05_result_due_date_update__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_05_result_due_date_update__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "meeting_05_result_due_date_update__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "meetings",
+          "MTG-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_meeting_record",
+          "resource_id": "MTG-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_01_fraction_answers__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_01_fraction_answers__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_01_fraction_answers__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_01_fraction_answers__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_01_fraction_answers__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_01_fraction_answers__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_01_fraction_answers__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_01_fraction_answers__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_04_project_roles__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_04_project_roles__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_04_project_roles__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_04_project_roles__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_04_project_roles__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_04_project_roles__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_04_project_roles__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "education_04_project_roles__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "learning_sessions",
+          "EDU-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_learning_session",
+          "resource_id": "EDU-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_01_appointment_consent__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_01_appointment_consent__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_01_appointment_consent__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_01_appointment_consent__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_01_appointment_consent__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_01_appointment_consent__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_01_appointment_consent__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_01_appointment_consent__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_02_medication_list_source__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_care_plan",
+          "resource_id": "CARE-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_02_medication_list_source__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_care_plan",
+          "resource_id": "CARE-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_02_medication_list_source__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_care_plan",
+          "resource_id": "CARE-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_02_medication_list_source__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_care_plan",
+          "resource_id": "CARE-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_02_medication_list_source__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_care_plan",
+          "resource_id": "CARE-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_02_medication_list_source__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_care_plan",
+          "resource_id": "CARE-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_02_medication_list_source__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_care_plan",
+          "resource_id": "CARE-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "healthcare_care_02_medication_list_source__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "care_plans",
+          "CARE-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_care_plan",
+          "resource_id": "CARE-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "hospitality_01_party_size_fix__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "hospitality_01_party_size_fix__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "hospitality_01_party_size_fix__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "hospitality_01_party_size_fix__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "hospitality_01_party_size_fix__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "hospitality_01_party_size_fix__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "hospitality_01_party_size_fix__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "hospitality_01_party_size_fix__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "hospitality_03_table_side_talk__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "confirm_guest_order",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "hospitality_03_table_side_talk__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "confirm_guest_order",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "hospitality_03_table_side_talk__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "confirm_guest_order",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "hospitality_03_table_side_talk__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "confirm_guest_order",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "hospitality_03_table_side_talk__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "confirm_guest_order",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "hospitality_03_table_side_talk__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "confirm_guest_order",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "hospitality_03_table_side_talk__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "confirm_guest_order",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "hospitality_03_table_side_talk__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": [
+        {
+          "tool_name": "confirm_guest_order",
+          "resource_id": "RSV-MU-003",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "hospitality_04_bill_split__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "hospitality_04_bill_split__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "hospitality_04_bill_split__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "hospitality_04_bill_split__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "hospitality_04_bill_split__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "hospitality_04_bill_split__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "hospitality_04_bill_split__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "hospitality_04_bill_split__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "reservations",
+          "RSV-MU-004",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_reservation",
+          "resource_id": "RSV-MU-004",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "public_services_01_transit_accessibility__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "public_services_01_transit_accessibility__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "public_services_01_transit_accessibility__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "public_services_01_transit_accessibility__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "public_services_01_transit_accessibility__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "public_services_01_transit_accessibility__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "public_services_01_transit_accessibility__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "public_services_01_transit_accessibility__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "public_services_02_appointment_interpreter__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_public_service_case",
+          "resource_id": "CIVIC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "public_services_02_appointment_interpreter__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_public_service_case",
+          "resource_id": "CIVIC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "public_services_02_appointment_interpreter__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_public_service_case",
+          "resource_id": "CIVIC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "public_services_02_appointment_interpreter__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_public_service_case",
+          "resource_id": "CIVIC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "public_services_02_appointment_interpreter__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_public_service_case",
+          "resource_id": "CIVIC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "public_services_02_appointment_interpreter__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_public_service_case",
+          "resource_id": "CIVIC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "public_services_02_appointment_interpreter__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_public_service_case",
+          "resource_id": "CIVIC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "public_services_02_appointment_interpreter__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "service_cases",
+          "CIVIC-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_public_service_case",
+          "resource_id": "CIVIC-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "it_support_01_service_owner_incident__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_workstream",
+          "resource_id": "INC-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "it_support_01_service_owner_incident__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_workstream",
+          "resource_id": "INC-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "it_support_01_service_owner_incident__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_workstream",
+          "resource_id": "INC-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "it_support_01_service_owner_incident__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_workstream",
+          "resource_id": "INC-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "it_support_01_service_owner_incident__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_workstream",
+          "resource_id": "INC-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "it_support_01_service_owner_incident__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_workstream",
+          "resource_id": "INC-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "it_support_01_service_owner_incident__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_workstream",
+          "resource_id": "INC-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "it_support_01_service_owner_incident__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_workstream",
+          "resource_id": "INC-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "it_support_03_rollback_correction__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "it_support_03_rollback_correction__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "it_support_03_rollback_correction__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "it_support_03_rollback_correction__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "it_support_03_rollback_correction__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "it_support_03_rollback_correction__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "it_support_03_rollback_correction__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "it_support_03_rollback_correction__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "incidents",
+          "INC-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_01_ticket_ownership__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_01_ticket_ownership__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_01_ticket_ownership__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_01_ticket_ownership__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_01_ticket_ownership__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_01_ticket_ownership__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_01_ticket_ownership__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_01_ticket_ownership__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_02_playlist_cheer__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_event_playlist",
+          "resource_id": "EVT-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "events_entertainment_02_playlist_cheer__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_event_playlist",
+          "resource_id": "EVT-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "events_entertainment_02_playlist_cheer__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_event_playlist",
+          "resource_id": "EVT-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "events_entertainment_02_playlist_cheer__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_event_playlist",
+          "resource_id": "EVT-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "events_entertainment_02_playlist_cheer__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_event_playlist",
+          "resource_id": "EVT-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "events_entertainment_02_playlist_cheer__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_event_playlist",
+          "resource_id": "EVT-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "events_entertainment_02_playlist_cheer__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_event_playlist",
+          "resource_id": "EVT-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "events_entertainment_02_playlist_cheer__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [],
+      "pacing_after_actions": [
+        {
+          "tool_name": "start_event_playlist",
+          "resource_id": "EVT-MU-002",
+          "actor_id": "primary",
+          "after_event_id": "e_live"
+        }
+      ]
+    },
+    "events_entertainment_03_accessible_seat__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_03_accessible_seat__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_03_accessible_seat__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_03_accessible_seat__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_03_accessible_seat__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_03_accessible_seat__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_03_accessible_seat__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_03_accessible_seat__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_05_schedule_time_fix__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_05_schedule_time_fix__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_05_schedule_time_fix__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_05_schedule_time_fix__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_05_schedule_time_fix__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_05_schedule_time_fix__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_05_schedule_time_fix__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "events_entertainment_05_schedule_time_fix__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "event_plans",
+          "EVT-MU-005",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_event_plan",
+          "resource_id": "EVT-MU-005",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_01_pickup_assignments__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_01_pickup_assignments__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_01_pickup_assignments__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_01_pickup_assignments__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_01_pickup_assignments__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_01_pickup_assignments__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_01_pickup_assignments__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_01_pickup_assignments__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-001",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-001",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_03_chore_quiet_child__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_03_chore_quiet_child__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_03_chore_quiet_child__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_03_chore_quiet_child__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_03_chore_quiet_child__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_03_chore_quiet_child__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_03_chore_quiet_child__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "family_coordination_03_chore_quiet_child__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "family_plans",
+          "FAM-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_family_plan",
+          "resource_id": "FAM-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_02_lost_child_description__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_02_lost_child_description__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_02_lost_child_description__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_02_lost_child_description__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_02_lost_child_description__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_02_lost_child_description__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_02_lost_child_description__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_02_lost_child_description__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-002",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-002",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_03_roll_call_overlap__g-small__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_03_roll_call_overlap__g-small__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_03_roll_call_overlap__g-small__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_03_roll_call_overlap__g-small__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_03_roll_call_overlap__g-large__a-clean__c-strong": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_03_roll_call_overlap__g-large__a-clean__c-weak": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_03_roll_call_overlap__g-large__a-realistic__c-strong": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    },
+    "emergency_incident_03_roll_call_overlap__g-large__a-realistic__c-weak": {
+      "projection_paths": [
+        [
+          "incident_records",
+          "EMG-MU-003",
+          "last_transaction_id"
+        ]
+      ],
+      "pacing_queries": [
+        {
+          "tool_name": "get_incident_record",
+          "resource_id": "EMG-MU-003",
+          "actor_id": "primary",
+          "before_event_id": "e_live"
+        }
+      ],
+      "pacing_after_actions": []
+    }
+  }
+}

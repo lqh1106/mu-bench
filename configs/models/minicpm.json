@@ -1,0 +1,9 @@
+{
+  "model": "minicpm",
+  "loader_module": "@adapter/loader.py",
+  "backend_args": {
+    "model": "minicpm",
+    "model_path": "@model_path",
+    "ref_audio": "@model_path/assets/HT_ref_audio.wav"
+  }
+}

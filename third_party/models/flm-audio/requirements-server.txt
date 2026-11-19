@@ -1,0 +1,6 @@
+accelerate
+aiohttp
+einops
+sphn==0.1.4
+transformers==4.51.3
+torch

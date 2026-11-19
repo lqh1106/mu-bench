@@ -1,0 +1,12 @@
+{
+  "python": "3.10.12",
+  "packages": {
+    "torch": "2.14.1",
+    "transformers": "4.51.3",
+    "tokenizers": "0.21.4",
+    "numpy": "2.2.6",
+    "accelerate": "1.15.0",
+    "safetensors": "0.8.0",
+    "einops": "0.8.2"
+  }
+}

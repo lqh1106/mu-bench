@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "catalog_version": "public-sources-v1",
+  "selection_policy": "deterministic_case_hash_then_role_balanced",
+  "sources": [
+    {
+      "source_id": "vctk-0.92",
+      "name": "CSTR VCTK Corpus",
+      "version": "0.92",
+      "homepage": "https://datashare.ed.ac.uk/handle/10283/3443",
+      "license": "CC-BY-4.0",
+      "speaker_count": 109,
+      "locales": ["en-GB", "en-US"],
+      "accent_coverage": ["British", "Irish", "Scottish", "American"],
+      "audio_profile": "studio",
+      "identity_policy": "pseudonymous_source_ids",
+      "usable_for_voice_cloning": true,
+      "attribution": "Veaux, Yamagishi and MacDonald, CSTR VCTK Corpus"
+    },
+    {
+      "source_id": "libritts-r",
+      "name": "LibriTTS-R",
+      "version": "1.0",
+      "homepage": "https://www.openslr.org/141/",
+      "license": "CC-BY-4.0",
+      "speaker_count": 2456,
+      "locales": ["en-US"],
+      "accent_coverage": ["English read speech"],
+      "audio_profile": "read_speech",
+      "identity_policy": "pseudonymous_source_ids",
+      "usable_for_voice_cloning": true,
+      "attribution": "Koizumi et al., LibriTTS-R"
+    },
+    {
+      "source_id": "multilingual-librispeech",
+      "name": "Multilingual LibriSpeech",
+      "version": "1.0",
+      "homepage": "https://www.openslr.org/94/",
+      "license": "CC-BY-4.0",
+      "speaker_count": null,
+      "locales": ["en", "de", "nl", "es", "fr", "it", "pt", "pl"],
+      "accent_coverage": ["multilingual read speech"],
+      "audio_profile": "read_speech",
+      "identity_policy": "pseudonymous_source_ids",
+      "usable_for_voice_cloning": true,
+      "attribution": "Pratap et al., Multilingual LibriSpeech"
+    },
+    {
+      "source_id": "globe-1.0",
+      "name": "GLOBE",
+      "version": "1.0",
+      "homepage": "https://huggingface.co/datasets/MushanW/GLOBE",
+      "license": "CC0-1.0",
+      "speaker_count": 23519,
+      "locales": ["en"],
+      "accent_coverage": ["164 self-reported English accent labels"],
+      "audio_profile": "crowdsourced",
+      "identity_policy": "pseudonymous_source_ids",
+      "usable_for_voice_cloning": true,
+      "attribution": "Wang et al., GLOBE: A High-quality English Corpus for Zero-shot Speaker Adaptive Text-to-Speech",
+      "notes": "Select one quality-gated reference per pseudonymous speaker."
+    },
+    {
+      "source_id": "common-voice-diagnostic",
+      "name": "Mozilla Common Voice",
+      "version": "release-selected",
+      "homepage": "https://commonvoice.mozilla.org/data",
+      "license": "CC0-1.0",
+      "speaker_count": null,
+      "locales": ["multilingual"],
+      "accent_coverage": ["community accents"],
+      "audio_profile": "crowdsourced",
+      "identity_policy": "do_not_identify_source_speakers",
+      "usable_for_voice_cloning": false,
+      "notes": "Diagnostic-only unless a separate consented voice-cloning release is obtained."
+    }
+  ],
+  "voices": []
+}

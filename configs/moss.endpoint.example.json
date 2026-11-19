@@ -1,0 +1,6 @@
+{
+  "model": "moss_live",
+  "native_quantum_ms": 80,
+  "url": "wss://api.mosi.cn/v1/realtime?model=moss-live-1.0",
+  "credential_file": "outputs/services/moss.key"
+}

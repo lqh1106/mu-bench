@@ -1,0 +1,6 @@
+{
+  "repo_path": "${REPO_ROOT}/third_party/models/Voila/source",
+  "model_path": "${REPO_ROOT}/external/weights/voila",
+  "debug_root": "${REPO_ROOT}/external/voila/debug",
+  "codec_path": "${REPO_ROOT}/external/weights/voila-tokenizer"
+}

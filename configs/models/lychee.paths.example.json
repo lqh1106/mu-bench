@@ -1,0 +1,5 @@
+{
+  "repo_path": "${REPO_ROOT}/third_party/models/Lychee-FD/source",
+  "model_path": "${REPO_ROOT}/external/weights/lychee",
+  "token2wav_path": "${REPO_ROOT}/external/lychee/token2wav"
+}

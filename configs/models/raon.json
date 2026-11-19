@@ -1,0 +1,10 @@
+{
+  "model": "raon",
+  "loader_module": "@adapter/loader.py",
+  "backend_args": {
+    "model": "raon",
+    "repo_path": "@repo_path",
+    "model_path": "@model_path",
+    "raon_max_sequence_length": 81920
+  }
+}

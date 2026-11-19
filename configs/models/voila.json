@@ -1,0 +1,11 @@
+{
+  "model": "voila",
+  "loader_module": "@adapter/loader.py",
+  "backend_args": {
+    "model": "voila",
+    "repo_path": "@repo_path",
+    "model_path": "@model_path",
+    "debug_root": "@debug_root",
+    "codec_path": "@codec_path"
+  }
+}

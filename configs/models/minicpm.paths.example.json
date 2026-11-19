@@ -1,0 +1,3 @@
+{
+  "model_path": "${REPO_ROOT}/external/weights/minicpm"
+}

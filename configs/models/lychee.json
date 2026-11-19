@@ -1,0 +1,22 @@
+{
+  "model": "lychee",
+  "owned_hf_runtime": true,
+  "backend_args": {
+    "repo_path": "@repo_path",
+    "model_path": "@model_path",
+    "token2wav_path": "@token2wav_path",
+    "ref_audio": "@repo_path/frontend/public/clone_24k_mono/default_female.wav",
+    "stepaudio_source": "@repo_path/third_party/Step-Audio2",
+    "attn_implementation": "eager",
+    "decoder_tts_chunk_size": 1,
+    "vocoder_hop_size": 25,
+    "source_sha256": {
+      "lychee_fd/runtime/hf_v9_realtime.py": "1cfd36c2613535799e94085d8ecadd1e5afe324b37f71263320da52c3ca8a4b9",
+      "lychee_fd/runtime/vllm_generation.py": "d378928d1b33d0c816f20885dae85095d2f20ed9fe11a0e50db9650dea94fee9"
+    },
+    "overlay_path": "@adapter/overlay",
+    "gpu_memory_utilization": 0.32,
+    "max_model_len": 4096,
+    "max_num_batched_tokens": 1024
+  }
+}

@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv*/
+.env
+.env.*
+!.env.example
+*.key
+private/
+external/
+outputs/
+*.log
+*.lock
+!environments/*/requirements.lock
+local*.json
+*.egg-info/
+.pytest_cache/

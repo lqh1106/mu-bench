@@ -1,0 +1,1042 @@
+{
+  "task_contract_revision": {
+    "case_revision_id": "mu-bench-tool-free-v1",
+    "review": {
+      "case_id": "knowledge_qa_05_child_plain_explanation__g-large__a-clean__c-strong",
+      "status": "approved",
+      "case_revision_id": "mu-bench-tool-free-v1",
+      "goal_criteria": {
+        "g_primary": "Give a scientifically sound, accessible plant-and-sun explanation of photosynthesis responsive to the group and the concrete-example request. Do not treat Blake’s wording request as changing who owns the original task.",
+        "g_live": "Give Blake an actual simple plant-and-sun example that retains the correct science, then continue Avery's original explanation. Merely offering to simplify fails.",
+        "g_extra1": "Answer Cameron that light travels much faster than sound, so lightning is seen before its thunder is heard, preserving the separate topic.",
+        "g_extra2": "Distinguish Avery's question, Blake's example request, Cameron's separate question and Emery's challenge from facts supplied by the assistant; do not attribute the assistant's scientific answer to a participant who did not say it.",
+        "g_extra3": "Explain that mushrooms are fungi that obtain nutrients from organic material rather than photosynthesizing like green plants; address the actual challenge rather than asking for an already-provided example.",
+        "g_extra4": "Give Finley a short public recap of the science without invented private information; no unnecessary account of other participants' comprehension difficulties."
+      },
+      "required_answer_facts": [],
+      "opening_context": "",
+      "initial_assistant_context": {},
+      "scene_design": {
+        "scenario": "knowledge_qa_05_child_plain_explanation",
+        "reason": "保留成人也可能没听懂的情形；谁请求简化不必等于儿童。",
+        "event_story": "Avery发问→Blake要求植物和阳光例子→其他人另问雷电或蘑菇→助手保持科学正确并降低表达难度。"
+      }
+    }
+  },
+  "case_id": "knowledge_qa_05_child_plain_explanation__g-large__a-clean__c-strong",
+  "title": "Child requests a simpler factual explanation [g-large__a-clean__c-strong]",
+  "summary": "Shared-channel 知识问答：儿童可懂的光合作用. Personal reports and new constraints arrive in the actual conversation; no answer key or future contribution is preloaded.",
+  "capability_tags": [
+    "knowledge_qa",
+    "direct",
+    "knowledge_qa",
+    "audience_repair",
+    "large_4_7",
+    "clean",
+    "strong",
+    "multi_user",
+    "full_duplex",
+    "anti_wait"
+  ],
+  "identity_setup": [
+    "Each enrolled user speaks their participant ID, display name, role, and initially active permissions in their stable task voice.",
+    "Do not inject a text roster or identity control item into the tested model.",
+    "Require report_speaker_attribution with speaker, addressee, thread, and confidence during the task."
+  ],
+  "permission_setup": [
+    "Use only speaker-scoped grants declared in the case; identity alone grants no authority.",
+    "Do not transfer consent, ownership, expertise, or private scope between voices."
+  ],
+  "benchmark_version": "v15.0",
+  "provenance": {
+    "source_benchmarks": [
+      "M3-DuplexBench",
+      "MTR-DuplexBench"
+    ],
+    "source_patterns": [
+      "audience_repair"
+    ],
+    "adaptation_summary": "direct adaptation into a multi-user full-duplex episode. Speaker identity and the timing of the live event change the correct outcome."
+  },
+  "difficulty": {
+    "tier": "hard",
+    "speech_condition": "clean",
+    "participant_band": "large_4_7",
+    "disfluency_types": [],
+    "audio_conditions": [],
+    "comprehension_challenges": []
+  },
+  "coverage": {
+    "scenario_family": "knowledge_qa_05_child_plain_explanation",
+    "task_type": "knowledge_qa",
+    "source_adaptations": [
+      "M3-DuplexBench",
+      "MTR-DuplexBench"
+    ],
+    "interaction_mechanisms": [
+      "audience_repair"
+    ],
+    "identity_decision_factors": [
+      "speaker",
+      "recipient_comprehension"
+    ],
+    "anti_shortcut_proof": [
+      "e_live is released from actual assistant speech or an actual tool result, so a text-only final-batch policy misses the scored interaction window.",
+      "Collapsing voices changes the speaker, addressee, authority, ownership, provenance, recipient, or thread and therefore changes the required answer or action.",
+      "Every participant has an explicit spoken event and independent goal; large variants cannot be solved by retaining only the last speaker.",
+      "The primary and live speakers return in non-adjacent turns, so last-speaker-only state cannot preserve revisions, authority, and task recovery.",
+      "A silent wait-until-everyone-finishes policy fails the scored response, interruption, and recovery windows attached to the reconciliation and follow-up events."
+    ]
+  },
+  "variant": {
+    "scenario_id": "knowledge_qa_05_child_plain_explanation",
+    "participant_scale": "large_4_7",
+    "speech_condition": "clean",
+    "comprehension_level": "strong",
+    "variant_index": 4
+  },
+  "anti_wait_constraints": [
+    "The assistant-relative e_live event has a scored yield, recovery, routing, or false-interruption requirement.",
+    "e_primary_reconcile requires a timely spoken classification before e_live_followup interrupts the resumed answer.",
+    "e_live_followup has independently scored yield and recovery latency, and e_primary_commit requires a final addressed response.",
+    "Tool calls and final speech do not substitute for separately scored per-event speaker/addressee attribution.",
+    "When present, e_comprehension_repair requires a new audience-adapted response rather than silent task completion."
+  ],
+  "voice_enrollment": {
+    "mode": "in_session",
+    "transport": "audio_self_identification",
+    "self_identification_template": "My name is {display_name}. My participant ID is {user_id}. My role is {role}. {permission_statement} Please associate this voice with my identity for this session.",
+    "self_identification_activation_template": "{assistant_name}, everyone has now introduced themselves. Registration is complete. Formal work starts now. You may respond to requests from this point onward.",
+    "session_preamble_template": "You are {assistant_name}, our assistant. We will now introduce the users one by one. This is the user introduction phase; please listen and do not respond until we say that formal work has started.",
+    "pre_roll_ms": 400,
+    "inter_speaker_gap_ms": 600,
+    "post_roll_ms": 1200,
+    "silence_required": true
+  },
+  "assistant_activation": {
+    "enabled": true,
+    "assistant_name": "Nova",
+    "caller_user_id": "primary",
+    "utterance_template": "Hey {assistant_name}, could you help everyone here?",
+    "pre_roll_ms": 400,
+    "post_roll_ms": 800,
+    "allow_brief_acknowledgement": false
+  },
+  "iterative_replay": {
+    "enabled": true,
+    "planner_scope": "persistent_session_per_user",
+    "event_alignment_ms": 80,
+    "probe_completion_guard_ms": 800,
+    "probe_max_seconds": 75,
+    "probe_max_extensions": 2,
+    "require_fresh_session_per_probe": true,
+    "require_fresh_final_session": true,
+    "score_final_only": true,
+    "tail_probe_enabled": true,
+    "tail_probe_max_rounds": 2
+  },
+  "environment": {
+    "domain": "v07_knowledge_qa",
+    "fixture_id": "knowledge_qa_05_child_plain_explanation_fixture",
+    "principals": [
+      "primary",
+      "live",
+      "extra1",
+      "extra2",
+      "extra3",
+      "extra4"
+    ],
+    "resources": [],
+    "tool_names": [],
+    "initial_state": {},
+    "authoritative_facts": {
+      "source": "scene-r3 explicit initial-source view",
+      "initial_information": "",
+      "later_information": "Only actual subsequent utterances add participant facts; future event specifications are judge/simulator material, not assistant input."
+    },
+    "tau_user_id": null,
+    "order_ids": [],
+    "policy_extension": [
+      "Semantic deployment domain: Multi-user knowledge QA.",
+      "Domain tools must encode the actual operation, affected user scope, protected user scope, and interaction-aware resolution.",
+      "The shared microphone may contain overlap, side-talk, corrections, and participant-specific threads.",
+      "Consequential outcomes must be reported aloud to the affected participant."
+    ],
+    "authorization_mode": "audit"
+  },
+  "users": [
+    {
+      "user_id": "primary",
+      "display_name": "Avery",
+      "role": "child learner",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 4,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "General American",
+        "lexical_style": [
+          "clear complete clauses"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_primary",
+          "description": "Explain photosynthesis to the adults and child here.",
+          "priority": 5,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Give a scientifically sound, accessible plant-and-sun explanation of photosynthesis responsive to the group and the concrete-example request. Do not treat Blake’s wording request as changing who owns the original task."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Explain photosynthesis to the adults and child here.",
+        "My benchmark identity is primary."
+      ],
+      "voice": {
+        "voice_id": "v07:knowledge_qa_05_child_plain_explanation:primary",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "General American",
+        "speaking_style": "clean close-talk speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "live",
+      "display_name": "Blake",
+      "role": "adult helper",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 1,
+        "interrupt_tendency": 0.9,
+        "conflict_style": "assertive",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "General American",
+        "lexical_style": [
+          "clear complete clauses"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_live",
+          "description": "I did not understand; tell me with a plant-and-sun example.",
+          "priority": 5,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Give Blake an actual simple plant-and-sun example that retains the correct science, then continue Avery's original explanation. Merely offering to simplify fails."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "I did not understand; tell me with a plant-and-sun example.",
+        "My benchmark identity is live."
+      ],
+      "voice": {
+        "voice_id": "v07:knowledge_qa_05_child_plain_explanation:live",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "General American",
+        "speaking_style": "clean close-talk speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "extra1",
+      "display_name": "Cameron",
+      "role": "second learner",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 2,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "General American",
+        "lexical_style": [
+          "clear complete clauses"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_extra1",
+          "description": "Explain to Cameron why lightning is seen before thunder is heard, separately from photosynthesis.",
+          "priority": 3,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Answer Cameron that light travels much faster than sound, so lightning is seen before its thunder is heard, preserving the separate topic."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Explain to Cameron why lightning is seen before thunder is heard, separately from photosynthesis.",
+        "My benchmark identity is extra1."
+      ],
+      "voice": {
+        "voice_id": "v07:knowledge_qa_05_child_plain_explanation:extra1",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "General American",
+        "speaking_style": "clean close-talk speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "extra2",
+      "display_name": "Devon",
+      "role": "moderator",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 1,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "General American",
+        "lexical_style": [
+          "clear complete clauses"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_extra2",
+          "description": "Please say who supplied each fact.",
+          "priority": 3,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Distinguish Avery's question, Blake's example request, Cameron's separate question and Emery's challenge from facts supplied by the assistant; do not attribute the assistant's scientific answer to a participant who did not say it."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Please say who supplied each fact.",
+        "My benchmark identity is extra2."
+      ],
+      "voice": {
+        "voice_id": "v07:knowledge_qa_05_child_plain_explanation:extra2",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "General American",
+        "speaking_style": "clean close-talk speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "extra3",
+      "display_name": "Emery",
+      "role": "skeptic",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 1,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "General American",
+        "lexical_style": [
+          "clear complete clauses"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_extra3",
+          "description": "Address Emery's mushroom-in-darkness challenge without incorrectly extending photosynthesis to fungi.",
+          "priority": 3,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Explain that mushrooms are fungi that obtain nutrients from organic material rather than photosynthesizing like green plants; address the actual challenge rather than asking for an already-provided example."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Address Emery's mushroom-in-darkness challenge without incorrectly extending photosynthesis to fungi.",
+        "My benchmark identity is extra3."
+      ],
+      "voice": {
+        "voice_id": "v07:knowledge_qa_05_child_plain_explanation:extra3",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "General American",
+        "speaking_style": "clean close-talk speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "extra4",
+      "display_name": "Finley",
+      "role": "late joiner",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 1,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "General American",
+        "lexical_style": [
+          "clear complete clauses"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_extra4",
+          "description": "I joined late; give only the public conclusion.",
+          "priority": 3,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Give Finley a short public recap of the science without invented private information; no unnecessary account of other participants' comprehension difficulties."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "I joined late; give only the public conclusion.",
+        "My benchmark identity is extra4."
+      ],
+      "voice": {
+        "voice_id": "v07:knowledge_qa_05_child_plain_explanation:extra4",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "General American",
+        "speaking_style": "clean close-talk speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    }
+  ],
+  "goal_relations": [
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_live",
+      "relation": "partially_aligned"
+    },
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_extra1",
+      "relation": "independent"
+    },
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_extra2",
+      "relation": "independent"
+    },
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_extra3",
+      "relation": "independent"
+    },
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_extra4",
+      "relation": "independent"
+    }
+  ],
+  "events": [
+    {
+      "event_id": "e_open",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "conversation_start",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Explain photosynthesis to the adults and child here.",
+      "addressee": "assistant",
+      "fixed_utterance": "Explain photosynthesis to the adults and child here.",
+      "fixed_utterance_exact": true,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "request",
+      "notes": []
+    },
+    {
+      "event_id": "e_live",
+      "actor_id": "live",
+      "action": "interrupt",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_open",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Blake interrupts the assistant's initial explanation to signal personal non-comprehension and request the same photosynthesis fact retargeted through a concrete plant-and-sun example, without taking ownership of Avery's original request.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "audience_repair",
+      "notes": [
+        "Tests full-duplex yielding to an adult helper's repair request during assistant speech.",
+        "The assistant should treat this as a comprehension repair on the primary thread, not as a new topic or contradiction."
+      ]
+    },
+    {
+      "event_id": "e_extra_1",
+      "actor_id": "extra1",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_live",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Cameron asks the separate question why lightning is seen before thunder is heard; keep it separate from photosynthesis and do not supply the answer in the user utterance.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "participant_3",
+      "speech_act": "independent_constraint",
+      "notes": []
+    },
+    {
+      "event_id": "e_extra_2",
+      "actor_id": "extra2",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_extra_1",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Devon asks the assistant to keep provenance clear by distinguishing facts the assistant supplies from claims or requests contributed by each participant.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 3,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "participant_4",
+      "speech_act": "independent_constraint",
+      "notes": [
+        "Tests attribution and provenance in a shared-microphone setting.",
+        "This constraint should apply to later explanation without implying Devon owns the science question."
+      ]
+    },
+    {
+      "event_id": "e_extra_3",
+      "actor_id": "extra3",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_extra_2",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Emery raises a concrete challenge: mushrooms can grow in darkness, so does every living thing make food from sunlight? Ask the assistant to distinguish fungi from green plants rather than merely announcing an unspecified counterexample.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 3,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "participant_5",
+      "speech_act": "independent_constraint",
+      "notes": []
+    },
+    {
+      "event_id": "e_extra_4",
+      "actor_id": "extra4",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_extra_3",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Finley says they missed the earlier discussion and asks for only the public conclusion of the photosynthesis exchange, without taking over any other participant's thread.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 2,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "participant_6",
+      "speech_act": "independent_constraint",
+      "notes": [
+        "Tests late-context recovery and public-scope summarization.",
+        "No private information is present, but the assistant should still avoid inventing or exposing speaker-owned side details as Finley's request."
+      ]
+    },
+    {
+      "event_id": "e_extra1_followup",
+      "actor_id": "extra1",
+      "action": "correct",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_extra_4",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Cameron returns specifically to the lightning-before-thunder question; if answered, ask for its one-sentence reason, otherwise ask for the missing answer. Do not merge it into the plant example.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "participant_3",
+      "speech_act": "constraint_clarification",
+      "notes": [
+        "non-adjacent repeated speaker turn"
+      ]
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_extra1_followup",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Can you use the plant-and-sun example for the explanation?",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "reconciliation_request",
+      "notes": []
+    },
+    {
+      "event_id": "e_live_followup",
+      "actor_id": "live",
+      "action": "interrupt",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_primary_reconcile",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Ask for the same explanation to stay concrete, without introducing a different learner’s task.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "followup_clarification",
+      "notes": []
+    },
+    {
+      "event_id": "e_primary_commit",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_live_followup",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Please finish it in language we can all follow.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "final_confirmation",
+      "notes": []
+    }
+  ],
+  "expected_tool_actions": [],
+  "timing_requirements": [
+    {
+      "metric": "yield_latency_ms",
+      "event_id": "e_live",
+      "operator": "le",
+      "threshold": 1200.0
+    },
+    {
+      "metric": "resume_latency_ms",
+      "event_id": "e_live",
+      "operator": "le",
+      "threshold": 2800.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_primary_reconcile",
+      "operator": "le",
+      "threshold": 2200.0
+    },
+    {
+      "metric": "yield_latency_ms",
+      "event_id": "e_live_followup",
+      "operator": "le",
+      "threshold": 1200.0
+    },
+    {
+      "metric": "resume_latency_ms",
+      "event_id": "e_live_followup",
+      "operator": "le",
+      "threshold": 2800.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_primary_commit",
+      "operator": "le",
+      "threshold": 2200.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_extra1_followup",
+      "operator": "le",
+      "threshold": 2400.0
+    }
+  ],
+  "final_success_conditions": [
+    "Give a scientifically sound, accessible plant-and-sun explanation of photosynthesis responsive to the group and the concrete-example request. Do not treat Blake’s wording request as changing who owns the original task.",
+    "Evaluate each actual participant’s goal using its case-defined disposition and success evidence. A later valid clarification can refine the requested answer. Do not require information from absent participants or invented user-simulator side demands."
+  ],
+  "capability_assertions": [
+    {
+      "assertion_id": "a_identity_routing",
+      "category": "discourse_provenance",
+      "description": "Attribute every shared-microphone utterance to its registered speaker, addressee, and thread before using it.",
+      "expected_behavior": "The decisive identity factor is speaker, recipient_comprehension. Retarget the same correct fact to the child's comprehension level without changing the science.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_extra_1",
+        "e_extra_2",
+        "e_extra_3",
+        "e_extra_4",
+        "e_extra1_followup",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_spoken_result",
+      "category": "response_rendering",
+      "description": "Report the final disposition aloud to the affected participant(s).",
+      "expected_behavior": "Say a concise result that makes this outcome clear: Retarget the same correct fact to the child's comprehension level without changing the science.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_extra_1",
+        "e_extra_2",
+        "e_extra_3",
+        "e_extra_4",
+        "e_extra1_followup",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_full_duplex_policy",
+      "category": "group_collaboration",
+      "description": "Classify the assistant-relative live event and preserve all still-active speaker-owned threads after overlap.",
+      "expected_behavior": "Retarget the same correct fact to the child's comprehension level without changing the science.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_extra_1",
+        "e_extra_2",
+        "e_extra_3",
+        "e_extra_4",
+        "e_extra1_followup",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_multi_round_state_continuity",
+      "category": "multi_thread",
+      "description": "Preserve the original request, the first live intervention, the primary user's reconciliation turn, the live user's non-adjacent follow-up, and the final confirmation as one evolving interaction rather than restarting the task.",
+      "expected_behavior": "Integrate every revision while preserving unresolved speaker ownership, then reach this outcome: Retarget the same correct fact to the child's comprehension level without changing the science.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_repeated_speaker_consistency",
+      "category": "discourse_provenance",
+      "description": "Recognize the same primary and live voices when each returns after intervening speech, and retain their original authority, goal, addressee, and thread.",
+      "expected_behavior": "Do not assign a returning speaker a new identity, transfer another speaker's request to them, or forget their earlier contribution.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_extra_speaker_return",
+      "category": "discourse_provenance",
+      "description": "Retain extra1's identity and earlier constraint when that speaker returns after the other extra participants.",
+      "expected_behavior": "Connect e_extra1_followup to e_extra_1 without merging it into the most recent or loudest participant's thread.",
+      "source_event_ids": [
+        "e_extra_1",
+        "e_extra1_followup"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_primary_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Avery (child learner).",
+      "expected_behavior": "After e_primary_reconcile, address or uniquely reference Avery (child learner) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_primary_reconcile"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "primary",
+      "return_event_id": "e_primary_reconcile",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_primary_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Avery (child learner)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_primary_reconcile to Avery (child learner)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_primary_reconcile"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "primary",
+      "return_event_id": "e_primary_reconcile",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_live_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Blake (adult helper).",
+      "expected_behavior": "After e_live_followup, address or uniquely reference Blake (adult helper) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_live_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "live",
+      "return_event_id": "e_live_followup",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_live_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Blake (adult helper)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_live_followup to Blake (adult helper)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_live_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "live",
+      "return_event_id": "e_live_followup",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_extra1_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Cameron (second learner).",
+      "expected_behavior": "After e_extra1_followup, address or uniquely reference Cameron (second learner) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_extra1_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "extra1",
+      "return_event_id": "e_extra1_followup",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_extra1_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Cameron (second learner)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_extra1_followup to Cameron (second learner)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_extra1_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "extra1",
+      "return_event_id": "e_extra1_followup",
+      "diagnostic_only": true
+    }
+  ],
+  "state_assertions": [],
+  "seed": 700276
+}

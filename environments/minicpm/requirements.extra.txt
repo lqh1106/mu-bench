@@ -1,0 +1,14 @@
+torchvision
+timm
+librosa
+omegaconf
+hydra-core
+einops
+s3tokenizer==0.2.0
+onnx
+onnxruntime-gpu
+onnx2torch
+openai-whisper
+vector-quantize-pytorch
+torchdiffeq
+tiktoken

@@ -1,0 +1,668 @@
+{
+  "task_contract_revision": {
+    "case_revision_id": "mu-bench-tool-free-v1",
+    "review": {
+      "case_id": "airline_05_mobility_repeat__g-small__a-clean__c-weak",
+      "status": "approved",
+      "case_revision_id": "mu-bench-tool-free-v1",
+      "goal_criteria": {
+        "g_primary": "Confirm Avery’s mobility assistance and state gate C12 and the Terminal 2 assistance desk meeting point. Honor the companion’s slow focused repeat. Keep other travelers’ gates separate when actually supplied.",
+        "g_live": "Give Blake a slowly understandable repeat of Avery's C12 gate and Terminal 2 assistance desk, without restarting unrelated travel history."
+      },
+      "required_answer_facts": [],
+      "opening_context": "",
+      "initial_assistant_context": {
+        "schema": "mu-assistant-initial-context-v1",
+        "available_at": "before_registration",
+        "source_type": "航空服务台已确认的无障碍服务记录",
+        "content": "Airport assistance-desk snapshot: Avery has confirmed mobility assistance; departure gate C12; assistance meeting point is the Terminal 2 assistance desk. These logistics may be discussed on the shared channel. No change or dispatch operation is available.",
+        "visibility": "assistant_read_only_scoped_source",
+        "contains_future_event_oracle": false,
+        "contains_internal_participant_mapping": false
+      },
+      "scene_design": {
+        "scenario": "airline_05_mobility_repeat",
+        "reason": "旅客不需要知道会合点；助手从服务记录回答，陪同者提出表达方式要求。",
+        "event_story": "Avery询问→Blake要求只把登机口和会合点慢慢重复→其他旅客加入各自需求→Avery继续确认→助手完成完整答复及定向慢速复述。"
+      }
+    }
+  },
+  "case_id": "airline_05_mobility_repeat__g-small__a-clean__c-weak",
+  "title": "Mobility traveler needs a targeted repeat [g-small__a-clean__c-weak]",
+  "summary": "Shared-channel 机场：行动协助与慢速复述. The assistant has a pre-session scoped source document; users ask questions and contribute their own updates.",
+  "capability_tags": [
+    "airline",
+    "direct",
+    "collaborative_reasoning",
+    "audience_repair",
+    "small_2_3",
+    "clean",
+    "weak",
+    "multi_user",
+    "full_duplex",
+    "anti_wait"
+  ],
+  "identity_setup": [
+    "Each enrolled user speaks their participant ID, display name, role, and initially active permissions in their stable task voice.",
+    "Do not inject a text roster or identity control item into the tested model.",
+    "Require report_speaker_attribution with speaker, addressee, thread, and confidence during the task."
+  ],
+  "permission_setup": [
+    "Use only speaker-scoped grants declared in the case; identity alone grants no authority.",
+    "Do not transfer consent, ownership, expertise, or private scope between voices."
+  ],
+  "benchmark_version": "v15.0",
+  "provenance": {
+    "source_benchmarks": [
+      "tau-Voice",
+      "Full-Duplex-Bench v3"
+    ],
+    "source_patterns": [
+      "audience_repair"
+    ],
+    "adaptation_summary": "direct adaptation into a multi-user full-duplex episode. Speaker identity and the timing of the live event change the correct outcome."
+  },
+  "difficulty": {
+    "tier": "medium",
+    "speech_condition": "clean",
+    "participant_band": "small_2_3",
+    "disfluency_types": [],
+    "audio_conditions": [],
+    "comprehension_challenges": [
+      "recipient does not understand a semantically correct first response",
+      "requires a short plain-language restatement addressed to the same user"
+    ]
+  },
+  "coverage": {
+    "scenario_family": "airline_05_mobility_repeat",
+    "task_type": "collaborative_reasoning",
+    "source_adaptations": [
+      "tau-Voice",
+      "Full-Duplex-Bench v3"
+    ],
+    "interaction_mechanisms": [
+      "audience_repair"
+    ],
+    "identity_decision_factors": [
+      "speaker",
+      "recipient_comprehension"
+    ],
+    "anti_shortcut_proof": [
+      "e_live is released from actual assistant speech or an actual tool result, so a text-only final-batch policy misses the scored interaction window.",
+      "Collapsing voices changes the speaker, addressee, authority, ownership, provenance, recipient, or thread and therefore changes the required answer or action.",
+      "Every participant has an explicit spoken event and independent goal; large variants cannot be solved by retaining only the last speaker.",
+      "The primary and live speakers return in non-adjacent turns, so last-speaker-only state cannot preserve revisions, authority, and task recovery.",
+      "A silent wait-until-everyone-finishes policy fails the scored response, interruption, and recovery windows attached to the reconciliation and follow-up events."
+    ]
+  },
+  "variant": {
+    "scenario_id": "airline_05_mobility_repeat",
+    "participant_scale": "small_2_3",
+    "speech_condition": "clean",
+    "comprehension_level": "weak",
+    "variant_index": 1
+  },
+  "anti_wait_constraints": [
+    "The assistant-relative e_live event has a scored yield, recovery, routing, or false-interruption requirement.",
+    "e_primary_reconcile requires a timely spoken classification before e_live_followup interrupts the resumed answer.",
+    "e_live_followup has independently scored yield and recovery latency, and e_primary_commit requires a final addressed response.",
+    "Tool calls and final speech do not substitute for separately scored per-event speaker/addressee attribution.",
+    "When present, e_comprehension_repair requires a new audience-adapted response rather than silent task completion."
+  ],
+  "voice_enrollment": {
+    "mode": "in_session",
+    "transport": "audio_self_identification",
+    "self_identification_template": "My name is {display_name}. My participant ID is {user_id}. My role is {role}. {permission_statement} Please associate this voice with my identity for this session.",
+    "self_identification_activation_template": "{assistant_name}, everyone has now introduced themselves. Registration is complete. Formal work starts now. You may respond to requests from this point onward.",
+    "session_preamble_template": "You are {assistant_name}, our assistant. We will now introduce the users one by one. This is the user introduction phase; please listen and do not respond until we say that formal work has started.",
+    "pre_roll_ms": 400,
+    "inter_speaker_gap_ms": 600,
+    "post_roll_ms": 1200,
+    "silence_required": true
+  },
+  "assistant_activation": {
+    "enabled": true,
+    "assistant_name": "Nova",
+    "caller_user_id": "primary",
+    "utterance_template": "Hey {assistant_name}, could you help everyone here?",
+    "pre_roll_ms": 400,
+    "post_roll_ms": 800,
+    "allow_brief_acknowledgement": false
+  },
+  "iterative_replay": {
+    "enabled": true,
+    "planner_scope": "persistent_session_per_user",
+    "event_alignment_ms": 80,
+    "probe_completion_guard_ms": 800,
+    "probe_max_seconds": 75,
+    "probe_max_extensions": 2,
+    "require_fresh_session_per_probe": true,
+    "require_fresh_final_session": true,
+    "score_final_only": true,
+    "tail_probe_enabled": true,
+    "tail_probe_max_rounds": 2
+  },
+  "environment": {
+    "domain": "v07_airline",
+    "fixture_id": "airline_05_mobility_repeat_fixture",
+    "principals": [
+      "primary",
+      "live"
+    ],
+    "resources": [],
+    "tool_names": [],
+    "initial_state": {},
+    "authoritative_facts": {
+      "source": "scene-r3 explicit initial-source view",
+      "initial_information": "Airport assistance-desk snapshot: Avery has confirmed mobility assistance; departure gate C12; assistance meeting point is the Terminal 2 assistance desk. These logistics may be discussed on the shared channel. No change or dispatch operation is available.",
+      "later_information": "Only actual subsequent utterances add participant facts; future event specifications are judge/simulator material, not assistant input."
+    },
+    "tau_user_id": null,
+    "order_ids": [],
+    "policy_extension": [
+      "Semantic deployment domain: Airline and airport.",
+      "Domain tools must encode the actual operation, affected user scope, protected user scope, and interaction-aware resolution.",
+      "The shared microphone may contain overlap, side-talk, corrections, and participant-specific threads.",
+      "Consequential outcomes must be reported aloud to the affected participant."
+    ],
+    "authorization_mode": "audit"
+  },
+  "users": [
+    {
+      "user_id": "primary",
+      "display_name": "Avery",
+      "role": "mobility traveler",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 4,
+        "interrupt_tendency": 0.25,
+        "conflict_style": "cooperative",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "General American",
+        "lexical_style": [
+          "clear complete clauses"
+        ],
+        "comprehension_profile": "needs_plain_language",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_primary",
+          "description": "Please tell me whether my mobility assistance is confirmed and where I should go.",
+          "priority": 5,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Confirm Avery’s mobility assistance and state gate C12 and the Terminal 2 assistance desk meeting point. Honor the companion’s slow focused repeat. Keep other travelers’ gates separate when actually supplied."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Please tell me whether my mobility assistance is confirmed and where I should go.",
+        "My benchmark identity is primary."
+      ],
+      "voice": {
+        "voice_id": "v07:airline_05_mobility_repeat:primary",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "General American",
+        "speaking_style": "clean close-talk speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    },
+    {
+      "user_id": "live",
+      "display_name": "Blake",
+      "role": "care companion",
+      "persona": {
+        "verbosity": "normal",
+        "patience": 1,
+        "interrupt_tendency": 0.9,
+        "conflict_style": "assertive",
+        "behavior_rules": [
+          "Keep this user's goal and authority separate from other speakers.",
+          "Speak only when the event controller releases this user's event."
+        ],
+        "accent": "General American",
+        "lexical_style": [
+          "clear complete clauses"
+        ],
+        "comprehension_profile": "typical",
+        "hearing_profile": "typical"
+      },
+      "goals": [
+        {
+          "goal_id": "g_live",
+          "description": "Please repeat just the gate and meeting point slowly.",
+          "priority": 5,
+          "expected_disposition": "fulfill",
+          "success_evidence": [
+            "Give Blake a slowly understandable repeat of Avery's C12 gate and Terminal 2 assistance desk, without restarting unrelated travel history."
+          ]
+        }
+      ],
+      "permissions": [],
+      "private_knowledge": [
+        "Please repeat just the gate and meeting point slowly.",
+        "My benchmark identity is live."
+      ],
+      "voice": {
+        "voice_id": "v07:airline_05_mobility_repeat:live",
+        "enrollment_status": "enrolled",
+        "locale": "en-US",
+        "gain_db": 0.0,
+        "accent_label": "General American",
+        "speaking_style": "clean close-talk speech"
+      },
+      "wake_on": [
+        "assistant_speech_stop",
+        "tool_call"
+      ],
+      "present_initially": true
+    }
+  ],
+  "goal_relations": [
+    {
+      "left_goal_id": "g_primary",
+      "right_goal_id": "g_live",
+      "relation": "partially_aligned"
+    }
+  ],
+  "events": [
+    {
+      "event_id": "e_open",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "conversation_start",
+        "pattern": null,
+        "event_id": null,
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Please tell me whether my mobility assistance is confirmed and where I should go.",
+      "addressee": "assistant",
+      "fixed_utterance": "Please tell me whether my mobility assistance is confirmed and where I should go.",
+      "fixed_utterance_exact": true,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "request",
+      "notes": []
+    },
+    {
+      "event_id": "e_live",
+      "actor_id": "live",
+      "action": "interrupt",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_open",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "As Blake, interrupt the assistant's answer to request a targeted slow restatement of only Avery's gate and meeting point, while leaving Avery's original mobility-confirmation task active.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "audience_repair",
+      "notes": [
+        "State effect: assistant should yield, treat Blake's turn as an audience-repair request on Avery's primary thread, and not transfer ownership of the travel task to Blake.",
+        "The requested facts are limited to visible case evidence: gate C12 and Terminal 2 assistance desk."
+      ]
+    },
+    {
+      "event_id": "e_primary_reconcile",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_live",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "I still need to know where to meet the assistance staff.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "reconciliation_request",
+      "notes": []
+    },
+    {
+      "event_id": "e_live_followup",
+      "actor_id": "live",
+      "action": "interrupt",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_primary_reconcile",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Ask for the gate and meeting point once more, slowly, on behalf of the ongoing travel discussion.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "followup_clarification",
+      "notes": []
+    },
+    {
+      "event_id": "e_primary_commit",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_live_followup",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "Please give me the final directions clearly.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 4,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "final_confirmation",
+      "notes": []
+    },
+    {
+      "event_id": "e_comprehension_repair",
+      "actor_id": "primary",
+      "action": "speak",
+      "trigger": {
+        "kind": "event_completed",
+        "pattern": null,
+        "event_id": "e_primary_commit",
+        "tool_name": null,
+        "after_ms": 0,
+        "fallback_at_ms": null,
+        "fallback_after_event_id": null
+      },
+      "intent": "As Avery, indicate that the previous answer was still hard to follow and request a shorter plain-language restatement of the same confirmed assistance, gate, and meeting point.",
+      "addressee": "assistant",
+      "fixed_utterance": null,
+      "fixed_utterance_exact": false,
+      "required": true,
+      "urgency": 5,
+      "overlap_allowed": false,
+      "max_delay_ms": 0,
+      "grant_effects": [],
+      "presence_effects": [],
+      "thread_id": "primary",
+      "speech_act": "audience_repair",
+      "notes": [
+        "State effect: assistant should address Avery, use a shorter plain-language formulation, keep the same factual outcome, and not merely repeat the prior wording."
+      ]
+    }
+  ],
+  "expected_tool_actions": [],
+  "timing_requirements": [
+    {
+      "metric": "yield_latency_ms",
+      "event_id": "e_live",
+      "operator": "le",
+      "threshold": 1200.0
+    },
+    {
+      "metric": "resume_latency_ms",
+      "event_id": "e_live",
+      "operator": "le",
+      "threshold": 2800.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_primary_reconcile",
+      "operator": "le",
+      "threshold": 2200.0
+    },
+    {
+      "metric": "yield_latency_ms",
+      "event_id": "e_live_followup",
+      "operator": "le",
+      "threshold": 1200.0
+    },
+    {
+      "metric": "resume_latency_ms",
+      "event_id": "e_live_followup",
+      "operator": "le",
+      "threshold": 2800.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_primary_commit",
+      "operator": "le",
+      "threshold": 2200.0
+    },
+    {
+      "metric": "clarification_latency_ms",
+      "event_id": "e_comprehension_repair",
+      "operator": "le",
+      "threshold": 2200.0
+    }
+  ],
+  "final_success_conditions": [
+    "Confirm Avery’s mobility assistance and state gate C12 and the Terminal 2 assistance desk meeting point. Honor the companion’s slow focused repeat. Keep other travelers’ gates separate when actually supplied.",
+    "Evaluate each actual participant’s goal using its case-defined disposition and success evidence. A later valid clarification can refine the requested answer. Do not require information from absent participants or invented user-simulator side demands."
+  ],
+  "capability_assertions": [
+    {
+      "assertion_id": "a_identity_routing",
+      "category": "discourse_provenance",
+      "description": "Attribute every shared-microphone utterance to its registered speaker, addressee, and thread before using it.",
+      "expected_behavior": "The decisive identity factor is speaker, recipient_comprehension. Repeat the affected traveler's concrete result without restarting unrelated booking history.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit",
+        "e_comprehension_repair"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_spoken_result",
+      "category": "response_rendering",
+      "description": "Report the final disposition aloud to the affected participant(s).",
+      "expected_behavior": "Say a concise result that makes this outcome clear: Repeat the affected traveler's concrete result without restarting unrelated booking history.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit",
+        "e_comprehension_repair"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_full_duplex_policy",
+      "category": "group_collaboration",
+      "description": "Classify the assistant-relative live event and preserve all still-active speaker-owned threads after overlap.",
+      "expected_behavior": "Repeat the affected traveler's concrete result without restarting unrelated booking history.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit",
+        "e_comprehension_repair"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_multi_round_state_continuity",
+      "category": "multi_thread",
+      "description": "Preserve the original request, the first live intervention, the primary user's reconciliation turn, the live user's non-adjacent follow-up, and the final confirmation as one evolving interaction rather than restarting the task.",
+      "expected_behavior": "Integrate every revision while preserving unresolved speaker ownership, then reach this outcome: Repeat the affected traveler's concrete result without restarting unrelated booking history.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_repeated_speaker_consistency",
+      "category": "discourse_provenance",
+      "description": "Recognize the same primary and live voices when each returns after intervening speech, and retain their original authority, goal, addressee, and thread.",
+      "expected_behavior": "Do not assign a returning speaker a new identity, transfer another speaker's request to them, or forget their earlier contribution.",
+      "source_event_ids": [
+        "e_open",
+        "e_live",
+        "e_primary_reconcile",
+        "e_live_followup",
+        "e_primary_commit"
+      ],
+      "judge": "hybrid",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    },
+    {
+      "assertion_id": "a_primary_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Avery (mobility traveler).",
+      "expected_behavior": "After e_primary_reconcile, address or uniquely reference Avery (mobility traveler) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_primary_reconcile"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "primary",
+      "return_event_id": "e_primary_reconcile",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_primary_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Avery (mobility traveler)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_primary_reconcile to Avery (mobility traveler)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_primary_reconcile"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "primary",
+      "return_event_id": "e_primary_reconcile",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_live_return_spoken_anchor",
+      "category": "speaker_anchor",
+      "description": "Committed assistant speech uniquely anchors the response to the returning participant Blake (care companion).",
+      "expected_behavior": "After e_live_followup, address or uniquely reference Blake (care companion) by display name, public participant ID, a case-unique role, or a case-unique original request. A bare pronoun after intervening speakers is insufficient.",
+      "source_event_ids": [
+        "e_open",
+        "e_live_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "live",
+      "return_event_id": "e_live_followup",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_live_return_behavior_continuity",
+      "category": "return_continuity",
+      "description": "The final committed behavior preserves Blake (care companion)'s original goal, authority, addressee, and thread.",
+      "expected_behavior": "Connect the return at e_live_followup to Blake (care companion)'s original thread and preserve that participant's goal, authority, and ownership without transferring or merging them. This assertion does not require the participant's name to be spoken.",
+      "source_event_ids": [
+        "e_open",
+        "e_live_followup"
+      ],
+      "judge": "semantic",
+      "critical": false,
+      "target_participant_id": "live",
+      "return_event_id": "e_live_followup",
+      "diagnostic_only": true
+    },
+    {
+      "assertion_id": "a_comprehension_repair",
+      "category": "targeted_repair",
+      "description": "The intended recipient explicitly failed to understand the first answer.",
+      "expected_behavior": "Address the same recipient, use one short plain-language sentence, retain the correct outcome, and do not merely repeat the old wording.",
+      "source_event_ids": [
+        "e_comprehension_repair"
+      ],
+      "judge": "semantic",
+      "critical": true,
+      "target_participant_id": null,
+      "return_event_id": null,
+      "diagnostic_only": false
+    }
+  ],
+  "state_assertions": [],
+  "seed": 700033
+}

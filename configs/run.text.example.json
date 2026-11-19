@@ -1,0 +1,10 @@
+{
+  "output_root": "outputs",
+  "auto_cleanup": true,
+  "text": {
+    "base_url": "https://example.com/v1",
+    "api_key": {"env": "TEXT_API_KEY"},
+    "model": "gpt-6-luna"
+  },
+  "sut": {"provider": "chat", "model": "qwen3.8-flash", "transport": "text"}
+}
