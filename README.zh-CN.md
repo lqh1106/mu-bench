@@ -1,46 +1,48 @@
 # μ-Bench
 
-**面向持续多人对话的共享语音助手评测。**
+### 面向共享语音助手的多人任务完成评测
 
-[English](README.md) · [安装部署](docs/INSTALL.md) · [测评协议](docs/PROTOCOL.md) · [评分机制](docs/EVALUATION.md) · [模型适配](docs/MODELS.md) · [Agent 安装指南](AGENTS.md)
+[English](README.md) · [快速开始](#快速开始) · [安装部署](docs/INSTALL.md) · [模型适配](docs/MODELS.md) · [评分机制](docs/EVALUATION.md) · [Agent 安装指南](AGENTS.md)
 
-作者与维护者：[Lin Qihao（@lqh1106）](https://github.com/lqh1106)。
+**语音助手能否在一场共享对话中，完成多位用户相互关联的任务？**
 
-μ-Bench 检验语音助手能否在同一段对话中，为多位用户推进相互关联的事务。用户可能插话、相互交谈、修订先前要求，或回到尚未完成的话题。助手需要持续辨明正在处理谁的请求、哪些约束仍然有效，以及谁有权改变已有安排。
+个人助手帮助一个人完成事务；共同出行、会议协作和家庭安排则要求助手记住各人的要求，检查新提议对已有安排的影响，并跟进未完成事项。**μ-Bench 通过可响应模型行为的多人对话与明确的任务结果，检验这份共同委托能否成立。**
 
-仓库提供 **100 个基础场景、800 个具体案例**，包含完整案例设计、在线用户模拟器、参考声纹、原生音频适配器、虚拟业务工具、基于证据的评分器与结果保存流程。补充模型权重或 API 凭据，并部署仓库提供的 ASR/TTS 服务后，即可运行音频测评。
+[![孩子插话要求去公园，助手查询预计到达时间、取得家长同意，并保留机场到达时限；下方展示 Attribution、Threading 和 Coordination。](assets/figures/intro-teaser.png)](assets/figures/intro-teaser.pdf)
 
-## 评测什么能力？
+*共享交互示意；点击图片查看矢量 PDF。*
 
-例如，Avery 要求把预订改为八人，Blake 随后补充实际只有六人，Avery 再回来确认修订。助手需要把这些发言连接到同一事务，正确识别每次业务调用的请求来源，并完成最终更新。环境会保存成功操作、被拒调用和业务终态。
+家长要求 **10:00 前到机场**，孩子提出先去公园。助手需要检查绕路影响、取得同意并保留到达时限，同时分清“谢谢爸爸”是对同伴说话，“嗯”是附和。μ-Bench 从三个维度观察其中的职责：
 
-无工具的机场案例中，Avery 询问登机口和行动协助，另一位用户同时播报不同航班的登机口，第三位旅客又提出自己的行程。助手需要在持续交互中保持航班、说话人和请求的对应关系。
+- **Attribution：归属。** 分清谁在说话、对谁说话，以及正在处理谁的请求。
+- **Threading：线程保持。** 持续维护、更新并接续各人的未完事项。
+- **Coordination：协调。** 在权限、隐私和共同约束下，满足相互关联的目标。
 
-场景涵盖出行与酒店、共享家庭与日程安排、会议、教育、医疗、客户支持、公共服务等多人日常事务。
+## Benchmark 概览
 
-## 案例与受控变量
+**20 个领域 · 100 个基础场景 · 800 个案例 · 全双工语音**
 
-| 子集 | 基础场景 | 具体案例 | 完成依据 |
+| 子集 | 场景 | 案例 | 完成依据 |
 |---|---:|---:|---|
-| 无工具 | 49 | 392 | 实际说出的回答、设计目标、约束与隐私要求 |
-| 有工具 | 51 | 408 | 对话、真实虚拟工具返回、必要业务效果及终态 |
-| **合计** | **100** | **800** | |
+| **无工具** | 49 | 392 | 口头回答、澄清、拒绝与协调 |
+| **有工具** | 51 | 408 | 对话、真实虚拟工具执行及必要业务效果 |
 
-每个场景包含 **2 × 2 × 2 = 8 个变体**：
+场景涵盖出行、家庭、会议、医疗、教育、公共服务等领域。每场景有 **2 × 2 × 2 = 8 个配对变体**，分别改变群体规模（2–3／4–7 人）、声学风格（清晰／自然口语）和用户理解及追问需求（强／弱）。[案例集](cases/)支持固定场景及其余两项变量、只改变一项因素的对比。
 
-| 受控变量 | 案例 ID 中的取值 |
-|---|---|
-| 群体规模 | `g-small` / `g-large` |
-| 声学条件 | `a-clean` / `a-realistic` |
-| 用户理解水平 | `c-strong` / `c-weak` |
+## 如何运行一场测评？
 
-例如 `airline_04_gate_announcement_collision__g-small__a-clean__c-strong` 对应一个具体变体。完整设计位于 [cases/](cases/)。
+**案例 Playbook → 响应式用户 ⇄ 待测助手与工具 → 交互证据 → 任务与 ATC 分数**
 
-## 从克隆到首案运行
+每案定义参与者、各自可知信息、目标、约束及事件图。调度器根据实际对话释放事件，编剧生成相应用户的发言，配音器按固定声纹合成语音；助手的发言和工具效果驱动后续插话、澄清与请求修订。评分器依据最终对话和环境，核验设计目标是否完成。
 
-### 1. 安装并核验
+仓库包含案例、参考声纹、模型适配器、语音服务实现和评分器。[架构文档](docs/ARCHITECTURE.md)介绍组件关系，[测评协议](docs/PROTOCOL.md)说明播放、打断、逻辑时间暂停及信息边界。
 
-运行器使用 Linux 与 Python **3.10–3.12**，需预先安装 Git、`ffmpeg`、`libsndfile` 以及所选后端要求的编译工具。运行器、模型、ASR 和 TTS 分别使用独立环境。
+## 快速开始
+
+
+### 1. 克隆并验证
+
+运行器支持 **Linux、Python 3.10–3.12**。安装 Git、`ffmpeg`、`libsndfile` 和所选后端要求的编译工具。仓库已包含声纹目录、**3,200 条参考录音**及固定参与者绑定；模型权重和 API 凭据单独配置。
 
 **复现命令——新建本地副本：**
 
@@ -52,22 +54,19 @@ bash scripts/bootstrap.sh
 .venv/bin/python -m mubench validate --assets
 ```
 
-仓库包含 **3,200 个参考声纹的目录、参考录音和固定的参与者声纹绑定**。模型权重和 API 凭据单独配置。
+### 2. 启动服务并配置模型
 
-### 2. 部署服务并填写配置
+[安装文档](docs/INSTALL.md)提供完整启动命令。运行器、语音服务及每个原生模型使用独立环境。
 
-按 [安装文档](docs/INSTALL.md) 启动以下组件：
+| 组件 | 实现 | 配置内容 |
+|---|---|---|
+| 用户 TTS | CosyVoice HTTP 服务 | 声纹目录、TTS 权重、`speech.tts_endpoint` |
+| 助手 ASR | Faster-Whisper large-v3 | ASR 权重和网关使用的 ASR 地址 |
+| ASR／文本网关 | 仓库内 HTTP 路由服务 | 文本上游地址、密钥及本地网关密钥 |
+| 用户模拟器与评分器 | OpenAI 兼容文本 API | `text.base_url`、`text.api_key`、`text.model`，默认 `gpt-6-luna` |
+| 待测模型 | 原生 GPU 服务或云端接口 | `sut` 中的模型、端点和提供方凭据 |
 
-| 组件 | 实现与用途 |
-|---|---|
-| TTS | CosyVoice HTTP 服务，按指定声纹合成用户发言 |
-| ASR | Faster-Whisper large-v3，转写实际播放的助手声音 |
-| ASR／文本网关 | 将音频请求路由到本地 ASR，将模拟器和评分请求路由到文本 API |
-| 待测模型 | 原生模型服务或云端适配器，每案维护独立会话 |
-
-用户模拟器和评分器默认使用 `gpt-6-luna`；具体模型与服务地址由本地配置指定。各模型权重、运行环境及辅助资源见 [模型文档](docs/MODELS.md)。
-
-**复现命令——准备本地配置文件：**
+**复现命令——准备本地配置：**
 
 ```bash
 export MUBENCH_REPO="$HOME/mu-bench"
@@ -77,11 +76,11 @@ cp configs/run.native.example.json local.native.json
 cp configs/run.closed.example.json local.closed.json
 ```
 
-按安装文档填写本地环境变量、模型端点和语音服务路径。配置支持通过环境变量引用密钥；`.env`、`local.*.json`、本地 token 和生成结果由 Git 忽略。MOSS 分别提供[音频配置](configs/run.moss.example.json)和[有工具配置](configs/run.moss.tools.example.json)。
+按 [INSTALL.md](docs/INSTALL.md) 填写 `.env` 与所选配置。示例通过环境变量引用密钥；模型路径和隔离环境见 [MODELS.md](docs/MODELS.md)。MOSS 提供[音频模板](configs/run.moss.example.json)及[有工具模板](configs/run.moss.tools.example.json)。本地配置、token、权重和运行结果不进入版本控制。
 
-### 3. 先跑一案
+### 3. 先跑一案，再增加并发
 
-**复现命令——服务就绪后，使用原生模型测试无工具案例：**
+**复现命令——服务就绪后运行原生模型无工具测试：**
 
 ```bash
 export MUBENCH_REPO="$HOME/mu-bench"
@@ -92,7 +91,7 @@ set +a
 .venv/bin/python -m mubench run --config local.native.json --subset tool_free --case airline_04_gate_announcement_collision__g-small__a-clean__c-strong --workers 1
 ```
 
-**复现命令——使用已配置的云端模型测试有工具案例：**
+**复现命令——使用已配置的云端模型运行有工具测试：**
 
 ```bash
 export MUBENCH_REPO="$HOME/mu-bench"
@@ -103,108 +102,55 @@ set +a
 .venv/bin/python -m mubench run --config local.closed.json --subset tool_augmented --case hospitality_01_party_size_fix__g-small__a-clean__c-strong --workers 1
 ```
 
-省略 `--case` 即运行整个所选子集；填写基础场景名可选择该场景的八个变体。提高 `--workers` 时，需同时调整模型服务允许的会话数。多个运行器应共享输出根目录，以通过领取锁避免重复跑案。MOSS 每路需要独立 key 端点，同一会话中保持 key 不变。
+运行结束后，在 `formal/<case>/` 中查看 `score.json` 的任务判定、`atc_score.json` 的诊断指标，并播放 `audio/both.wav` 回听对话。该目录位于 `output_root/<model>/<subset>/<condition>/` 下。[输出结构、全量运行与并发设置 →](docs/USAGE.md)
 
-## 支持的模型
+## 支持的模型与实验设置
 
-| 模型适配 | 无工具音频 | 有工具音频 | 身份／语义消融投递 |
+| 模型 | 无工具音频 | 有工具音频 | 身份／语义消融 |
 |---|:---:|:---:|:---:|
 | MiniCPM-o | ✓ | — | ✓ |
 | Moshi、Freeze-Omni、FLM-Audio、Voila、Raon-SpeechChat、PersonaPlex、Lychee-FD | ✓ | — | — |
 | OpenAI Realtime、Grok voice、Gemini Live | ✓ | ✓ | — |
 | MOSS Live | ✓ | ✓ | ✓ |
 
-八个开源模型均附模型加载器和依赖记录；云端适配器使用各自的原生流式接口。业务工具使用公开参与者编号和逐次调用的 `caller_id`；身份报告的返回值只确认接收，不告知识别正误。
+[模型部署文档](docs/MODELS.md)提供检查点、隔离环境和提供方配置。实际可用性与并发容量取决于部署端点。
 
-模型检查点、部署方式与能力范围见 [MODELS.md](docs/MODELS.md)。注册、初始资料投递、打断和模拟器计算期间的暂停见 [PROTOCOL.md](docs/PROTOCOL.md)。
+**能力消融。** 三组设置保留原任务目标与资料，逐层消除交互要求：**串行 → 串行＋身份 → 串行＋身份＋结构化语义**。共 1,176 个变体，设计与模型无关；MiniCPM 和 MOSS 已实现相应辅助输入投递。[消融设置与送达核验 →](docs/USAGE.md#capability-ablations)
 
-## 三组消融
+**文本诊断。** 可选的流式文本轨道按注册姓名标注发言，使用逻辑时间前缀截断和同一虚拟工具环境，无需语音服务或 GPU。默认待测文本模型为 `qwen3.8-flash`。[配置与结果解读 →](docs/TEXT_TRACK.md)
 
-在相同任务目标、约束和业务规则上，逐层提供额外辅助：
+## 如何评价？
 
-| 设置 | CLI 参数 | 改动 |
+**Task Success** 判断案例适用目标、必要业务效果、终态与隐私约束是否满足。**授权及调用人来源违规单独报告**，并保留对应的原始记录。
+
+**ATC** 解释任务结果背后的交互能力：
+
+| 维度 | 含义 | 分项映射 |
 |---|---|---|
-| 串行 | `serial` | 用户发言依次送达，消除用户重叠和实时插话要求 |
-| 串行＋身份 | `serial_identity` | 进一步提供说话人、受话人、请求归属及线程信息 |
-| 串行＋身份＋语义 | `serial_identity_semantics` | 进一步提供当前发言及已听上下文的结构化解释 |
+| **A：Attribution** | 说话人、受话人及请求归属 | `A = Routing` |
+| **T：Threading** | 任务线程保持与续接 | `T = Continuity` |
+| **C：Coordination** | 边界遵守与适用的多人服务公平性 | `C = (Isolation + Equity) / 2`；无适用 Equity 时，`C = Isolation` |
 
-**三组共 1,176 个案例，设计与模型无关**，由三个设置分别作用于 392 个无工具案例。当前身份／语义辅助投递适配 MiniCPM 和 MOSS。案例在模型间共用，运行实现由独立指纹记录；结构化输入生成及最后候选采用情况保留审计。
+分数范围为 `[0, 1]`；不适用的 Equity 不计入分母，实际得零则参与平均。ATC 按案从保留的 RICE 分项计算，无需额外调用 Judge。
 
-**复现命令——原生服务就绪后测试身份组：**
+评价结合确定性工具／状态检查、语义初评、独立全复核、必要时的冲突仲裁与定向来源复核。Judge 只按案例设计目标评分，模拟器追加的请求不升级为必须完成的目标。完整轨迹可以离线重评，无需重跑待测模型。
 
-```bash
-export MUBENCH_REPO="$HOME/mu-bench"
-cd "$MUBENCH_REPO"
-set -a
-source .env
-set +a
-.venv/bin/python -m mubench run --config local.native.json --subset tool_free --ablation serial_identity --case airline_04_gate_announcement_collision__g-small__a-clean__c-strong --workers 1
-```
+[评分与证据流](docs/EVALUATION.md) · [有工具评价契约](docs/TOOL_EVALUATION.md) · [输出与自动清理](docs/USAGE.md#outputs-and-cleanup)
 
-## 评分机制
+## 文档导航
 
-证据包组织实际送达的用户发言、实际播放的助手音频及其 ASR、工具返回、参与者映射和设计任务契约。评分依次经过：**初评 → 独立全复核 → 有冲突时仲裁 → 按需进行来源专项核查**，并在发布前验证证据和确定性条件。
-
-- **Task Success** 检查设计目标、必要业务效果、终态和隐私；授权违规单独报告，保留后续更换聚合口径所需的记录。
-- **模拟器追加要求**不升级为案例必须完成的目标。
-- **无工具案例**按要求的口头行为判断，不要求不存在的数据库写入。
-- **有工具案例**区分口头报告和真实执行；终态与执行历史分别用于业务效果和过程、授权核验。
-
-| RICE 维度 | 测量内容 |
+| 需要做什么 | 入口 |
 |---|---|
-| **R：Routing** | 身份与受话人归属、请求来源、用户返回时的指代锚点 |
-| **C：Continuity** | 保持并续接正确的任务线程与约束 |
-| **I：Isolation** | 用户之间的隐私、权限与信息隔离 |
-| **E：Equity** | 适用的公平性、群体协作和低显著性输入处理 |
-
-各轴分数在 `[0, 1]`，按可用子项聚合，不适用项留空。逐项依据及分母记录保存在输出中。完整定义见 [评分文档](docs/EVALUATION.md)与[有工具评分契约](docs/TOOL_EVALUATION.md)。
-
-## 输出、自动清理与补评
-
-默认输出结构如下：
-
-```text
-outputs/<model>/<subset>/<condition>/
-├── formal/<case>/                # 完整采用结果
-│   ├── score.json
-│   ├── rice_score.json
-│   ├── audio/both.wav            # 最终双声道录音
-│   └── ...                      # Case、ASR、轨迹及评分证据
-├── runs/<case>/attempt_001/      # 尝试日志、回执和证据
-└── claims/                      # 案例领取锁
-```
-
-每案新建独立会话，已发布案例再次运行时跳过。交互和评分有效的任务失败仍作为真实结果保留；技术错误单独记录，保存证据后推进后续案例。
-
-示例配置默认开启自动清理：在分数、RICE 与最终录音通过校验后，删除冗余单声道和音频分片；保留最终立体声录音、ASR、轨迹、契约和评分审计。同一文件系统内通过硬链接发布，避免 `formal` 与 `runs` 重复占用音频空间。不自动删除未完整的尝试证据。
-
-完整交互可以离线重新评分，无需重新运行待测模型；新评价写入单独的续评目录。操作见[离线补评](docs/INSTALL.md#offline-judging)。
-
-## 文本诊断
-
-文本适配器按注册姓名标注发言，复用在线模拟器和虚拟工具。按逻辑时间触发打断时，保留已送达前缀、丢弃未送达后缀，再加入打断发言；完整工具调用保留实际效果，未完成的调用不执行。
-
-默认待测文本模型为 `qwen3.8-flash`。将[文本配置模板](configs/run.text.example.json)复制为 `local.text.json`，填写支持所选模型的端点即可。该轨道不需要 ASR、TTS 或 GPU，分数标记为文本诊断结果。时钟估计与轨迹格式见 [TEXT_TRACK.md](docs/TEXT_TRACK.md)。
-
-## 仓库导航
-
-| 目录 | 内容 |
-|---|---|
-| [cases/](cases/) | 完整无工具、有工具及模型无关的消融案例 |
-| [runtime/](runtime/) | 模拟器、时钟、事件调度与运行入口 |
-| [adapters/](adapters/) | 原生模型加载器及云端适配器 |
-| [judges/](judges/) | 证据组织、语义复核、确定性评分与 RICE |
-| [services/](services/) | ASR、TTS、网关和模型服务 |
-| [assets/voices/](assets/voices/) | 声纹目录、参考音频及固定绑定 |
-| [configs/](configs/) | 运行与模型路径模板 |
-| [environments/](environments/) | 分模型依赖记录 |
-| [third_party/](third_party/) | 上游源码及原许可证 |
-| [scripts/](scripts/)、[tests/](tests/) | 安装辅助、校验和回归测试 |
-
-自动配置 agent 请从 [AGENTS.md](AGENTS.md) 开始；组件关系见[架构文档](docs/ARCHITECTURE.md)。
+| 部署 TTS、ASR 与运行器 | [安装部署](docs/INSTALL.md) |
+| 配置或部署待测模型 | [模型文档](docs/MODELS.md) |
+| 全量运行、消融或离线补评 | [使用指南](docs/USAGE.md) |
+| 理解共享频道交互 | [测评协议](docs/PROTOCOL.md) |
+| 检查任务判定与诊断分数 | [评分机制](docs/EVALUATION.md) |
+| 运行流式文本实验 | [文本诊断](docs/TEXT_TRACK.md) |
+| 查找组件或由 Agent 配置 | [架构文档](docs/ARCHITECTURE.md) · [Agent 指南](AGENTS.md) |
 
 ## 引用与许可证
 
-软件引用信息见 [CITATION.cff](CITATION.cff)。
+作者与维护者：[Lin Qihao（@lqh1106）](https://github.com/lqh1106)。软件引用信息见 [CITATION.cff](CITATION.cff)。
 
-原创 benchmark 代码和案例内容采用 [Apache-2.0](LICENSE)。第三方代码、参考录音和外部模型权重保留各自许可证，详见 [NOTICE](NOTICE) 和[第三方组件说明](docs/THIRD_PARTY.md)。
+原创代码和案例采用 [Apache-2.0](LICENSE)。第三方代码、参考声纹和外部权重保留各自许可证，详见 [NOTICE](NOTICE) 与[第三方组件说明](docs/THIRD_PARTY.md)。

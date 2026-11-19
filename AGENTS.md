@@ -11,8 +11,10 @@ This checkout is an independent benchmark. Configure local model/speech services
 7. Scale with --workers and model --max-sessions. All lanes targeting the same experiment share one output root for claim locking. One MOSS key endpoint per lane; never change a key mid-session.
 8. For tool cases, preserve explicit caller_id public codes. Do not expose private participant roles/goals/ACL oracle mappings to the tested model. Attribution acknowledgments disclose receipt, not correctness.
 9. Keep evidence on errors. Only complete conversations qualify for evidence-only judging. Do not fabricate successful exit codes or replay partial tool streams.
-10. Auto-cleanup is score/RICE/final-stereo gated. Keep final audio, ASR, trajectories, case contracts, judge requests/responses and receipts. Never delete incomplete evidence merely because a queue advances.
+10. Auto-cleanup is score/ATC/source-RICE/final-stereo gated. Keep final audio, ASR, trajectories, case contracts, judge requests/responses and receipts. Never delete incomplete evidence merely because a queue advances.
 
 Use the public protocol identifiers produced by this release. Experimental histories and private deployment paths are not needed. Do not commit local keys, endpoint token files, logs, model weights or generated result trees.
 
 Recompile the shared ablation catalog and separate runtime fingerprints if a case/scoring implementation changes. Run scripts/validate_release.py, scripts/check_entrypoints.py, the unit tests and tool revision/caller/transport fixtures after changing protocol code. Synthetic fixtures test mechanisms; they are not model evaluations.
+
+ATC is the public diagnostic format: A=R, T=Continuity, C=(I+E)/2, or C=I when E is absent. Keep raw RICE components and applicability; never zero-impute missing Equity. New finalized and offline-evaluated outputs include atc_score.json without rejudging merely for aggregation.

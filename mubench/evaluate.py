@@ -24,4 +24,11 @@ score=MultiUserEvaluator().evaluate(case,trace).model_dump(mode='json')
 # Shared evaluator already applies the public authorization-separated contract.
 score['judge_protocol']=os.environ.get('MUBENCH_TOOL_JUDGE_VERSION',os.environ['MUBENCH_JUDGE_PROTOCOL']);score['evidence_only_resume']=True
 (out/'score.json').write_text(json.dumps(score,ensure_ascii=False,indent=2)+'\n');(out/'trace.after_judge.json').write_text(trace.model_dump_json(indent=2)+'\n')
-print(json.dumps({'score':str(out/'score.json'),'sut_replayed':False,'task_success':score['task_success']}))
+from rice_compute import compute_rice
+from mubench.metrics import write_atc
+rice=compute_rice(score,score)
+rice.update(measurement_track='audio-logical' if a.transport=='audio' else 'text-logical',
+            voice_comparable=a.transport=='audio',source_score='score.json')
+(out/'rice_score.json').write_text(json.dumps(rice,indent=2)+'\n')
+write_atc(out,rice)
+print(json.dumps({'score':str(out/'score.json'),'atc':str(out/'atc_score.json'),'rice':str(out/'rice_score.json'),'sut_replayed':False,'task_success':score['task_success']}))

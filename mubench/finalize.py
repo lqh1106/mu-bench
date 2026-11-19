@@ -24,6 +24,9 @@ def finalize(case,rt,envfile,model,formal,transport,cleanup=False):
     (case/'rice_score.json').write_text(json.dumps(rice,indent=2)+'\n')
     rice=json.loads((case/'rice_score.json').read_text())
     if any(rice.get(k) is None for k in ['routing_score','continuity_score','isolation_score']):raise ValueError('Required RICE axis missing')
+    from mubench.metrics import write_atc
+    atc=write_atc(case,rice)
+    if any(atc[k] is None for k in ('attribution_score','threading_score','coordination_score')):raise ValueError('Required ATC axis missing')
     if formal.exists():raise FileExistsError('Never overwrite an existing published result')
     tmp=formal.with_name('.'+formal.name+'.publishing');tmp.parent.mkdir(parents=True,exist_ok=True)
     def link_or_copy(src,dst):
@@ -32,7 +35,7 @@ def finalize(case,rt,envfile,model,formal,transport,cleanup=False):
         return dst
     shutil.copytree(case,tmp,copy_function=link_or_copy,ignore=shutil.ignore_patterns('private.env','private_text.json','*.lock','_floor_scratch'))
     # Hardlinks preserve one physical copy on one filesystem. All retained provenance remains accessible.
-    receipt={'complete':True,'transport':transport,'task_success':score['task_success'],'source':str(case),'score_sha256':digest(tmp/'score.json'),'rice_sha256':digest(tmp/'rice_score.json'),'audio_sha256':digest(tmp/'audio/both.wav') if transport=='audio' else None}
+    receipt={'complete':True,'transport':transport,'task_success':score['task_success'],'source':str(case),'score_sha256':digest(tmp/'score.json'),'rice_sha256':digest(tmp/'rice_score.json'),'atc_sha256':digest(tmp/'atc_score.json'),'audio_sha256':digest(tmp/'audio/both.wav') if transport=='audio' else None}
     (tmp/'release_receipt.json').write_text(json.dumps(receipt,indent=2)+'\n');os.replace(tmp,formal)
     if cleanup and transport=='audio':
         from formal_post_score_rice import cleanup_attempt_seal_audio

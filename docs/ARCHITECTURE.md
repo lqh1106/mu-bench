@@ -17,7 +17,7 @@ runtime/
   ablations/                shared transformation, routing/semantic records and pacing
   fingerprints/             implementation pins for each realized ablation transport
 judges/
-  common/                   shared evaluator, evidence rules, reviews, source checks and RICE
+  common/                   shared evaluator, evidence rules, reviews, source checks and ATC (with raw RICE components)
   tool_free/                tool-free semantic judging entry
   tool_augmented/           business/caller rules and audio/text semantic entries
   text/                     text evidence changes only

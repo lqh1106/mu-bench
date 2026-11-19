@@ -24,20 +24,26 @@ The primary Task Success is the conjunction of correct goal dispositions/complet
 
 Separating authorization does not exempt a wrong business result, privacy leak, unsupported completion claim or unresolved user goal. Those can independently cause task failure.
 
-## RICE
+## ATC: Attribution, Threading and Coordination
 
-Scores are in [0, 1]; percentages are a presentation choice. The implementation records the units used and leaves nonapplicable components absent.
+ATC presents the existing evidence-based component scores in three axes. It does not run another judge or change Task Success.
 
-| Axis | Applicable components |
-|---|---|
-| Routing | Participant/scene recognition, addressee and discourse provenance; return spoken-anchor evidence |
-| Continuity | Thread maintenance, targeted repair, response rendering; return behavioral continuity |
-| Isolation | Privacy, authorization and isolation assertions; a disclosed boolean proxy only when detailed assertions are unavailable |
-| Equity | Fairness, group collaboration and applicable quiet-input integration/floor policy |
+| ATC axis | Mapping | Interpretation |
+|---|---|---|
+| **A — Attribution** | `A = R` | Participant/addressee recognition, discourse provenance and return spoken anchors |
+| **T — Threading** | `T = Continuity` | Maintaining, updating and resuming participant-specific task threads |
+| **C — Coordination** | `C = (I + E) / 2` when E applies | Boundary compliance and applicable multi-user service equity |
+| **C when E is absent** | `C = I` | Isolation alone; absent Equity is not zero-imputed |
 
-Each axis averages its available component rates. The interaction summary averages applicable axes. Individual assertion/event-level records and denominators remain in `score.json` and trajectories. `rice_score.json` is derived from the completed current judge/evaluator output, including its `recognition_split`; no second judgment is needed merely to aggregate it.
+`I` retains privacy, authorization and isolation evidence. `E` retains applicable fairness, group collaboration and quiet-input/floor-policy evidence. A numerical E of zero is applicable and participates in the two-component mean. Missing I leaves Coordination absent, rather than substituting E. All scores are in `[0, 1]`.
 
-Text-track RICE is labeled noncomparable to voice. It measures name-labeled routing and logical interruption/continuity, not voice identity recognition or physical overlap.
+The public artifact is `atc_score.json`, containing `attribution_score`, `threading_score`, `coordination_score`, I/E values, the Coordination denominator (one or two), applicability and the original component units. It records the SHA-256 of `rice_score.json`. Raw RICE is retained for compatibility and audit: `routing_score`, `continuity_score`, `isolation_score`, and `equity_score` are unchanged. **ATC C means Coordination; the older RICE C means Continuity and maps to ATC T.**
+
+Each original RICE axis averages its applicable component rates. Individual assertion/event-level records and denominators remain in `score.json` and trajectories. Both `rice_score.json` and its ATC wrapper are derived from the current judge/evaluator output, including `recognition_split`; no additional semantic judgment is needed to aggregate them. The older `interaction_score_rice` is retained as a legacy diagnostic, not renamed to an ATC average.
+
+For dataset summaries, aggregate per-case ATC over the declared set of available results and retain its coverage. Compute each case's Coordination before averaging: a mean of aggregate I and E can differ when their applicable cases differ.
+
+Text-track ATC retains `voice_comparable=false`: it measures name-labeled routing and logical interruption/threading, not voice identity recognition or physical overlap.
 
 ## Offline continuation
 
@@ -45,7 +51,7 @@ Complete interaction evidence can be judged again without replaying the tested m
 
 ## Publication and cleanup
 
-Publication requires a task verdict, required RICE axes, and for audio a readable nonempty stereo final waveform. Raw judgments and receipts are retained. Redundant mono stems, oracle stems and played audio fragments are removed only after sealing; the final stereo recording, ASR and JSON provenance survive. Incomplete attempts are not automatically deleted.
+Publication requires a task verdict, required ATC axes and their source RICE components, and for audio a readable nonempty stereo final waveform. Raw judgments and receipts are retained. Redundant mono stems, oracle stems and played audio fragments are removed only after sealing; the final stereo recording, ASR and JSON provenance survive. Incomplete attempts are not automatically deleted.
 
 
 The tool-augmented track applies the [business, caller, evidence and privacy contracts](TOOL_EVALUATION.md). Tool-free and ablation tracks use their corresponding evidence profiles.
