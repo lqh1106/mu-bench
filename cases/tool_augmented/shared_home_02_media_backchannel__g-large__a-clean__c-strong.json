@@ -240,7 +240,8 @@
           "Incidental realistic requests may be added only without replacing the authored core request or creating new mandatory benchmark goals."
         ]
       }
-    }
+    },
+    "tool_boundary_patch": "tool-contract-boundaries-r1"
   },
   "case_id": "shared_home_02_media_backchannel__g-large__a-clean__c-strong",
   "title": "Media request continues through a backchannel [g-large__a-clean__c-strong]",

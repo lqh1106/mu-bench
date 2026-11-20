@@ -265,7 +265,7 @@ def _transcript(payload, voiced_duration: float) -> dict:
     if text.startswith("```") or text.lower().startswith(("here is the transcript:", "transcription:")):
         raise AudibleASRError("asr_returned_wrapper_not_verbatim_text")
     meta_patterns = (
-        r"\b(?:please\s+)?(?:provide|upload|attach|send|share)\b.{0,80}\b(?:audio|recording|file|clip)\b",
+        r"\b(?:please\s+)?(?:provide|upload|attach|send|share)\s+(?:(?:me|us)\s+)?(?:(?:the|an?|your|attached|actual|original|another|new|requested)\s+){0,3}(?:audio(?:\s+(?:file|recording|clip))?|recording|file|clip)\b",
         r"\b(?:can(?:not|'t)|unable to)\b.{0,50}\b(?:hear|access|listen to)\b.{0,40}\b(?:audio|recording)\b",
         r"\b(?:ready|happy|glad) to transcribe\b",
         r"请.{0,10}(?:提供|上传|发送|附上).{0,30}(?:音频|录音|文件)",

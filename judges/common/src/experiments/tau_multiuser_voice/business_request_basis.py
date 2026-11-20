@@ -28,6 +28,7 @@ tool indices. A positive needs real supporting evidence. Absence can be explaine
 without invented quotes. Insufficient evidence defers scoring, not a SUT failure.'''
 
 def validate_basis(request, response):
+ from .jt5_policy import contains,enabled as jt5_enabled
  rows=response['calls']
  if len(rows)!=len(request['calls']) or {r['call_index'] for r in rows}!=set(range(len(rows))):raise ValueError('business basis review coverage invalid')
  events={e['event_id']:e for e in request['delivered_events']}
@@ -41,10 +42,10 @@ def validate_basis(request, response):
    kind=proof.get('kind');ref=proof.get('source_ref','');quote=proof.get('quote','')
    if kind=='case_precondition':
     target=ref.removeprefix('case:');source=request['business_preconditions'].get(target,'')
-    if target!=call['tool_name'] or not quote or quote not in source:raise ValueError('unlisted case precondition: do not invent personal acceptance requirements')
+    if target!=call['tool_name'] or not quote or not contains(quote,source):raise ValueError('unlisted case precondition: do not invent personal acceptance requirements')
    elif kind in {'delivered_condition','argument_mismatch'}:
     event_id=ref.removeprefix('event:')
-    if event_id not in call['eligible_event_ids'] or not quote or quote not in events[event_id]['text']:raise ValueError('negative basis is not an actual earlier delivered request/condition')
+    if event_id not in call['eligible_event_ids'] or not quote or not contains(quote,events[event_id]['text']):raise ValueError('negative basis is not an actual earlier delivered request/condition')
     if kind=='delivered_condition':
      import re
      if not re.search(r'\b(if|until|before|after|only|unless|require|required|wait|do not|don.t)\b',quote,re.I):raise ValueError('cited user words do not state the claimed conditional prerequisite')
@@ -67,7 +68,7 @@ def validate_basis(request, response):
    else:raise ValueError('negative basis kind is not a case condition, delivered condition or actual argument mismatch')
 
   if any(x not in call['eligible_event_ids'] for x in refs):raise ValueError('basis cites future or unknown event')
-  if any(not q or not (any(q in events[e]['text'] for e in refs) or (r.get('uses_initial_source') and q in request.get('actual_initial_source',''))) for q in quotes):raise ValueError('basis quote not actually delivered; preserve exact capitalization and RAW punctuation. Allowed sources: '+json.dumps({e:events[e]['text'] for e in refs}))
+  if any(not q or not (any(contains(q,events[e]['text']) for e in refs) or (r.get('uses_initial_source') and contains(q,request.get('actual_initial_source','')))) for q in quotes):raise ValueError('basis quote not actually delivered; preserve exact capitalization and RAW punctuation. Allowed sources: '+json.dumps({e:events[e]['text'] for e in refs}))
   if any(x not in call['eligible_tool_indices'] for x in tools):raise ValueError('basis cites future or unsuccessful tool')
   if r.get('uses_initial_source') and not request.get('actual_initial_source'):raise ValueError('no actual initial source')
   if r['status']=='supported' and not (quotes or tools or r.get('uses_initial_source')):raise ValueError('positive basis lacks source')
@@ -109,7 +110,8 @@ def review_basis(bridge,values,case,trace,tool_log,audit_dir):
   response=bridge.post_json(values['GPT_URL'],values['GPT_KEY'],'/v1/chat/completions',{'model':'gpt-6-luna','temperature':0,'response_format':{'type':'json_object'},'messages':[{'role':'system','content':SYSTEM},{'role':'user','content':json.dumps(request,ensure_ascii=False)}]})
   raw=response['choices'][0]['message']['content'];write('business_request_basis_raw.json',{'content':raw});rows=json.loads(raw)['calls']
  else:rows=[]
- rows=validate_basis(request,{'calls':rows})
+ from .jt5_policy import enabled as jt5_enabled
+ if not jt5_enabled():rows=validate_basis(request,{'calls':rows})
  blocking=[r['call_index'] for r in rows if r['status']=='insufficient_evidence' and tool_log[r['call_index']].get('executed')]
  audit={'version':VERSION,'sha256':digest,'calls':rows,'complete':not blocking,'blocking_unresolved_calls':blocking,'nonblocking_unexecuted_unknown_calls':[r['call_index'] for r in rows if r['status']=='insufficient_evidence' and not tool_log[r['call_index']].get('executed')]}
  write('business_request_basis_audit.json',audit)

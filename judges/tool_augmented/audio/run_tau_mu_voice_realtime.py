@@ -2150,6 +2150,8 @@ def run_semantic_judge(
     from experiments.tau_multiuser_voice.fact_contract import review_for_case
     from experiments.tau_multiuser_voice.task_evidence import build_task_evidence_contract, validate_goal_evidence
     from experiments.tau_multiuser_voice.business_acceptance import annotate_tool_facts
+    from experiments.tau_multiuser_voice.tool_temporal_alignment import prepare_turns
+    assistant_turns = prepare_turns(bridge, values, trace, assistant_turns, tool_log, audit_dir)
     annotate_tool_facts(case,trace,tool_log)
     from experiments.tau_multiuser_voice.privacy_evidence import build_privacy_evidence_contract, validate_privacy_evidence
     from experiments.tau_multiuser_voice.judge_evidence import (

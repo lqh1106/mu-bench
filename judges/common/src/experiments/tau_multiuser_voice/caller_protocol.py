@@ -107,6 +107,7 @@ def build_request(case, trace, tool_log):
         delivered_events=events, calls=calls)
 
 def validate_review(request, response):
+    from .jt5_policy import contains
     rows = response.get('calls')
     if not isinstance(rows, list) or len(rows) != len(request['calls']):
         raise ValueError('caller review must cover every business call')
@@ -126,7 +127,7 @@ def validate_review(request, response):
             raise ValueError('caller review evidence lists required')
         if any(ref not in call['eligible_event_ids'] for ref in refs):
             raise ValueError('caller review cites future or unknown utterance')
-        if any(not isinstance(q, str) or not q or not any(q in events[ref]['text'] for ref in refs) for q in quotes):
+        if any(not isinstance(q, str) or not q or not any(contains(q, events[ref]['text']) for ref in refs) for q in quotes):
             raise ValueError('caller review quotation is not delivered evidence; preserve exact capitalization and RAW punctuation. Allowed sources: '+json.dumps({ref:events[ref]['text'] for ref in refs}))
         if call['caller_id'] not in ids:
             if row['status'] != 'contradicted':

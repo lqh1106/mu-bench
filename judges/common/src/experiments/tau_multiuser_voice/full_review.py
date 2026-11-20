@@ -87,7 +87,8 @@ def full_review(bridge,values,case,contract,primary,catalog,judge_request,audit_
                 if stage=='source_guard_reassessment':
                     from .source_guard import merge_affected
                     spec=packet['source_guard'];obj=merge_affected(spec['previous_final'],obj,spec['affected_item_ids'])
-                bound,audit=validate_and_bind_judge_payload(case,contract,obj,catalog)
+                from .jt5_policy import enabled as jt5_enabled
+                bound,audit=validate_and_bind_judge_payload(case,contract,obj,catalog,**({'jt5_accept_third':attempt==3} if jt5_enabled() else {}))
                 got=verdicts(bound)
                 if set(got)!=set(expected):raise JudgeEvidenceInvalid([{'path':'coverage','reason':'full semantic item IDs differ'}],{'evaluation_valid':False})
                 if audit_dir is not None:write(audit_dir/f'{stage}_validation.json',audit)

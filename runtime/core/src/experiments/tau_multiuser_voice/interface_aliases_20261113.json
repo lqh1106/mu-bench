@@ -52,6 +52,12 @@
   "events_entertainment_03_accessible_seat": {
     "seat_requirement": {
       "wheelchair-accessible row": "wheelchair_accessible_row"
+    },
+    "proximity_priority": {
+      "accessibility_over_group_proximity": "secondary",
+      "accessibility_first": "secondary",
+      "group_proximity_first": "primary",
+      "no_proximity_preference": "none"
     }
   },
   "family_coordination_03_chore_quiet_child": {
@@ -62,6 +68,20 @@
   "emergency_incident_03_roll_call_overlap": {
     "reports_by_user": {
       "one_person_unaccounted_for": "one_unaccounted_for"
+    }
+  },
+  "events_entertainment_02_playlist_cheer": {
+    "playlist_scope": {
+      "complete set": "complete_set",
+      "complete-set": "complete_set",
+      "complete_set": "complete_set"
+    }
+  },
+  "shared_home_02_media_backchannel": {
+    "playback_scope": {
+      "full album": "full_album",
+      "full-album": "full_album",
+      "full_album": "full_album"
     }
   }
 }

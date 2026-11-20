@@ -24,9 +24,27 @@ def normalize_fields(scenario, arguments):
 
 def expose_schema(schema,scenario):
     expose_nested_shapes(schema)
+    if scenario=='events_entertainment_03_accessible_seat' and 'proximity_priority' in schema.get('properties',{}):
+        prop=schema['properties']['proximity_priority']
+        prop['enum']=['primary','secondary','none',*ALIASES[scenario]['proximity_priority']]
+        prop['description']='Priority of sitting near the group: primary means group proximity takes precedence; secondary means proximity is a preference subordinate to mandatory seat requirements; none means no group-proximity preference. Choose from the actual request. Finite equivalent spellings below are accepted; conflicting priorities remain different.'
     if scenario=="healthcare_care_02_medication_list_source":
         schema["properties"]["documented_dose"].update(pattern=r"[0-9]+(?:\.[0-9]+)? (?:mg|g|mcg|mL)",description="Dose amount and unit only, such as a number followed by mg. Put attribution in source, not in the dose string.")
         schema["properties"]["confirmation_status"]["description"] += " confirmation_required is a finite alias for patient_confirmation_required in this API."
+        schema['properties']['documented_dose']['description'] += ' This is the dose reported by the external note, not a confirmed patient dose.'
+        if 'source' in schema['properties']:
+            schema['properties']['source']['description']='Free-text explanation of where the external entry came from and whether it has been confirmed. Preserve the actual person and document attribution. No fixed wording or hidden source code is required. Do not claim patient confirmation unless it actually occurred.'
+        if 'source_document' in schema['properties']:
+            schema['properties']['source_document']['description']='Document identifier: family_written_list denotes the family-provided list; care_plan_list_v1 denotes the existing historical list. Keep their facts separate.'
+        if 'confirmation_status' in schema['properties']:
+            schema['properties']['confirmation_status']['enum']=['patient_confirmation_required','confirmation_required']
+            schema['properties']['confirmation_status']['description'] += ' This endpoint stages unverified information only; it never confirms a patient dose or updates treatment.'
+
+    scope_fields={'events_entertainment_02_playlist_cheer':('playlist_scope','Play the complete set playlist, not a single item or excerpt.'),'shared_home_02_media_backchannel':('playback_scope','Play the whole selected album, not a single track or excerpt.')}
+    if scenario in scope_fields:
+        field,meaning=scope_fields[scenario]
+        if field in schema['properties']:
+            schema['properties'][field].update(enum=list(ALIASES[scenario][field]),description=meaning+' These are equivalent API spellings for the scope, not different content identities. Album names remain independent and must be correct.')
     for field,aliases in ALIASES.get(scenario,{}).items():
         prop=schema['properties'].get(field)
         if prop is None: continue

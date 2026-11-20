@@ -92,6 +92,15 @@ class LogicalTimeOpenAIAdapter(DiscreteTimeOpenAIAdapter):
         self._audit_sequence = 0
         self._audit_lock = threading.RLock()
         self._current_logical_time_ms = 0
+        self._tool_output_epoch = 0
+        self._tool_output_unacked: dict[str, int] = {}
+        self._tool_output_committed_epoch = 0
+        self._continuation_wanted_epoch = 0
+        self._continuation_covered_epoch = 0
+        self._continuation_inflight = False
+        self._continuation_request_ids: list[str] = []
+        self._continuation_serial = 0
+        self._continuation_not_before = 0.0
 
     # ------------------------------------------------------------------
     # Public compatibility and logical-pause contract
@@ -356,6 +365,9 @@ class LogicalTimeOpenAIAdapter(DiscreteTimeOpenAIAdapter):
                 self._anonymous_active_responses,
                 self._pending_truncate_acks,
                 self._pending_tool_results,
+                self._tool_output_unacked,
+                self._continuation_inflight,
+                self._continuation_wanted_epoch > self._continuation_covered_epoch,
                 self._deferred_provider_events,
             )
         )
@@ -374,6 +386,35 @@ class LogicalTimeOpenAIAdapter(DiscreteTimeOpenAIAdapter):
     # ------------------------------------------------------------------
     # Corrected OpenAI event processing
     # ------------------------------------------------------------------
+
+    async def _flush_pending_tool_results(self) -> None:
+        # Every result is sent once. Only continuation requests are coalesced.
+        for call_id, result_str, request_response, _is_error in self._pending_tool_results:
+            self._tool_output_epoch += 1
+            epoch = self._tool_output_epoch
+            self._tool_output_unacked[call_id] = epoch
+            await self.provider.send_tool_result(call_id, result_str, False)
+            if request_response:
+                self._continuation_wanted_epoch = epoch
+                self._continuation_not_before = time.monotonic() + 0.2
+            self._audit('tool_output_queued', call_id=call_id, epoch=epoch,
+                        continuation_requested=request_response)
+        self._pending_tool_results.clear()
+
+    async def _maybe_request_continuation(self) -> None:
+        if (self._continuation_wanted_epoch <= self._continuation_covered_epoch
+                or self._continuation_inflight or self._tool_output_unacked
+                or self._active_response_ids or self._anonymous_active_responses
+                or self._paused or self._interruption_open or self._pending_truncate_acks
+                or time.monotonic() < self._continuation_not_before):
+            return
+        self._continuation_serial += 1
+        event_id = 'mu_continuation_' + str(self._continuation_serial)
+        await self.provider.request_response(event_id)
+        self._continuation_inflight = True
+        self._continuation_request_ids = (self._continuation_request_ids + [event_id])[-16:]
+        self._audit('continuation_requested', event_id=event_id,
+                    committed_epoch=self._tool_output_committed_epoch)
 
     async def _execute_tick(
         self,
@@ -407,9 +448,22 @@ class LogicalTimeOpenAIAdapter(DiscreteTimeOpenAIAdapter):
         )
         for event in [*deferred, *received_events]:
             await self._process_event(result, event)
+        await self._maybe_request_continuation()
 
     async def _process_event(self, result: TickResult, event: Any) -> None:
         event_type = getattr(event, "type", "unknown")
+
+        if event_type in {'conversation.item.created', 'conversation.item.done'}:
+            raw = getattr(event, 'raw', None) or {}
+            item = getattr(event, 'item', None) or raw.get('item', {})
+            call_id = item.get('call_id')
+            if item.get('type') == 'function_call_output' and call_id in self._tool_output_unacked:
+                epoch = self._tool_output_unacked.pop(call_id)
+                # WebSocket event order, not wall time, proves server receipt.
+                if not self._tool_output_unacked:
+                    self._tool_output_committed_epoch = self._tool_output_epoch
+                self._audit('tool_output_committed', call_id=call_id, epoch=epoch)
+
 
         if self._pending_truncate_acks and (
             event_type == "response.created" or event_type.startswith("response.output")
@@ -484,6 +538,11 @@ class LogicalTimeOpenAIAdapter(DiscreteTimeOpenAIAdapter):
                     self._active_response_ids.add(response_id)
             elif not duplicate:
                 self._anonymous_active_responses += 1
+            if not duplicate:
+                self._continuation_inflight = False
+                # A response created before output acknowledgement cannot consume it.
+                self._continuation_covered_epoch = max(self._continuation_covered_epoch,
+                                                        self._tool_output_committed_epoch)
             await super()._process_event(result, event)
             self._audit("response_created", response_id=response_id, event_id=event_id,
                         duplicate=duplicate, active_response_ids=sorted(self._active_response_ids),
@@ -532,6 +591,22 @@ class LogicalTimeOpenAIAdapter(DiscreteTimeOpenAIAdapter):
                 }
                 self._tool_races.append(race)
                 self._audit("tool_call_interruption_race", **race)
+            return
+
+        if (isinstance(event, ErrorEvent)
+                and event.code == 'conversation_already_has_active_response'
+                and getattr(event, 'related_event_id', None) in self._continuation_request_ids):
+            # Reconcile only an identified request made by this scheduler.
+            import re
+            match = re.search(r'in progress: ([A-Za-z0-9_-]+)', event.message or '')
+            if match and match[1] not in self._terminal_response_ids:
+                self._active_response_ids.add(match[1])
+            self._continuation_inflight = False
+            self._audit('continuation_conflict_deferred', event_id=event.related_event_id,
+                        active_response_id=match[1] if match else None,
+                        wanted_epoch=self._continuation_wanted_epoch,
+                        covered_epoch=self._continuation_covered_epoch,
+                        tool_outputs_replayed=False)
             return
 
         if isinstance(event, ErrorEvent):

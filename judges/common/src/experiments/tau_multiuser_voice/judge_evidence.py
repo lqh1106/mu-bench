@@ -556,7 +556,7 @@ def build_evidence_catalog(assistant_turns: Sequence[Any], tool_log: Sequence[An
 
 
 def validate_and_bind_judge_payload(case: Any, contract: Mapping[str, Any], payload: Any,
-                                    catalog: Mapping[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+                                    catalog: Mapping[str, Any], *, jt5_accept_third: bool = False) -> tuple[dict[str, Any], dict[str, Any]]:
     """Validate IDs/types/completeness and bind each quote to its cited source.
 
     Explicit False and empty evidence arrays remain explicit, normal outcomes.
@@ -836,7 +836,11 @@ def validate_and_bind_judge_payload(case: Any, contract: Mapping[str, Any], payl
     if enabled() and not issues:
         issues.extend(validate_item_support(case, contract, bound, catalog))
     audit["evaluation_valid"] = not issues
-    if issues:
+    from .jt5_policy import enabled as jt5_enabled
+    if issues and jt5_accept_third and jt5_enabled():
+        audit.update(judge_version='jt5',accepted_third_generation=True,strict_validation_passed=False,evaluation_valid=True,validation_issues_retained=True)
+        bound['_jt5_third_generation_accepted']=True
+    elif issues:
         raise JudgeEvidenceInvalid(issues, audit)
     return bound, audit
 

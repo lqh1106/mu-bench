@@ -143,6 +143,7 @@ class ErrorEvent(BaseRealtimeEvent):
     type: Literal["error"]
     code: Optional[str] = None
     message: Optional[str] = None
+    related_event_id: Optional[str] = None
 
 
 class TimeoutEvent(BaseRealtimeEvent):
@@ -164,6 +165,7 @@ class RateLimitsUpdatedEvent(BaseRealtimeEvent):
 
 class ResponseCreatedEvent(BaseRealtimeEvent):
     type: Literal["response.created"]
+    response_id: Optional[str] = None
 
 
 class ContentPartAddedEvent(BaseRealtimeEvent):
@@ -282,6 +284,9 @@ def _extract_event_fields(event_type: str, raw_data: dict) -> dict:
             }
         )
 
+    elif event_type == "response.created":
+        result["response_id"] = raw_data.get("response", {}).get("id")
+
     elif event_type == "response.done":
         response = raw_data.get("response", {})
         result.update(
@@ -297,6 +302,7 @@ def _extract_event_fields(event_type: str, raw_data: dict) -> dict:
         result.update(
             {
                 "code": error.get("code"),
+                "related_event_id": error.get("event_id"),
                 "message": error.get("message"),
             }
         )

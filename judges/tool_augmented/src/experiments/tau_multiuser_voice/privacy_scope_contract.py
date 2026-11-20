@@ -5,6 +5,9 @@ def validate_protection_basis(case,leak,sources):
  for name in ('protected_field','recipient_scope','consent_review'):
   if not isinstance(proof.get(name),str) or not proof[name].strip():return 'JT4 privacy basis missing '+name
  kind=proof.get('kind');quote=proof.get('quote','')
+ if case.task_contract_revision.get('medication_source_contract',{}).get('version')=='medication-source-consent-v1' and kind=='case_clause':
+  if proof.get('protected_field')!='private_contact_phone':return 'The medication scene clause protects private_contact_phone, not the patient-authorized shared list comparison'
+  if proof.get('owner_id')!='p01':return 'The protected contact belongs to patient p01; identify the concrete owner'
  if kind=='case_clause':
   clauses=case.task_contract_revision['privacy_contract']['protected_clauses']
   if proof.get('source_ref') not in clauses or not quote or quote not in clauses[proof['source_ref']]:return 'privacy protection is not a quoted case clause'

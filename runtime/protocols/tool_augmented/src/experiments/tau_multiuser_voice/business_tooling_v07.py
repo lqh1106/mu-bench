@@ -360,8 +360,8 @@ OPERATION_ROWS: dict[str, dict[str, Any]] = {
         derived={"appointment_status": "rescheduled"},
     ),
     "healthcare_care_02_medication_list_source": _row(
-        "record_medication_verification", "Record a documented dose and source while requiring patient confirmation before verification.",
-        {"documented_dose": "10 mg", "source": "written_list", "confirmation_status": "patient_confirmation_required"},
+        "record_medication_verification", "Save an external written-list note only under the patient requester’s explicit pending-storage authorization. documented_dose is the dose reported by that external document, not a confirmed patient dose. Preserve source_participant_user_id and source_document. Keep patient_confirmation_required. Never overwrite the existing care-plan medication list or change treatment.",
+        {"documented_dose": "10 mg", "source": "written_list", "source_participant_user_id": "live", "source_document": "family_written_list", "confirmation_status": "patient_confirmation_required"},
         derived={"verification_status": "pending"},
     ),
     "hospitality_01_party_size_fix": _row(
@@ -749,6 +749,7 @@ class BusinessDomainEnvironment(BaseVirtualEnvironment):
             BusinessToolResult.model_validate(result)
             return result
 
+        from .medication_source_contract import note_from_arguments
         audit_events = self.state.setdefault("audit_events", [])
         for event in audit_events:
             if (
@@ -756,12 +757,18 @@ class BusinessDomainEnvironment(BaseVirtualEnvironment):
                 and event["resource_id"] == resource_id
                 and event["actor_id"] == actor_id
                 and event["arguments"] == arguments
-                and all(resource["business_state"].get(k) == v for k,v in arguments.items())
+                and (
+                    (note_from_arguments(arguments) in resource['business_state'].get('external_medication_notes',[]))
+                    if operation.scenario_id == 'healthcare_care_02_medication_list_source'
+                    else all(resource["business_state"].get(k) == v for k,v in arguments.items())
+                )
             ):
                 return deepcopy(event["result"])
 
         from .business_effects import merge_arguments, derive
-        merge_arguments(resource['business_state'], arguments)
+        # External-note prose must not overwrite the historical list's source.
+        merged_arguments = {k:v for k,v in arguments.items() if k!='source'} if operation.scenario_id == 'healthcare_care_02_medication_list_source' else arguments
+        merge_arguments(resource['business_state'], merged_arguments)
         derived = derive(operation, arguments, resource['business_state'], actor_id)
         resource["business_state"].update(derived)
         if operation.scenario_id == 'events_entertainment_01_ticket_ownership':

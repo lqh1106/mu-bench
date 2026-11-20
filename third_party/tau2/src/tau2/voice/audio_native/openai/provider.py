@@ -550,6 +550,12 @@ class OpenAIRealtimeProvider:
         if request_response:
             self._enqueue_json({"type": "response.create"})
 
+    async def request_response(self, event_id: str) -> None:
+        """Request one continuation; its ID permits exact race reconciliation."""
+        if not self.is_connected:
+            raise RuntimeError("Not connected to API")
+        self._enqueue_json({"type": "response.create", "event_id": event_id})
+
     async def truncate_item(
         self,
         item_id: str,

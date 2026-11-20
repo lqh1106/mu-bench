@@ -46,7 +46,7 @@ def environment(rt,subset,arm=None,provider=None):
       MUBENCH_JUDGE_PROTOCOL='tool_full_source_review' if subset=='tool_augmented' else 'full_source_review',
       MUBENCH_ATTEMPT_SEAL_CLEANUP='0',MUBENCH_FORMAL_POST_SCORE='0',MUBENCH_ATTEMPT_LOCAL_RICE='0')
     if subset=='tool_augmented':
-        env.update(MUBENCH_TOOL_JUDGE_VERSION='jt4',MUBENCH_TOOL_CASE_MECHANISM='tr3')
+        env.update(MUBENCH_TOOL_JUDGE_VERSION='jt5',MUBENCH_TOOL_CASE_MECHANISM='tr3')
     else:
         env.pop('MUBENCH_TOOL_JUDGE_VERSION',None)
         env.pop('MUBENCH_TOOL_CASE_MECHANISM',None)

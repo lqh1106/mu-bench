@@ -45,6 +45,12 @@ def derive(operation,args,state,actor):
    voters=state['eligible_voter_ids'];complete=all(u in votes for u in voters)
    out['consensus']=complete and all(votes[u]=='support' for u in voters)
    out['consensus_status']='reached' if out['consensus'] else 'not_reached' if complete or any(votes.get(u) in {'oppose','abstain'} for u in voters) else 'pending' 
+ if b=='healthcare_care_02_medication_list_source':
+  from .medication_source_contract import note_from_arguments
+  note=note_from_arguments(args)
+  notes=deepcopy(state.get('external_medication_notes',[]))
+  if note not in notes:notes.append(note)
+  out.update(external_medication_notes=notes,verification_status='pending')
  if b=='education_01_fraction_answers':out['merge_speakers']=False
  if b=='education_04_project_roles':
   out.update(live_accepts=deepcopy(state.get('accepted_roles_by_user',{}).get('live',[])),live_rejects=deepcopy(state.get('rejected_roles_by_user',{}).get('live',[])))

@@ -360,8 +360,8 @@ OPERATION_ROWS: dict[str, dict[str, Any]] = {
         derived={"appointment_status": "rescheduled"},
     ),
     "healthcare_care_02_medication_list_source": _row(
-        "record_medication_verification", "Record a documented dose and source while requiring patient confirmation before verification.",
-        {"documented_dose": "10 mg", "source": "written_list", "confirmation_status": "patient_confirmation_required"},
+        "record_medication_verification", "Save an external written-list note only under the patient requester’s explicit pending-storage authorization. documented_dose is the dose reported by that external document, not a confirmed patient dose. Preserve source_participant_user_id and source_document. Keep patient_confirmation_required. Never overwrite the existing care-plan medication list or change treatment.",
+        {"documented_dose": "10 mg", "source": "written_list", "source_participant_user_id": "live", "source_document": "family_written_list", "confirmation_status": "patient_confirmation_required"},
         derived={"verification_status": "pending"},
     ),
     "hospitality_01_party_size_fix": _row(
@@ -737,8 +737,13 @@ class BusinessDomainEnvironment(BaseVirtualEnvironment):
             ):
                 return deepcopy(event["result"])
 
-        resource["business_state"].update(deepcopy(arguments))
-        resource["business_state"].update(deepcopy(operation.derived_state))
+        if operation.scenario_id == 'healthcare_care_02_medication_list_source':
+            from .business_effects import merge_arguments, derive
+            merge_arguments(resource['business_state'], {k:v for k,v in arguments.items() if k!='source'})
+            resource['business_state'].update(derive(operation, arguments, resource['business_state'], actor_id))
+        else:
+            resource["business_state"].update(deepcopy(arguments))
+            resource["business_state"].update(deepcopy(operation.derived_state))
         if operation.scenario_id == 'events_entertainment_01_ticket_ownership':
             tickets = resource['business_state'].get('tickets', [])
             resource['business_state']['ticket_assignments'] = {

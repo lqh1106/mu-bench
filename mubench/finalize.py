@@ -35,6 +35,10 @@ def finalize(case,rt,envfile,model,formal,transport,cleanup=False):
         return dst
     shutil.copytree(case,tmp,copy_function=link_or_copy,ignore=shutil.ignore_patterns('private.env','private_text.json','*.lock','_floor_scratch'))
     # Hardlinks preserve one physical copy on one filesystem. All retained provenance remains accessible.
+    execution=case/'judge_execution_protocol.json'
+    if execution.exists():
+        protocol=json.loads(execution.read_text())
+        (tmp/'judge_protocol_marker.json').write_text(json.dumps(protocol,indent=2)+'\n')
     receipt={'complete':True,'transport':transport,'task_success':score['task_success'],'source':str(case),'score_sha256':digest(tmp/'score.json'),'rice_sha256':digest(tmp/'rice_score.json'),'atc_sha256':digest(tmp/'atc_score.json'),'audio_sha256':digest(tmp/'audio/both.wav') if transport=='audio' else None}
     (tmp/'release_receipt.json').write_text(json.dumps(receipt,indent=2)+'\n');os.replace(tmp,formal)
     if cleanup and transport=='audio':

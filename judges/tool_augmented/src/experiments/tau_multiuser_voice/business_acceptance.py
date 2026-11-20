@@ -64,9 +64,21 @@ def v3(case):
 def canonical_values(case,value,path=()):
  """Normalize only declared meaning-bearing business fields."""
  if not v3(case):return deepcopy(value)
+ from .medication_source_contract import comparison_mapping
+ value=comparison_mapping(case,value)
+ if case.case_id.split('__')[0]=='telecom_03_router_restart_pushback' and isinstance(value,dict) and 'until_condition' in value and 'reason' in value:
+  # Prose truth is a semantic completion obligation; never a hidden reason code.
+  value=dict(value);reason=value['reason']
+  value['reason']='[reason text: semantic completion required]' if isinstance(reason,str) and reason.strip() else reason
  if isinstance(value,dict):return {k:canonical_values(case,v,path+(k,)) for k,v in value.items()}
  if isinstance(value,list):return [canonical_values(case,v,path+('[]',)) for v in value]
  scene=case.case_id.split('__')[0]
+ if isinstance(value,str) and path and ((scene=='events_entertainment_02_playlist_cheer' and path[-1]=='playlist_scope') or (scene=='shared_home_02_media_backchannel' and path[-1]=='playback_scope')):
+  from .interface_contract import normalize_fields
+  return normalize_fields(scene,{path[-1]:value})[path[-1]]
+ if isinstance(value,str) and scene=='events_entertainment_03_accessible_seat' and path and path[-1]=='proximity_priority':
+  from .interface_contract import normalize_fields
+  return normalize_fields(scene,{'proximity_priority':value})['proximity_priority']
  if isinstance(value,str) and scene=='education_01_fraction_answers' and any(k in path for k in ('answers_by_user','answers')):
   from fractions import Fraction
   import re
@@ -91,6 +103,8 @@ def project(case,state):
   for record in collection.values():
    if not isinstance(record,dict):continue
    for field in ('last_modified_by','last_operation','last_transaction_id'):record.pop(field,None)
+ from .medication_source_contract import project_legacy_source
+ out=project_legacy_source(case,out)
  return canonical_values(case,out)
 
 
