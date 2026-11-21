@@ -952,6 +952,9 @@ class ToolActionTrace(BaseModel):
     caller_id: str | None = None
     authorization_basis: str | None = None
     request_basis_status: str | None = None
+    request_basis_original_status: str | None = None
+    request_basis_review_reason: str | None = None
+    request_basis_routing_policy: str | None = None
     request_basis_evidence: list[str] = Field(default_factory=list)
     caller_provenance_status: str | None = None
     caller_provenance_evidence: list[str] = Field(default_factory=list)
@@ -1051,6 +1054,8 @@ class MultiUserEpisodeTrace(BaseModel):
 
 
 class MultiUserScoreReport(BaseModel):
+    business_basis_routing_policy: str | None = None
+    business_basis_original_insufficient_calls: list[int] = Field(default_factory=list)
     """Disaggregated task, interaction, and run-validity scores."""
 
     scoring_contract_version: str = "mu-bench-scoring-v3-mean-interaction"

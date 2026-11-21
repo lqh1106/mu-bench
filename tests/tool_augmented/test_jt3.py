@@ -55,18 +55,18 @@ class MoreTests(unittest.TestCase):
 class RelevanceTests(unittest.TestCase):
  def test_unknown_denied_attempt_does_not_block_business_score(self):
   self.check(False)
- def test_unknown_executed_prerequisite_still_blocks(self):
-  with self.assertRaises(ValueError):self.check(True)
+ def test_unknown_executed_prerequisite_is_unsupported_without_blocking(self):
+  self.check(True)
  def check(self,executed):
   from unittest.mock import patch
   from experiments.tau_multiuser_voice.business_request_basis import review_basis,VERSION
   case=SimpleNamespace(task_contract_revision={'request_revision_protocol':VERSION,'request_revision_contract':{'business_preconditions':{}},'review':{}})
-  trace=SimpleNamespace(tool_actions=[SimpleNamespace()]);request={'calls':[{'timestamp_ms':100}],'delivered_events':[]}
+  trace=SimpleNamespace(tool_actions=[SimpleNamespace(executed=executed)]);request={'calls':[{'timestamp_ms':100}],'delivered_events':[]}
   rows=[{'call_index':0,'status':'insufficient_evidence','reason':'request relevance unclear','event_ids':[],'quotes':[],'tool_indices':[],'uses_initial_source':False}]
   with tempfile.TemporaryDirectory() as t,patch('experiments.tau_multiuser_voice.caller_protocol.build_request',return_value=request),patch('experiments.tau_multiuser_voice.jt3_review.dual_calls',return_value=rows):
    review_basis(None,None,case,trace,[{'executed':executed}],t)
    a=json.loads((Path(t)/'business_request_basis_audit.json').read_text())
-   self.assertTrue(a['complete']);self.assertEqual(a['nonblocking_unexecuted_unknown_calls'],[0])
+   self.assertTrue(a['complete']);self.assertEqual(a['nonblocking_unexecuted_unknown_calls'],[] if executed else [0]);self.assertEqual(trace.tool_actions[0].request_basis_status,'contradicted');self.assertEqual(trace.tool_actions[0].request_basis_original_status,'insufficient_evidence');self.assertEqual(a['blocking_unresolved_calls'],[])
 class CriterionIdentityTests(unittest.TestCase):
  def run_binding(self,index):
   payload={'goal_results':[{'goal_id':'g','completion_checks':[{'criterion':'review what needs reconsidering','passed':False,'reason':'unchanged','assistant_evidence':[]}]}]}

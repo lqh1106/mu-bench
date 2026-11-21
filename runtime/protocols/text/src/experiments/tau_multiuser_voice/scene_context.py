@@ -8,7 +8,7 @@ import hashlib,json
 VERSION='mu-bench-tool-augmented-v1'
 def get_initial_context(case):
  review=case.task_contract_revision.get('review',{})
- if review.get('case_revision_id') not in {VERSION,'mu-bench-tool-augmented-v1','mu-bench-tool-augmented-v2','mu-bench-tool-augmented-v3'}:return {}
+ if review.get('case_revision_id') not in {VERSION,'mu-bench-tool-augmented-v1','mu-bench-tool-augmented-v2','mu-bench-tool-augmented-v3','mu-bench-tool-augmented-v4','mu-bench-tool-augmented-v5'}:return {}
  ctx=review.get('initial_assistant_context',{})
  if not ctx:return {}
  assert ctx['available_at']=='before_registration'

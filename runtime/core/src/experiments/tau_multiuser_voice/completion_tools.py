@@ -156,7 +156,8 @@ def _completion_comparable_state(case,state):
 def comparable_state(case, state):
     from .evaluation_policy import business_state_projection
     result = business_state_projection(case, _completion_comparable_state(case, state))
-    if case.task_contract_revision.get("design_revision") in {"tool-scene-r2","tool-scene-r3"} or __import__("os").environ.get("MUBENCH_TOOL_CASE_MECHANISM") in {"tr2","tr3"}:
+    if case.task_contract_revision.get("design_revision") in {"tool-scene-r2","tool-scene-r3","tool-scene-r4","tool-scene-r5"} or __import__("os").environ.get("MUBENCH_TOOL_CASE_MECHANISM") in {"tr2","tr3","tr4","tr5"}:
         from .business_acceptance import project
         return project(case, result)
-    return result
+    from .business_values import enabled, canonical
+    return canonical(case.case_id.split('__')[0],result) if enabled(case) else result

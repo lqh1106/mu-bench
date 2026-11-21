@@ -334,6 +334,13 @@ def run_case(
             tick_duration_ms=simulator.tick_ms, seed=case.seed,
             input_sample_rate=tts.sample_rate,
             max_media_ms=enrollment.task_start_ms + int(args.logical_max_seconds * 1000) + simulator.tick_ms)
+    elif realtime_provider == "seeduplex":
+        from experiments.mu_bench.logical_time.seeduplex_adapter import make_seeduplex_logical_adapter
+        adapter = make_seeduplex_logical_adapter(
+            key=values["REALTIME_SEEDUPLEX_KEY"], model=args.realtime_model, bridge=bridge,
+            realtime_url=values["REALTIME_SEEDUPLEX_URL"], tick_duration_ms=simulator.tick_ms,
+            voice=getattr(args, "seeduplex_voice", "zh_female_vv_jupiter_bigtts"),
+            proxy=os.environ.get("https_proxy") or os.environ.get("HTTPS_PROXY"))
     elif realtime_provider == "gemini":
         from experiments.mu_bench.logical_time.gemini_adapter import make_gemini_logical_adapter
         adapter = make_gemini_logical_adapter(
@@ -1637,7 +1644,8 @@ def main():
     extra.add_argument("--bilateral-silence-seconds", type=int)
     extra.add_argument("--prior-partial-dir", type=Path)
     extra.add_argument("--openweight-endpoint", type=Path)
-    extra.add_argument("--realtime-provider", choices=("openai", "xai", "gemini", "moss"), default="openai")
+    extra.add_argument("--seeduplex-voice", default="zh_female_vv_jupiter_bigtts")
+    extra.add_argument("--realtime-provider", choices=("openai", "xai", "gemini", "seeduplex", "moss"), default="openai")
     extra.add_argument("--moss-endpoint", type=Path)
     extra.add_argument("--planner-observation", choices=("auto", "tau_proportional", "audible_asr"), default="auto")
     opts, remaining = extra.parse_known_args()
@@ -1645,6 +1653,7 @@ def main():
     args = parse_args()
     args.tts_run_namespace = resolve_tts_run_namespace(args)
     args.openweight_endpoint = opts.openweight_endpoint
+    args.seeduplex_voice = opts.seeduplex_voice
     args.realtime_provider = opts.realtime_provider
     args.moss_endpoint = opts.moss_endpoint
     if opts.realtime_provider == "moss" and (not opts.moss_endpoint or opts.openweight_endpoint):
@@ -1684,7 +1693,7 @@ def main():
     values = bridge.load_env(args.env)
     required = ["GPT_URL", "GPT_KEY"]
     if not endpoint and opts.realtime_provider != "moss":
-        prefix = {"xai": "REALTIME_GROK", "gemini": "REALTIME_GEMINI", "openai": "REALTIME_GPT"}[opts.realtime_provider]
+        prefix = {"xai": "REALTIME_GROK", "gemini": "REALTIME_GEMINI", "openai": "REALTIME_GPT", "seeduplex": "REALTIME_SEEDUPLEX"}[opts.realtime_provider]
         required.extend([prefix + "_URL", prefix + "_KEY"])
     for name in required:
         if not values.get(name):

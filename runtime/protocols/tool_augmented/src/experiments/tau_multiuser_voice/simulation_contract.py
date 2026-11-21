@@ -10,7 +10,7 @@ _base_critic=critique_candidate
 
 def compile_event_contract(case,event):
  out=_base_compile(case,event)
- if case.task_contract_revision.get('design_revision')=='tool-scene-r3':
+ if case.task_contract_revision.get('design_revision') in {'tool-scene-r3','tool-scene-r4','tool-scene-r5'}:
   out['immutable_meaning']=case.task_contract_revision['event_semantics'].get(event.event_id,{})
  return out
 
@@ -23,7 +23,7 @@ def writer_prompt(context,*,alignment_ms):
 def validate_candidate(raw,**kwargs):
  out=_base_validate(raw,**kwargs)
  context=kwargs['context'];case=kwargs['case'];event=kwargs['event']
- if case.task_contract_revision.get('design_revision')=='tool-scene-r3' and case.case_id.startswith('telecom_02_lost_phone_number_fix__') and event.event_id in {'e_primary_reconcile','e_primary_commit','e_live_followup'}:
+ if case.task_contract_revision.get('design_revision') in {'tool-scene-r3','tool-scene-r4','tool-scene-r5'} and case.case_id.startswith('telecom_02_lost_phone_number_fix__') and event.event_id in {'e_primary_reconcile','e_primary_commit','e_live_followup'}:
   value=out.utterance.casefold().replace('’',"'")
   # A narrow observed inversion, never a general ban on initial incorrect speech.
   if re.search(r'(?:^|[.!?;]\s+)(?:please\s+)?(?:keep|leave|retain)\s+(?:line\s+)?0182(?:[’\']s)?(?:\s+suspension)?\s+(?:in place|suspended|switched off)',value):

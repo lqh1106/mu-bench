@@ -2,17 +2,19 @@
 import os,json,time
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[5]
-def enabled():return os.environ.get('MUBENCH_TOOL_JUDGE_VERSION')=='jt5'
+def enabled():return os.environ.get('MUBENCH_TOOL_JUDGE_VERSION') in {'jt5','jt6','jt7'}
 def activate(path):
  if path is None:return
- policy=ROOT/'runtime/jt5_policy.json'
+ policy=ROOT/'runtime/jt7_policy.json'
+ if not policy.exists():policy=ROOT/'runtime/jt6_policy.json'
+ if not policy.exists():policy=ROOT/'runtime/jt5_policy.json'
  if not policy.exists():return
  data=json.loads(policy.read_text());current=Path(path).resolve()
  if any(current==Path(folder).resolve() for folder in data.get('preserve_jt4_evidence_dirs',[])):return
- if os.environ.get('MUBENCH_TOOL_JUDGE_VERSION') in {'jt4','jt5'}:
-  os.environ['MUBENCH_TOOL_JUDGE_VERSION']='jt5'
+ if os.environ.get('MUBENCH_TOOL_JUDGE_VERSION') in {'jt4','jt5','jt6','jt7'}:
+  os.environ['MUBENCH_TOOL_JUDGE_VERSION']=data.get('default_version','jt5')
   p=Path(path);p.mkdir(parents=True,exist_ok=True)
-  (p/'judge_execution_protocol.json').write_text(json.dumps({'judge_version':'jt5','at':time.time(),'case_insensitive_quotes':True,'third_generation_direct_acceptance':True,'scoring_model':'gpt-6-luna'},indent=2))
+  (p/'judge_execution_protocol.json').write_text(json.dumps({'judge_version':os.environ.get('MUBENCH_TOOL_JUDGE_VERSION','jt5'),'at':time.time(),'case_insensitive_quotes':True,'third_generation_direct_acceptance':True,'scoring_model':'gpt-6-luna','business_basis_unknown_policy':data.get('business_basis_unknown_policy')},indent=2))
 def contains(quote,text):
  return quote.casefold() in text.casefold() if enabled() else quote in text
 def accept_calls(request,payload,path,prefix,stage,error):
@@ -21,7 +23,7 @@ def accept_calls(request,payload,path,prefix,stage,error):
  if any(r.get('status') not in {'supported','contradicted','insufficient_evidence'} for r in rows):raise ValueError('JT5 third generation has unusable status')
  if path is not None:
   p=Path(path);p.mkdir(parents=True,exist_ok=True)
-  (p/(prefix+'_'+stage+'_jt5_third_accepted.json')).write_text(json.dumps({'judge_version':'jt5','generation':3,'accepted_directly':True,'validation_passed':False,'validation_error':str(error),'verdicts_unchanged':True,'response':payload},ensure_ascii=False,indent=2))
+  (p/(prefix+'_'+stage+'_jt5_third_accepted.json')).write_text(json.dumps({'judge_version':os.environ.get('MUBENCH_TOOL_JUDGE_VERSION','jt5'),'generation':3,'accepted_directly':True,'validation_passed':False,'validation_error':str(error),'verdicts_unchanged':True,'response':payload},ensure_ascii=False,indent=2))
  return sorted(rows,key=lambda r:r['call_index'])
 
 def bind_case_only(request,response):

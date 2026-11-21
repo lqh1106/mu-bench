@@ -197,7 +197,7 @@ Evaluation combines deterministic tool/state checks, itemized semantic assessmen
 |---|:---:|:---:|:---:|
 | MiniCPM-o | ✓ | — | ✓ |
 | Moshi, Freeze-Omni, FLM-Audio, Voila, Raon-SpeechChat, PersonaPlex, Lychee-FD | ✓ | — | — |
-| OpenAI Realtime, Grok voice, Gemini Live | ✓ | ✓ | — |
+| OpenAI Realtime, Grok voice, Gemini Live, Seeduplex 3.0 | ✓ | ✓ | — |
 | MOSS Live | ✓ | ✓ | ✓ |
 
 [Model deployment](docs/MODELS.md) provides checkpoint information, isolated environments and provider configuration. Availability and capacity depend on the configured endpoint.

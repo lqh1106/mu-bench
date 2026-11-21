@@ -2,7 +2,7 @@
 from copy import deepcopy
 import os
 
-def revised(case):return case.task_contract_revision.get('design_revision') in {'tool-scene-r2','tool-scene-r3'} or os.environ.get('MUBENCH_TOOL_CASE_MECHANISM') in {'tr2','tr3'}
+def revised(case):return case.task_contract_revision.get('design_revision') in {'tool-scene-r2','tool-scene-r3','tool-scene-r4','tool-scene-r5'} or os.environ.get('MUBENCH_TOOL_CASE_MECHANISM') in {'tr2','tr3','tr4','tr5'}
 def aggregate_matches(case,expected,trace,contains):
  if not revised(case) or not expected.allowed:return []
  from experiments.tau_multiuser_voice.business_effects import MAP_FIELDS
@@ -59,10 +59,12 @@ def project(case,state):
 
 
 def v3(case):
- return case.task_contract_revision.get('design_revision')=='tool-scene-r3'
+ return case.task_contract_revision.get('design_revision') in {'tool-scene-r3','tool-scene-r4','tool-scene-r5'}
 
 def canonical_values(case,value,path=()):
  """Normalize only declared meaning-bearing business fields."""
+ from .business_values import enabled, canonical
+ if enabled(case):value=canonical(case.case_id.split('__')[0],value,path)
  if not v3(case):return deepcopy(value)
  from .medication_source_contract import comparison_mapping
  value=comparison_mapping(case,value)

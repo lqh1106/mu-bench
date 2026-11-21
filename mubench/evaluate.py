@@ -11,7 +11,7 @@ from run_tau_mu_voice_realtime import run_semantic_judge,measure_floor_split_tim
 case=MultiUserVoiceCase.model_validate(json.loads((a.case_dir/'reviewed_case.json').read_text()))
 trace=MultiUserEpisodeTrace.model_validate(json.loads((a.case_dir/'final_trace.before_judge.json').read_text()))
 turns=json.loads((a.case_dir/'assistant_turns.before_judge.json').read_text());logs=json.loads((a.case_dir/'tool_log.before_judge.json').read_text())
-text=load(a.config)['text'];bridge=load_bridge(ROOT/'runtime/core/run_tau_voice_realtime_debug_20260909.py')
+text=load(a.config)['text'];os.environ['MUBENCH_TEXT_BASE_URL']=text.get('direct_base_url','');os.environ['MUBENCH_TEXT_MODEL']=text.get('model','gpt-6-luna');bridge=load_bridge(ROOT/'runtime/core/run_tau_voice_realtime_debug_20260909.py')
 out=a.case_dir/('judge_resume_'+str(time.time_ns()));out.mkdir()
 # The source guard also reads actual sent enrollment and auxiliary audit files.
 import shutil

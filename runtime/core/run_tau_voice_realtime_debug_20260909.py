@@ -90,6 +90,24 @@ def upstream_url(base_url: str, path: str) -> str:
     return base + normalized
 
 
+def text_request_base_url(base_url: str, payload: dict[str, Any]) -> str:
+    """Route the configured text model separately; retain the audio endpoint."""
+    direct = os.environ.get("MUBENCH_TEXT_BASE_URL", "").strip()
+    model = str(payload.get("model", ""))
+    if not direct or model != os.environ.get("MUBENCH_TEXT_MODEL", "gpt-6-luna"):
+        return base_url
+    if model.startswith("gpt-audio"):
+        return base_url
+    for message in payload.get("messages", []):
+        content = message.get("content")
+        if isinstance(content, list) and any(
+            isinstance(part, dict) and (part.get("type") == "input_audio" or "input_audio" in part)
+            for part in content
+        ):
+            return base_url
+    return direct
+
+
 def post_json(
     base_url: str,
     api_key: str,
@@ -101,7 +119,7 @@ def post_json(
     if payload.get("model") == "gpt-6-luna":
         payload = dict(payload, model=os.environ.get("MUBENCH_TEXT_MODEL", "gpt-6-luna"))
     request = urllib.request.Request(
-        upstream_url(base_url, path),
+        upstream_url(text_request_base_url(base_url, payload), path),
         data=json.dumps(payload).encode("utf-8"),
         headers={
             "Authorization": f"Bearer {api_key}",

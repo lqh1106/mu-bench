@@ -85,7 +85,7 @@ def causal_query_check(case, query, matches, trace):
     # it does not inherently consume a prior record lookup. Keep actual source
     # review and all other genuine lookup dependencies.
     import os
-    if os.environ.get('MUBENCH_TOOL_CASE_MECHANISM') in {'tr2','tr3'} and case.case_id.split('__')[0] in {'travel_identity_01_passport_digit_correction','travel_identity_03_document_interpreter'}:
+    if os.environ.get('MUBENCH_TOOL_CASE_MECHANISM') in {'tr2','tr3','tr4','tr5'} and case.case_id.split('__')[0] in {'travel_identity_01_passport_digit_correction','travel_identity_03_document_interpreter'}:
         for check,action in zip(checks,actions):
             if action.request_basis_status=='supported':
                 check['supported']=True

@@ -196,7 +196,7 @@ output_root/<model>/<subset>/<condition>/
 |---|:---:|:---:|:---:|
 | MiniCPM-o | ✓ | — | ✓ |
 | Moshi、Freeze-Omni、FLM-Audio、Voila、Raon-SpeechChat、PersonaPlex、Lychee-FD | ✓ | — | — |
-| OpenAI Realtime、Grok voice、Gemini Live | ✓ | ✓ | — |
+| OpenAI Realtime、Grok voice、Gemini Live、Seeduplex 3.0 | ✓ | ✓ | — |
 | MOSS Live | ✓ | ✓ | ✓ |
 
 [模型部署文档](docs/MODELS.md)提供检查点、隔离环境和提供方配置。实际可用性与并发容量取决于部署端点。

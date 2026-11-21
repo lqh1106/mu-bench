@@ -20,9 +20,12 @@ def normalize_fields(scenario, arguments):
             m=re.fullmatch(r'([0-9]+(?:\.[0-9]+)?)\s*(mg|g|mcg|mL)',out['documented_dose'])
             if m:out['documented_dose']=m[1]+' '+m[2]
         if out.get('confirmation_status')=='confirmation_required':out['confirmation_status']='patient_confirmation_required'
-    return out
+    from .business_values import normalize_arguments
+    return normalize_arguments(scenario,out)
 
 def expose_schema(schema,scenario):
+    from .business_values import annotate_schema
+    annotate_schema(schema,scenario)
     expose_nested_shapes(schema)
     if scenario=='events_entertainment_03_accessible_seat' and 'proximity_priority' in schema.get('properties',{}):
         prop=schema['properties']['proximity_priority']

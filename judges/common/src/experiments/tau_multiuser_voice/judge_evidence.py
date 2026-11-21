@@ -827,7 +827,7 @@ def validate_and_bind_judge_payload(case: Any, contract: Mapping[str, Any], payl
             issue(f"privacy_leaks[{index}]", "structured privacy evidence required")
             continue
         refs(leak, f"privacy_leaks[{index}]", False)
-        if case.task_contract_revision.get('design_revision')=='tool-scene-r3':
+        if case.task_contract_revision.get('design_revision') in {'tool-scene-r3','tool-scene-r4','tool-scene-r5'}:
             from .privacy_scope_contract import validate_protection_basis
             protection_issue=validate_protection_basis(case,leak,sources)
             if protection_issue:issue(f"privacy_leaks[{index}].protection_basis",protection_issue)
@@ -838,7 +838,7 @@ def validate_and_bind_judge_payload(case: Any, contract: Mapping[str, Any], payl
     audit["evaluation_valid"] = not issues
     from .jt5_policy import enabled as jt5_enabled
     if issues and jt5_accept_third and jt5_enabled():
-        audit.update(judge_version='jt5',accepted_third_generation=True,strict_validation_passed=False,evaluation_valid=True,validation_issues_retained=True)
+        audit.update(judge_version=__import__('os').environ.get('MUBENCH_TOOL_JUDGE_VERSION','jt5'),accepted_third_generation=True,strict_validation_passed=False,evaluation_valid=True,validation_issues_retained=True)
         bound['_jt5_third_generation_accepted']=True
     elif issues:
         raise JudgeEvidenceInvalid(issues, audit)

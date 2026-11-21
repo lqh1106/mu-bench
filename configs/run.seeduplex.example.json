@@ -1,0 +1,24 @@
+{
+  "output_root": "outputs",
+  "auto_cleanup": true,
+  "text": {
+    "base_url": "http://127.0.0.1:18992/v1",
+    "api_key": {
+      "env": "MUBENCH_GATEWAY_KEY"
+    },
+    "model": "gpt-6-luna"
+  },
+  "speech": {
+    "tts_endpoint": "${REPO_ROOT}/outputs/services/tts.json"
+  },
+  "sut": {
+    "provider": "seeduplex",
+    "model": "1.2.6.1",
+    "transport": "audio",
+    "url": "wss://openspeech.bytedance.com/api/v3/duplex/realtime/dialogue",
+    "api_key": {
+      "env": "MUBENCH_SEEDUPLEX_KEY"
+    },
+    "voice": "zh_female_vv_jupiter_bigtts"
+  }
+}

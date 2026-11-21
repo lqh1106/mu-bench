@@ -25,13 +25,14 @@ def run_one(cfg,subset,case,arm,slot):
         number=1+max([int(p.name.split('_')[-1]) for p in attempts.glob('attempt_*') if p.name.split('_')[-1].isdigit()]+[0])
         attempt=attempts/f'attempt_{number:03d}';attempt.mkdir()
         text=cfg['text'];speech=cfg.get('speech',{});env['MUBENCH_TEXT_MODEL']=text.get('model','gpt-6-luna')
+        env['MUBENCH_TEXT_BASE_URL']=text.get('direct_base_url','')
         values={'GPT_URL':text['base_url'],'GPT_KEY':text['api_key']}
-        for p in ('GPT','GROK','GEMINI'):
+        for p in ('GPT','GROK','GEMINI','SEEDUPLEX'):
             values['REALTIME_'+p+'_URL']=sut.get('url','')
             values['REALTIME_'+p+'_KEY']=sut.get('api_key','')
         envfile=attempt/'private.env';envfile.write_text('\n'.join(k+'='+str(v) for k,v in values.items())+'\n');envfile.chmod(0o600)
         env['MUBENCH_CONFIG_FILE']=str(attempt/'private_text.json')
-        write(env['MUBENCH_CONFIG_FILE'],dict(base_url=text['base_url'],api_key=text['api_key'],sut_model=name,simulator_model=text.get('model','gpt-6-luna'),judge_model=text.get('model','gpt-6-luna'),timeout_seconds=cfg.get('api_timeout_seconds',720),https_proxy=text.get('https_proxy')))
+        write(env['MUBENCH_CONFIG_FILE'],dict(base_url=text.get('direct_base_url') or text['base_url'],api_key=text['api_key'],sut_model=name,simulator_model=text.get('model','gpt-6-luna'),judge_model=text.get('model','gpt-6-luna'),timeout_seconds=cfg.get('api_timeout_seconds',720),https_proxy=text.get('https_proxy')))
         Path(env['MUBENCH_CONFIG_FILE']).chmod(0o600)
         if transport=='text':
             if subset!='tool_augmented':raise ValueError('Text track is the tool-augmented diagnostic track')
@@ -50,7 +51,9 @@ def run_one(cfg,subset,case,arm,slot):
             elif provider in ('native','moss'):
                 endpoints=sut.get('endpoints') or [sut['endpoint_file']]
                 args+=['--openweight-endpoint',endpoints[slot%len(endpoints)]]
-            else:args+=['--realtime-provider',{'openai':'openai','xai':'xai','gemini':'gemini'}[provider]]
+            else:args+=['--realtime-provider',{'openai':'openai','xai':'xai','gemini':'gemini','seeduplex':'seeduplex'}[provider]]
+        if provider=='seeduplex' and transport=='audio' and sut.get('voice'):
+            args+=['--seeduplex-voice',sut['voice']]
         started=time.time();status='technical_error'
         try:
             with (attempt/'case.log').open('ab') as log:

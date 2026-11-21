@@ -37,3 +37,7 @@ Start a new environment with one session per GPU, verify the model's own speech,
 Independent runner processes must share the same output root to share case claims. Do not launch two experiments with separate claim roots and expect duplicate suppression. A case with a complete release receipt is skipped. Technical failures remain resumable evidence, rather than a false task-success denominator entry.
 
 Provider transports are located in `adapters/providers/{openai,grok,gemini,moss,chat}`. Runtime profiles select task and evidence protocol, independently of model selection. All three ablation case catalogs are common across models; only auxiliary-input transport and its verified delivery differ. Runtime fingerprints are under `runtime/fingerprints/`, never inside a model-specific case copy.
+
+## Seeduplex 3.0
+
+Use [the Seeduplex configuration](../configs/run.seeduplex.example.json) and set `MUBENCH_SEEDUPLEX_KEY` to a Doubao Speech API Key. The explicitly pinned native model ID is `1.2.6.1`; the default output directory is therefore `outputs/1.2.6.1/<subset>/baseline/`. Both audio subsets use the same runner, simulator, case inputs and judge contracts as the other closed providers. No additional LLM decides its tools. See [Seeduplex protocol and qualification](SEEDUPLEX.md).

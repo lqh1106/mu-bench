@@ -1,13 +1,13 @@
 {
   "task_contract_revision": {
-    "version": "mu-bench-tool-augmented-v3",
+    "version": "mu-bench-tool-augmented-v5",
     "review": {
       "case_id": "events_entertainment_05_schedule_time_fix__g-large__a-clean__c-strong",
       "status": "repaired",
       "opening_context": "",
       "goal_criteria": {
-        "g_primary": "Update the schedule using organizer Blake's authorized correction, then announce doors at six and show at seven to attendees. The old recorded six-o'clock start is superseded; distinguish doors from show.",
-        "g_live": "Organizer correction: doors open at six, but the show starts at seven.",
+        "g_primary": "Update the schedule using organizer Blake's authorized correction, then announce doors at six and show at seven to attendees. The old recorded six-o'clock start is superseded; distinguish doors from show. The published event is in the evening: doors 18:00 and show 19:00; equivalent explicit 6:00 PM and 7:00 PM are accepted.",
+        "g_live": "Organizer correction: doors open at six, but the show starts at seven. The published event is in the evening: doors 18:00 and show 19:00; equivalent explicit 6:00 PM and 7:00 PM are accepted.",
         "g_extra1": "Keep ticket ownership separate.",
         "g_extra2": "That cheer was a backchannel.",
         "g_extra3": "The accessibility seat belongs to its requester."
@@ -28,10 +28,10 @@
         }
       },
       "explicitly_public_information": [],
-      "case_revision_id": "mu-bench-tool-augmented-v3",
+      "case_revision_id": "mu-bench-tool-augmented-v5",
       "initial_assistant_context": {
         "available_at": "before_registration",
-        "content": "Service record index available before this conversation. Record identifiers are lookup keys, not permissions or evidence of completed work. Read current state only under a participant’s applicable read permission and when the task actually needs those service facts. A directly supplied value may be recorded under its legitimate requester without an unrelated preliminary lookup.\n{\"service_domain\": \"events_entertainment\", \"records\": [{\"resource_id\": \"EVT-MU-005\"}]}",
+        "content": "Service record index available before this conversation. Record identifiers are lookup keys, not permissions or evidence of completed work. Read current state only under a participant’s applicable read permission and when the task actually needs those service facts. A directly supplied value may be recorded under its legitimate requester without an unrelated preliminary lookup.\n{\"service_domain\": \"events_entertainment\", \"records\": [{\"resource_id\": \"EVT-MU-005\"}]}\nPublished event information: This is an evening performance. All event times are local. Tool time parameters use the 24-hour HH:MM clock.",
         "source_type": "service_record_index",
         "visibility": "shared_public_service_metadata",
         "contains_future_event_oracle": false,
@@ -109,7 +109,7 @@
       "permission_and_negative_action_rules_retained": true,
       "initial_call_required": false
     },
-    "design_revision": "tool-scene-r3",
+    "design_revision": "tool-scene-r5",
     "tool_scoring_contract": {
       "version": "tool-scoring-r3",
       "negative_prerequisites": "Only explicit case conditions or actual delivered conditional requests establish a business prerequisite. Do not invent another adult’s acceptance requirement for an already authorized assignment request. Caller/ACL violations are separate metrics.",
@@ -238,7 +238,10 @@
           "Incidental realistic requests may be added only without replacing the authored core request or creating new mandatory benchmark goals."
         ]
       }
-    }
+    },
+    "previous_design_revision": "tool-scene-r4",
+    "business_value_contract": "mu-business-values-v1",
+    "evaluation_revision": "tool-evaluation-r5"
   },
   "case_id": "events_entertainment_05_schedule_time_fix__g-large__a-clean__c-strong",
   "title": "Organizer corrects event time during announcement [g-large__a-clean__c-strong]",
@@ -385,7 +388,7 @@
           ],
           "status": "open",
           "business_state": {
-            "recorded_start_time": "6:00"
+            "recorded_start_time": "18:00"
           },
           "last_operation": null,
           "last_modified_by": null,
@@ -750,7 +753,7 @@
         "fallback_at_ms": null,
         "fallback_after_event_id": null
       },
-      "intent": "As organizer Blake, provide your own authorized correction: doors at six, show at seven. If an actual event-plan result is already available, correct its obsolete value; otherwise state the times without pretending a query has returned.",
+      "intent": "As organizer Blake, provide your own authorized correction: doors at six, show at seven. If an actual event-plan result is already available, correct its obsolete value; otherwise state the times without pretending a query has returned. These are evening times: doors at six p.m. (18:00), show at seven p.m. (19:00); preserve the distinction.",
       "addressee": "assistant",
       "fixed_utterance": null,
       "fixed_utterance_exact": false,
@@ -930,7 +933,7 @@
         "fallback_at_ms": null,
         "fallback_after_event_id": null
       },
-      "intent": "As the assistant begins responding to Avery's reconciliation request, Blake should assertively ensure the organizer correction is applied and acknowledged, and that the assistant then restores the unfinished schedule readback without reverting to the obsolete start time. Refer only to what was actually heard or returned. If no operation happened, state the current request/preference without claiming it already happened. Acknowledge completed work without demanding a duplicate operation.",
+      "intent": "As the assistant begins responding to Avery's reconciliation request, Blake should assertively ensure the organizer correction is applied and acknowledged, and that the assistant then restores the unfinished schedule readback without reverting to the obsolete start time. Refer only to what was actually heard or returned. If no operation happened, state the current request/preference without claiming it already happened. Acknowledge completed work without demanding a duplicate operation. These are evening times: doors at six p.m. (18:00), show at seven p.m. (19:00); preserve the distinction.",
       "addressee": "assistant",
       "fixed_utterance": null,
       "fixed_utterance_exact": false,
@@ -960,7 +963,7 @@
         "fallback_at_ms": null,
         "fallback_after_event_id": null
       },
-      "intent": "Confirm that the assistant should complete Avery's original announcement task using Blake's corrected doors/show times and report the final speaker-scoped outcomes to the affected participants without merging the unrelated participant constraints. Refer only to what was actually heard or returned. If no operation happened, state the current request/preference without claiming it already happened. Acknowledge completed work without demanding a duplicate operation.",
+      "intent": "Confirm that the assistant should complete Avery's original announcement task using Blake's corrected doors/show times and report the final speaker-scoped outcomes to the affected participants without merging the unrelated participant constraints. Refer only to what was actually heard or returned. If no operation happened, state the current request/preference without claiming it already happened. Acknowledge completed work without demanding a duplicate operation. These are evening times: doors at six p.m. (18:00), show at seven p.m. (19:00); preserve the distinction.",
       "addressee": "assistant",
       "fixed_utterance": null,
       "fixed_utterance_exact": false,
@@ -1000,8 +1003,8 @@
       "must_execute": true,
       "argument_subset": {
         "event_plan_id": "EVT-MU-005",
-        "doors_time": "6:00",
-        "show_time": "7:00"
+        "doors_time": "18:00",
+        "show_time": "19:00"
       },
       "after_event_id": null,
       "before_event_id": null,
@@ -1294,8 +1297,8 @@
       "path": "event_plans.EVT-MU-005.business_state",
       "operator": "contains",
       "expected": {
-        "doors_time": "6:00",
-        "show_time": "7:00",
+        "doors_time": "18:00",
+        "show_time": "19:00",
         "schedule_status": "corrected"
       },
       "critical": true

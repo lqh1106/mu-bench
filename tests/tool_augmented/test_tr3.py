@@ -156,7 +156,7 @@ class VersionTests(unittest.TestCase):
  def test_all_cases_have_same_current_version(self):
   for p in (P/'cases/tool_augmented').glob('*.json'):
    c=case(p.stem.split('__')[0],group=p.stem.split('__g-')[1].split('__')[0]) if False else MultiUserVoiceCase.model_validate_json(p.read_text())
-   r=c.task_contract_revision;self.assertEqual(r['version'],'mu-bench-tool-augmented-v3');self.assertEqual(r['review']['case_revision_id'],r['version']);self.assertEqual(r['design_revision'],'tool-scene-r3')
+   r=c.task_contract_revision;self.assertEqual(r['version'],'mu-bench-tool-augmented-v5' if r['design_revision']=='tool-scene-r5' else 'mu-bench-tool-augmented-v4');self.assertEqual(r['review']['case_revision_id'],r['version']);self.assertIn(r['design_revision'],{'tool-scene-r4','tool-scene-r5'})
    self.assertEqual(set(r['event_semantics']),{e.event_id for e in c.events})
 
 if __name__=='__main__':unittest.main()

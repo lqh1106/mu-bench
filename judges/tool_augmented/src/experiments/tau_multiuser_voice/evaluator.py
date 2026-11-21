@@ -132,6 +132,8 @@ class MultiUserEvaluator:
         trace: MultiUserEpisodeTrace,
     ) -> MultiUserScoreReport:
         """Compute a report without hiding hard failures in an average score."""
+        from .tool_revision_r5 import resolve_case
+        case = resolve_case(case, trace)
         if trace.case_id != case.case_id:
             raise ValueError("trace and case ids differ")
         from .evaluation_policy import policy_for, is_pacing_query, is_pacing_after, causal_query_check, VERSION
@@ -314,7 +316,7 @@ class MultiUserEvaluator:
         }
         for expected in case.expected_tool_actions:
             expected_subset = expected.argument_subset
-            if __import__("os").environ.get("MUBENCH_TOOL_CASE_MECHANISM") in {"tr2","tr3"} and case.case_id.startswith("telecom_03_router_restart_pushback__"):
+            if __import__("os").environ.get("MUBENCH_TOOL_CASE_MECHANISM") in {"tr2","tr3","tr4","tr5"} and case.case_id.startswith("telecom_03_router_restart_pushback__"):
                 expected_subset = {k:v for k,v in expected_subset.items() if k!="reason"}
             matches = [
                 action
@@ -383,6 +385,8 @@ class MultiUserEvaluator:
             # Interaction and penalized models without a reporting channel.
             if assertion.assertion_id == "a_identity_routing":
                 continue
+            if assertion.diagnostic_only and assertion.return_event_id and assertion.return_event_id not in observed_ids and assertion.category.value in {'speaker_anchor','return_continuity'}:
+                continue
             result = capability_results.get(assertion.assertion_id)
             passed = bool(result and result.passed)
             capability_passes.append(passed)
@@ -412,21 +416,27 @@ class MultiUserEvaluator:
             exists, actual = _resolve_state_path(
                 trace.final_environment_state, assertion.path
             )
+            from .business_values import enabled as value_contract_enabled, canonical as canonical_business_value
+            expected_value = assertion.expected
+            if value_contract_enabled(case):
+                scene=case.case_id.split("__")[0]; location=tuple(assertion.path.split("."))
+                actual=canonical_business_value(scene,actual,location)
+                expected_value=canonical_business_value(scene,expected_value,location)
             if assertion.operator == "exists":
                 passed = exists
             elif not exists:
                 passed = False
             elif assertion.operator == "eq":
-                passed = _values_equal(actual, assertion.expected, case)
+                passed = _values_equal(actual, expected_value, case)
             elif assertion.operator == "ne":
-                passed = not _values_equal(actual, assertion.expected, case)
+                passed = not _values_equal(actual, expected_value, case)
             elif assertion.operator == "contains":
-                passed = _contains_subset(actual, assertion.expected, case)
+                passed = _contains_subset(actual, expected_value, case)
             else:
                 if isinstance(actual, (list, dict, str)):
-                    passed = assertion.expected not in actual
+                    passed = expected_value not in actual
                 else:
-                    passed = actual != assertion.expected
+                    passed = actual != expected_value
             state_passes.append(passed)
             if assertion.critical and not passed:
                 task_failures.append(f"state_failed:{assertion.assertion_id}")
@@ -560,6 +570,7 @@ class MultiUserEvaluator:
             )
             behavior_result = capability_results.get(behavior_assertion_id)
             anchor_result = capability_results.get(assertion.assertion_id)
+            return_observed = assertion.return_event_id in observed_ids
             recognition_pairs.append(
                 RecognitionSplitPair(
                     target_participant_id=assertion.target_participant_id,
@@ -567,13 +578,13 @@ class MultiUserEvaluator:
                     spoken_anchor_assertion_id=assertion.assertion_id,
                     behavior_continuity_assertion_id=behavior_assertion_id,
                     spoken_anchor_passed=(
-                        anchor_result.passed if anchor_result is not None else None
+                        anchor_result.passed if anchor_result is not None and return_observed else None
                     ),
                     behavior_continuity_passed=(
-                        behavior_result.passed if behavior_result is not None else None
+                        behavior_result.passed if behavior_result is not None and return_observed else None
                     ),
                     spoken_anchor_anchor_kind=(
-                        anchor_result.anchor_kind if anchor_result is not None else None
+                        anchor_result.anchor_kind if anchor_result is not None and return_observed else 'event_not_delivered'
                     ),
                     behavior_continuity_failure_kind=(
                         behavior_result.failure_kind
@@ -616,6 +627,7 @@ class MultiUserEvaluator:
                     pair.spoken_anchor_passed is False
                     and pair.behavior_continuity_passed is True
                     for pair in recognition_pairs
+                    if pair.spoken_anchor_passed is not None and pair.behavior_continuity_passed is not None
                 ]
             ),
             anchor_only_rate=optional_rate(
@@ -623,6 +635,7 @@ class MultiUserEvaluator:
                     pair.spoken_anchor_passed is True
                     and pair.behavior_continuity_passed is False
                     for pair in recognition_pairs
+                    if pair.spoken_anchor_passed is not None and pair.behavior_continuity_passed is not None
                 ]
             ),
             neither_rate=optional_rate(
@@ -630,6 +643,7 @@ class MultiUserEvaluator:
                     pair.spoken_anchor_passed is False
                     and pair.behavior_continuity_passed is False
                     for pair in recognition_pairs
+                    if pair.spoken_anchor_passed is not None and pair.behavior_continuity_passed is not None
                 ]
             ),
             no_assistant_evidence_rate=optional_rate(
@@ -642,6 +656,7 @@ class MultiUserEvaluator:
                         pair.spoken_anchor_assertion_id
                     ].assistant_source_ids
                     for pair in recognition_pairs
+                    if pair.spoken_anchor_passed is not None and pair.behavior_continuity_passed is not None
                 ]
             ),
             explicitation_gap=(
@@ -704,6 +719,8 @@ class MultiUserEvaluator:
             + run_diagnostics
         )
         return MultiUserScoreReport(
+            business_basis_routing_policy=next((a.request_basis_routing_policy for a in trace.tool_actions if a.request_basis_routing_policy),None),
+            business_basis_original_insufficient_calls=[i for i,a in enumerate(trace.tool_actions) if a.request_basis_original_status=="insufficient_evidence"],
             evaluation_policy_version=VERSION if active_policy else None,
             raw_reference_state_match=raw_reference_state_match,
             causal_query_audit=causal_query_audit,

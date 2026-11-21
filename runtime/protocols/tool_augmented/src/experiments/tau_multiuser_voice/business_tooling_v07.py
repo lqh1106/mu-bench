@@ -410,7 +410,7 @@ OPERATION_ROWS: dict[str, dict[str, Any]] = {
     ),
     "events_entertainment_05_schedule_time_fix": _row(
         "update_event_schedule", "Update and distinguish doors time from show start time.",
-        {"doors_time": "6:00", "show_time": "7:00"}, derived={"schedule_status": "corrected"},
+        {"doors_time": "18:00", "show_time": "19:00"}, derived={"schedule_status": "corrected"},
     ),
     "family_coordination_01_pickup_assignments": _row(
         "record_school_pickup_assignments", "Record child-specific accepted pickups and leave unaccepted duties unresolved.",
@@ -706,6 +706,9 @@ class BusinessDomainEnvironment(BaseVirtualEnvironment):
             raise ValueError(f"INVALID_ARGUMENT: expected fields {sorted(expected_keys)}")
         resource_id = str(arguments.pop(self.contract.resource_key))
         resource = self._resource(resource_id)
+        from .business_values import enabled as value_contract_enabled, resolve_public_child_names
+        if operation.scenario_id == "family_coordination_01_pickup_assignments" and value_contract_enabled():
+            arguments = resolve_public_child_names(arguments, resource["business_state"].get("children", []))
         for name, example in operation.expected_arguments.items():
             if not isinstance(arguments[name], type(example)):
                 raise ValueError(f"INVALID_ARGUMENT: wrong type for {name}")

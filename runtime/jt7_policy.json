@@ -1,0 +1,8 @@
+{
+  "default_version": "jt7",
+  "inherits": "jt6",
+  "business_value_contract": "mu-business-values-v1",
+  "preserve_jt4_evidence_dirs": [],
+  "business_basis_unknown_policy": "business-basis-unknown-as-contradicted-v1",
+  "tool_evaluation_revision": "tool-evaluation-r5"
+}

@@ -2166,6 +2166,8 @@ def run_semantic_judge(
     review_callers(bridge, values, case, trace, tool_log, audit_dir)
     from experiments.tau_multiuser_voice.business_request_basis import review_basis
     review_basis(bridge, values, case, trace, tool_log, audit_dir)
+    from experiments.tau_multiuser_voice.tool_revision_r5 import resolve_case
+    case = resolve_case(case, trace)
     review = review_for_case(case)
     task_evidence_contract = build_task_evidence_contract(case, review)
     privacy_evidence_contract = build_privacy_evidence_contract(case, review)
@@ -2384,6 +2386,8 @@ def run_semantic_judge(
             write_json(audit_dir / 'task_evidence_contract.json', task_evidence_contract)
     from experiments.tau_multiuser_voice.judge_context_contract import enrich_packet
     enrich_packet(case, trace, review, task_evidence_contract, judge_payload, evidence_catalog, audit_dir)
+    from experiments.tau_multiuser_voice.tool_revision_r5 import enrich_judge_packet
+    enrich_judge_packet(case, trace, judge_payload)
     if enabled() and audit_dir is not None:
         write_json(audit_dir / 'task_evidence_contract.json', task_evidence_contract)
     from experiments.tau_multiuser_voice.jt3_review import enabled as jt3_enabled, semantic_review
@@ -4953,11 +4957,11 @@ def run_case(
             "unsupported_reason": None,
         }
     )
-    if case.task_contract_revision.get('design_revision')=='tool-scene-r3':
+    if case.task_contract_revision.get('design_revision') in {'tool-scene-r3','tool-scene-r4','tool-scene-r5'}:
         delivered={e.event_id for e in trace.spoken_events}
         missing=[e.event_id for e in case.events if e.required and e.event_id not in delivered]
-        score_payload.update(case_version='mu-bench-tool-augmented-v3',judge_protocol='jt4',
-            judge_protocol_label='jt4',evaluation_contract='tool-scoring-r3',
+        score_payload.update(case_version=case.task_contract_revision['review']['case_revision_id'],judge_protocol=__import__('os').environ.get('MUBENCH_TOOL_JUDGE_VERSION','jt6'),
+            judge_protocol_label=__import__('os').environ.get('MUBENCH_TOOL_JUDGE_VERSION','jt6'),evaluation_contract='tool-scoring-r5' if __import__('os').environ.get('MUBENCH_TOOL_JUDGE_VERSION')=='jt7' else 'tool-scoring-r4' if __import__('os').environ.get('MUBENCH_TOOL_JUDGE_VERSION')=='jt6' else 'tool-scoring-r3',
             caller_protocol='explicit-caller',task_success_policy='separate-authorization',
             authorization_reported_separately=True,case_input_delivery_complete=not missing,
             missing_required_input_events=missing,full_case_comparable=not missing)

@@ -25,7 +25,7 @@ Output {"calls":[{"call_index":0,"status":"supported|contradicted|insufficient_e
 "reason":"why the request/data/confirmation did or did not precede this call"}]}.
 Cover every call. Cite exact delivered quotes and/or eligible prior successful
 tool indices. A positive needs real supporting evidence. Absence can be explained
-without invented quotes. Insufficient evidence defers scoring, not a SUT failure.'''
+without invented quotes. Keep insufficient_evidence as the epistemic review status when sources genuinely do not establish the basis. The evaluator applies its separately recorded downstream routing policy; do not invent a contradicted finding to avoid uncertainty.'''
 
 def validate_basis(request, response):
  from .jt5_policy import contains,enabled as jt5_enabled
@@ -79,7 +79,7 @@ def review_basis(bridge,values,case,trace,tool_log,audit_dir):
  from experiments.tau_multiuser_voice.caller_protocol import build_request
  path=Path(audit_dir);request=build_request(case,trace,tool_log)
  request['business_preconditions']=case.task_contract_revision['request_revision_contract']['business_preconditions']
- if case.task_contract_revision.get('design_revision')=='tool-scene-r3':
+ if case.task_contract_revision.get('design_revision') in {'tool-scene-r3','tool-scene-r4','tool-scene-r5'}:
   request['case_id']=case.case_id
   request['scoring_contract']=case.task_contract_revision['tool_scoring_contract']
   request['query_dependencies']=case.task_contract_revision['query_dependencies']
@@ -112,9 +112,32 @@ def review_basis(bridge,values,case,trace,tool_log,audit_dir):
  else:rows=[]
  from .jt5_policy import enabled as jt5_enabled
  if not jt5_enabled():rows=validate_basis(request,{'calls':rows})
- blocking=[r['call_index'] for r in rows if r['status']=='insufficient_evidence' and tool_log[r['call_index']].get('executed')]
- audit={'version':VERSION,'sha256':digest,'calls':rows,'complete':not blocking,'blocking_unresolved_calls':blocking,'nonblocking_unexecuted_unknown_calls':[r['call_index'] for r in rows if r['status']=='insufficient_evidence' and not tool_log[r['call_index']].get('executed')]}
+ audit=route_basis_reviews(rows,trace,digest)
  write('business_request_basis_audit.json',audit)
- if not audit['complete']:raise ValueError('business prerequisite evidence unresolved; preserve dialogue for completion')
- for r in rows:
-  action=trace.tool_actions[r['call_index']];action.request_basis_status=r['status'];action.request_basis_evidence=r['event_ids']
+
+ROUTING_POLICY = 'business-basis-unknown-as-contradicted-v1'
+
+def route_basis_reviews(rows,trace,digest):
+ """Keep the review verbatim; route unknowns through unsupported-call handling.
+
+ This policy is not a new claim that missing evidence proves a contradiction.
+ It never creates negative_basis, changes an LLM verdict, authorizes a call or
+ erases an executed action. Existing contradicted downstream semantics apply.
+ """
+ from copy import deepcopy
+ calls=deepcopy(rows);unknown=[]
+ for row in calls:
+  raw=row['status'];effective='contradicted' if raw=='insufficient_evidence' else raw
+  row.update(effective_status=effective,routing_policy=ROUTING_POLICY)
+  action=trace.tool_actions[row['call_index']]
+  action.request_basis_status=effective
+  action.request_basis_original_status=raw
+  action.request_basis_review_reason=row.get('reason')
+  action.request_basis_routing_policy=ROUTING_POLICY
+  action.request_basis_evidence=list(row.get('event_ids',[]))
+  if raw=='insufficient_evidence':unknown.append(row['call_index'])
+ return {'version':VERSION,'sha256':digest,'calls':calls,'complete':True,
+  'routing_policy':ROUTING_POLICY,'insufficient_evidence_routed_as_contradicted':unknown,
+  'blocking_unresolved_calls':[],
+  'nonblocking_unexecuted_unknown_calls':[i for i in unknown if not trace.tool_actions[i].executed],
+  'original_status_and_reason_preserved':True,'source_absence_relabelled_as_factual_contradiction':False}
