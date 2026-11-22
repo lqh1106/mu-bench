@@ -22,9 +22,9 @@ Personal assistants help one person get things done. Shared activities introduce
 
 **μ-Bench tests whether these interdependent requests reach a jointly valid outcome in one live conversation.** The agent's questions, refusals and tool actions shape what participants say next; the resulting conversation and business state determine whether the shared task is complete.
 
-[![A child asks for a park stop on an airport trip. The assistant checks the detour, obtains the parent's approval and preserves the arrival deadline; the lower panels explain Attribution, Threading and Coordination.](assets/figures/intro-teaser.png)](assets/figures/intro-teaser.pdf)
+[![A shared airport ride illustrates barge-in, side-talk and backchannels, with Attribution, Threading and Coordination views below. The domain map shows the Tool-Augmented and Tool-Free scenario split.](assets/figures/intro-teaser.png)](assets/figures/intro-teaser.pdf)
 
-*An illustrative shared interaction: a park-stop request must fit an existing 10:00 airport deadline. Click the figure for the vector PDF.*
+*Left: the agent checks a detour and obtains approval while preserving the 10:00 airport deadline; the lower panels unpack Attribution, Threading and Coordination. Right: 100 base scenarios across 20 domains, split into Tool-Augmented (TA) and Tool-Free (TF) tasks. Click for the PDF.*
 
 - **Reactive multi-user simulation.** Participants have individual profiles, goals and knowledge boundaries. An orchestrator, scriptwriter and voice actor generate interruptions, clarification and request revisions in response to the agent's played speech and actual tool effects.
 - **Controlled comparisons.** 100 base scenarios span 20 domains. Each has eight matched variants across group size, acoustic profile and user comprehension, with fixed voice bindings and 3,200 reference recordings.
