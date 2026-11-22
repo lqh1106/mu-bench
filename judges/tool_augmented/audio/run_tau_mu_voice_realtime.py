@@ -2818,6 +2818,7 @@ def run_semantic_judge(
         from experiments.tau_multiuser_voice.full_review import full_review
         payload = full_review(bridge, values, case, task_evidence_contract, payload,
                               evidence_catalog, judge_payload, audit_dir, write_json)
+    reviewed_applicability = __import__('copy').deepcopy(payload)
     if task_evidence_contract["enabled"]:
         normalized_goals, grounding_audit = validate_goal_evidence(
             case, review, payload, assistant_turns, tool_log, event_log=trace.spoken_events
@@ -2837,6 +2838,10 @@ def run_semantic_judge(
         if not privacy_audit.get("evaluation_valid", False):
             raise JudgeEvidenceInvalid([{"path": "privacy_leaks", "reason": "privacy evidence invalid; preserve Final, not a model failure"}], privacy_audit)
         payload["privacy_leaks"] = verified_privacy_leaks
+    from experiments.tau_multiuser_voice.tool_obligation_corrections import mark_conditional
+    applicability_audit = mark_conditional(case, trace, payload, reviewed_applicability)
+    if audit_dir is not None:
+        write_json(audit_dir / "conditional_applicability_audit.json", applicability_audit)
     capabilities = []
     for item in payload.get("capability_results", []):
         try:

@@ -120,7 +120,7 @@
     "judges/common/src/experiments/tau_multiuser_voice/evaluation_policy_data.py": "9a77ba9547063d9afcd2d54a6f5f9c83e3ec6d491c788478219fc60857d92e4c",
     "judges/common/src/experiments/tau_multiuser_voice/task_evidence.py": "c4e559891d7292bbb485d1f71c3ea812fe57fdf31c7cbd76ac1f849885160aa6",
     "judges/common/src/experiments/tau_multiuser_voice/source_guard.py": "66a43185833fc2a91d4e3a0286354d532b6d3363b1f6b0ee4b1a498b63ecf94d",
-    "judges/common/src/experiments/tau_multiuser_voice/jt3_review.py": "51084210ab018143d94569fb58d90cad8abf3881cadbbc26d80d18c8bdc6a9b6",
+    "judges/common/src/experiments/tau_multiuser_voice/jt3_review.py": "dfa6af334b6f20953f611b73e82773b0fefd9d57732946991899d84c46053246",
     "judges/common/src/experiments/tau_multiuser_voice/judge_context_contract.py": "a552d7070a0441370c61cce5d929ee26eae7559b7da6d688db8bafa232005456",
     "judges/common/src/experiments/tau_multiuser_voice/obligation_evidence.py": "06bb1d5068a26ec9e12e4f738f520a0648c1515c4a762ad145c03861b7168238",
     "judges/common/src/experiments/tau_multiuser_voice/attribution.py": "e24ceed6fe7fc91ce62b25cdbf71ec9232b02d8854ca01e6bb8148953507ba01",
@@ -144,7 +144,7 @@
     "adapters/native/minicpm/src/experiments/mu_bench/logical_time/openweight/session.py": "d173bcde2089aad71ce2d61f70ec8b2518b3418f5e96e9151d8bf3c4e8e9a0c0",
     "runtime/core/src/experiments/tau_multiuser_voice/business_values.py": "24fc582a26be842651bbcfef52df44db465cc62859b58bdbc837468da419e962"
   },
-  "scoring_sha256": "1341a857c2fdb28d4ff897c22e09a18973702044695d91dc622012b7c2cca9c3",
+  "scoring_sha256": "f1e0a0631264e1c83d098961bbcc35f4fc6f7b52282eae3900053631338a0178",
   "task_success_policy": "separate-authorization",
   "provider": "minicpm",
   "shared_cases": "cases/ablations"

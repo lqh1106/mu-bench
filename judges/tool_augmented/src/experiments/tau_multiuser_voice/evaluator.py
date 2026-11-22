@@ -276,10 +276,9 @@ class MultiUserEvaluator:
             for goal in user.goals
         }
         goal_results = {result.goal_id: result for result in trace.goal_results}
+        from .tool_obligation_corrections import goal_matches
         goal_correct = sum(
-            goal_id in goal_results
-            and goal_results[goal_id].disposition == disposition
-            and goal_results[goal_id].evidence_verified is not False
+            goal_matches(case, goal_id, goal_results.get(goal_id), disposition)
             for goal_id, disposition in goal_oracle.items()
         )
         goal_accuracy = goal_correct / len(goal_oracle) if goal_oracle else 1.0

@@ -28,6 +28,10 @@
         },
         "g_extra1": {
           "mode": "spoken_answer"
+        },
+        "g_extra2": {
+          "mode": "conditional_constraint",
+          "condition": "A corrected witness description is actually relayed; mere mention of a future conditional correction does not trigger this obligation. All mandatory events must be delivered."
         }
       },
       "explicitly_public_information": [],
@@ -243,7 +247,8 @@
       }
     },
     "previous_design_revision": "tool-scene-r3",
-    "business_value_contract": "mu-business-values-v1"
+    "business_value_contract": "mu-business-values-v1",
+    "obligation_correction": "tool-obligation-corrections-20261123"
   },
   "case_id": "emergency_incident_03_roll_call_overlap__g-large__a-realistic__c-strong",
   "title": "Floor representatives overlap during roll call [g-large__a-realistic__c-strong]",

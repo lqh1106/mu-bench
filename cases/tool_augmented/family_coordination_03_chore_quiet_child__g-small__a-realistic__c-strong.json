@@ -7,7 +7,7 @@
       "opening_context": "",
       "goal_criteria": {
         "g_primary": "Read the actual chore proposal and recorded workload. Explain how Blake’s newly supplied daily dishes affect the proposed daily sweeping alongside Avery’s weekly vacuuming and existing daily meal preparation. Identify what needs discussion without claiming agreed final assignments or inventing times/durations.",
-        "g_live": "I have not spoken yet; I already do dishes every day."
+        "g_live": "Acknowledge Blake's stated daily dish duty, compare it with the proposed daily sweeping, and explain the workload/fairness issue while keeping assignments provisional. This is a spoken-review obligation, not a required workload database write or final allocation."
       },
       "required_answer_facts": [],
       "goal_policies": {
@@ -15,10 +15,7 @@
           "mode": "spoken_answer"
         },
         "g_live": {
-          "mode": "execute_and_report",
-          "tool_names": [
-            "record_existing_chore_constraint"
-          ]
+          "mode": "spoken_answer"
         }
       },
       "explicitly_public_information": [],
@@ -179,7 +176,8 @@
       }
     },
     "previous_design_revision": "tool-scene-r3",
-    "business_value_contract": "mu-business-values-v1"
+    "business_value_contract": "mu-business-values-v1",
+    "obligation_correction": "tool-obligation-corrections-20261123"
   },
   "case_id": "family_coordination_03_chore_quiet_child__g-small__a-realistic__c-strong",
   "title": "Quiet child challenges a chore summary [g-small__a-realistic__c-strong]",
@@ -679,21 +677,6 @@
       "after_event_id": null,
       "before_event_id": "e_live",
       "before_event_anchor": "start"
-    },
-    {
-      "tool_name": "record_existing_chore_constraint",
-      "resource_id": "FAM-MU-003",
-      "actor_id": "live",
-      "allowed": true,
-      "must_execute": true,
-      "argument_subset": {
-        "family_plan_id": "FAM-MU-003",
-        "family_member_user_id": "live",
-        "existing_chore": "dishes_daily"
-      },
-      "after_event_id": null,
-      "before_event_id": null,
-      "before_event_anchor": "end"
     }
   ],
   "timing_requirements": [
@@ -935,35 +918,26 @@
   ],
   "state_assertions": [
     {
-      "assertion_id": "s_business_record_updated",
-      "path": "family_plans.FAM-MU-003.status",
-      "operator": "eq",
-      "expected": "updated",
-      "critical": true
-    },
-    {
-      "assertion_id": "s_business_actor",
-      "path": "family_plans.FAM-MU-003.last_modified_by",
-      "operator": "eq",
-      "expected": "live",
-      "critical": true
-    },
-    {
-      "assertion_id": "s_business_operation",
-      "path": "family_plans.FAM-MU-003.last_operation",
-      "operator": "eq",
-      "expected": "record_existing_chore_constraint",
-      "critical": true
-    },
-    {
-      "assertion_id": "s_business_state",
+      "assertion_id": "s_proposal_unfinalized",
       "path": "family_plans.FAM-MU-003.business_state",
       "operator": "contains",
       "expected": {
-        "family_member_user_id": "live",
-        "existing_chore": "dishes_daily",
-        "live_existing_chore": "dishes_daily",
-        "allocation_status": "reconsider_required"
+        "allocation_phase": "proposal_review",
+        "proposed_chores": [
+          {
+            "participant_user_id": "primary",
+            "chore": "vacuuming",
+            "frequency": "weekly",
+            "times_per_week": 1
+          },
+          {
+            "participant_user_id": "live",
+            "chore": "sweeping",
+            "frequency": "daily",
+            "times_per_week": 7
+          }
+        ],
+        "review_rule": "Compare stated task frequency and overlapping responsibilities; do not invent task durations or times of day. Assignments remain proposals until the affected people agree."
       },
       "critical": true
     }

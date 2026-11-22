@@ -14,6 +14,8 @@ def resolve_case(case,trace):
  and that basis must cite an actually delivered prior request by the seat owner.
  Missing/contradicted basis never changes the expected state. ACL remains separate.
  """
+ from .tool_obligation_corrections import correct_case
+ case=correct_case(case,trace)
  if not enabled(case) or case.case_id.split('__')[0]!='events_entertainment_03_accessible_seat':return case
  owner='live';value='secondary';proof=None
  for i,action in enumerate(trace.tool_actions):
@@ -35,6 +37,8 @@ def resolve_case(case,trace):
 
 def enrich_judge_packet(case,trace,packet):
  if not enabled(case):return
+ from .tool_obligation_corrections import enrich
+ enrich(packet)
  packet['tool_evaluation_revision']=VERSION
  packet.setdefault('judge_boundary_rules',[]).extend([
   'For a valid authorized revision, an explicit statement that the old request is obsolete, overridden, or will not be applied can establish its non-execution disposition. No refusal keyword or extra refusal speech is required. Still reject an uncorrected forbidden effect.',

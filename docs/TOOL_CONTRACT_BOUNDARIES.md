@@ -19,3 +19,8 @@ Complete historical episodes can be re-evaluated with an evaluation-only correct
 - Event times use local 24-hour HH:MM and the supplied daypart. Explicit AM/PM is normalized; bare 06:00 and 18:00 are different. The evening-event fixture provides its daypart before the dialogue.
 - Diagnostic return pairs are applicable only when their return event was actually delivered. Absent returns remain in the audit with null outcomes and are omitted from metric denominators. Missing original goals remain failures.
 - A clear owner-bound reference by public participant ID can satisfy a return anchor without a vocative. An unrelated mention of an ID cannot.
+
+
+### Conditional obligations, spoken dates, and provisional reviews
+
+A conditional obligation is not an unconditionally required outcome. After all authored events are delivered, evidence-validated non-applicability is carried through machine aggregation. Missing mandatory events do not qualify. Spoken calendar dates are compared by unambiguous calendar meaning; ASR separator changes alone do not change the date. Original quotations remain unchanged. The chore-workload scene requires reading and discussing the provisional proposal; it does not require an unrequested workload write or a final allocation. Legitimate optional workload notes may preserve the stated constraint without finalizing the proposal.
