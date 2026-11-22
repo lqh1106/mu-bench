@@ -144,7 +144,7 @@
     "adapters/providers/moss/ablation.py": "65f8b3a7f9c370167942fa99b6986a6605ab957c949ad4967c73a9786c6696b0",
     "runtime/core/src/experiments/tau_multiuser_voice/business_values.py": "24fc582a26be842651bbcfef52df44db465cc62859b58bdbc837468da419e962"
   },
-  "scoring_sha256": "37e3c3683c3218979a399c11174eeb374a838b20460b832edefe584181513e3d",
+  "scoring_sha256": "2166267db0b6e04fd2b5d53fa69e5d919e6eb2bc4e7876fbdb68559e4eb6dee4",
   "task_success_policy": "separate-authorization",
   "provider": "moss",
   "shared_cases": "cases/ablations"

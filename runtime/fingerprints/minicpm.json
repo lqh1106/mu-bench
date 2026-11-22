@@ -144,7 +144,7 @@
     "adapters/native/minicpm/src/experiments/mu_bench/logical_time/openweight/session.py": "d173bcde2089aad71ce2d61f70ec8b2518b3418f5e96e9151d8bf3c4e8e9a0c0",
     "runtime/core/src/experiments/tau_multiuser_voice/business_values.py": "24fc582a26be842651bbcfef52df44db465cc62859b58bdbc837468da419e962"
   },
-  "scoring_sha256": "9633bc404d531d37af0b9f88579cad17642f4c153576257d49aa736e6778f1e2",
+  "scoring_sha256": "1341a857c2fdb28d4ff897c22e09a18973702044695d91dc622012b7c2cca9c3",
   "task_success_policy": "separate-authorization",
   "provider": "minicpm",
   "shared_cases": "cases/ablations"

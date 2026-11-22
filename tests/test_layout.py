@@ -19,6 +19,7 @@ class LayoutTests(unittest.TestCase):
   for provider in ['native','moss']:
    code="from pathlib import Path;from types import SimpleNamespace;from mubench.config import activate,profile;activate(profile('"+provider+"','tool_free','serial'));from experiments.tau_multiuser_voice.cases import CaseCatalog;from ablation_runtime import prepare;case=CaseCatalog.get('airline_04_gate_announcement_collision__g-small__a-clean__c-strong');args=SimpleNamespace(ablation_arm='serial',openweight_endpoint=Path('endpoint.json'),output_dir=Path('unused_output'));changed,experiment=prepare(case,args);print(changed.case_id)"
    env=dict(os.environ,PYTHONPATH=str(ROOT),MUBENCH_PROVIDER=provider,MUBENCH_ABLATION_ARM='serial')
-   p=subprocess.run([sys.executable,'-c',code],cwd=ROOT,env=env,capture_output=True,text=True,check=True)
+   p=subprocess.run([sys.executable,'-c',code],cwd=ROOT,env=env,capture_output=True,text=True)
+   self.assertEqual(p.returncode,0,p.stderr)
    self.assertEqual(p.stdout.strip(),'airline_04_gate_announcement_collision__g-small__a-clean__c-strong')
 if __name__=='__main__':unittest.main()

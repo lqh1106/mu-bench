@@ -1,13 +1,20 @@
 name: Validate benchmark
 on: [push, pull_request]
+permissions:
+  contents: read
 jobs:
   cpu-contracts:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
-      - run: python -m venv .venv
-      - run: .venv/bin/python -m pip install -e '.[dev]'
-      - run: bash scripts/check_release.sh
+      - name: Create runner environment
+        run: python -m venv .venv
+      - name: Install benchmark and test dependencies
+        run: |
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/python -m pip install -e '.[dev]'
+      - name: Validate cases, runtime contracts and reference outcomes
+        run: bash scripts/check_release.sh

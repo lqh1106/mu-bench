@@ -12,15 +12,15 @@
 
 **Closed-loop, full-duplex evaluation for voice agents serving multiple users over a shared audio channel.**
 
-[Overview](#benchmark-overview) · [Quick Start](#quick-start) · [Evaluation](#evaluation) · [Models](#supported-models-and-tracks) · [中文](README.zh-CN.md)
+[Overview](#benchmark-overview) · [Framework](#how-it-works) · [Evaluation](#evaluation) · [Quick Start](#quick-start) · [Models](#supported-models-and-tracks) · [中文](README.zh-CN.md)
 
 </div>
 
 ## Why μ-Bench?
 
-Personal assistants help one person get things done. In shared activities—planning a trip, coordinating a meeting or updating a family schedule—one person's new request can change another person's plan. A shared voice assistant must remember each participant's requirements, check the consequences of revisions and resume unfinished requests as people interrupt, clarify or talk to one another.
+Personal assistants help one person get things done. Shared activities introduce **dependencies across users**: a child's request for a park stop must respect a parent's airport deadline and decision authority. A shared voice agent must track who wants what, assess how a revision affects existing commitments, and resume unfinished requests through interruptions and side-talk.
 
-**μ-Bench evaluates whether the assistant can complete this interdependent work within one evolving conversation.** Cases pair reactive multi-user interaction with explicit task goals and verifiable outcomes.
+**μ-Bench tests whether these interdependent requests reach a jointly valid outcome in one live conversation.** The agent's questions, refusals and tool actions shape what participants say next; the resulting conversation and business state determine whether the shared task is complete.
 
 [![A child asks for a park stop on an airport trip. The assistant checks the detour, obtains the parent's approval and preserves the arrival deadline; the lower panels explain Attribution, Threading and Coordination.](assets/figures/intro-teaser.png)](assets/figures/intro-teaser.pdf)
 
@@ -44,7 +44,7 @@ Each scenario has a **2 × 2 × 2** condition grid:
 |---|---|
 | **Group size** | Small: 2–3 participants / large: 4–7 participants |
 | **Acoustic profile** | Clean / realistic |
-| **User comprehension and follow-up demand** | Strong / weak |
+| **Follow-up demands** | Direct comprehension (`c-strong`) / repeated clarification and confirmation (`c-weak`) |
 
 The [case catalog](cases/) supports comparisons that hold the scenario and two factors fixed while varying the third.
 
@@ -76,6 +76,46 @@ The [case catalog](cases/) supports comparisons that hold the scenario and two f
 
 
 </details>
+
+## How it works
+
+[![μ-Bench framework. Left: a playbook and orchestrator drive isolated participants through live feedback, audible history, a scriptwriter and voice actor. Right: the task contract and recorded evidence feed independent semantic reviews and programmatic checks, producing Task Success and ATC diagnostics.](assets/figures/framework.png)](assets/figures/framework.pdf)
+
+*Reactive interaction on the left; evidence-based verification on the right. Click for the vector PDF.*
+
+### 1. Simulate independent people in a shared conversation
+
+The **playbook** defines participants, their goals and authority, initial materials, and an event graph. The **orchestrator** monitors the agent's played speech and tool effects to trigger events and bounded follow-ups. Each participant's **scriptwriter** uses their own profile, knowledge and audible history; the **voice actor** turns the utterance into speech with a fixed voice binding. A clarification, refusal or intermediate action can therefore change the next user response.
+
+### 2. Verify the outcome against what actually happened
+
+The **task contract** defines the required outcomes. **Recorded evidence** establishes which inputs were delivered, what users and the agent said, which tools executed, and how business state changed.
+
+- **Semantic review:** two itemized reviews in independent contexts check goal satisfaction, context isolation and evidence grounding. Disagreements go to arbitration; targeted source checks retrieve delivered material when a potential missing-source or fabrication error is flagged.
+- **Programmatic verification:** validators check actual tool execution, causal order and the relevant final business state. Internal audit IDs are excluded from business-state comparison. Where a task permits it, both acting and then revising after new input, and waiting before executing once, are valid paths.
+- **Aggregation:** code computes Task Success and ATC from the verified items. The judge does not assign a single holistic score. Infrastructure failures retain their evidence for recovery rather than becoming model task failures.
+
+[Interaction protocol](docs/PROTOCOL.md) · [Evidence and scoring](docs/EVALUATION.md) · [Implementation map](docs/ARCHITECTURE.md)
+
+## Evaluation
+
+**Joint Task Success (TS)** is a binary session outcome: every required user goal, applicable tool effect and final-state constraint, and privacy boundary must hold in the **same trajectory**. A correct disposition can be fulfillment, clarification, refusal or ignoring peer-directed side-talk. Tool-free cases are judged from spoken coordination; they do not require a backend write.
+
+**Authorization and caller-source violations are reported separately.** A rejected unauthorized attempt does not, by itself, force TS to fail; incorrect business effects, unmet task requirements and privacy breaches still affect completion.
+
+**ATC** explains the interaction capabilities behind the outcome:
+
+| Axis | Meaning | Component mapping |
+|---|---|---|
+| **A — Attribution** | Speaker, addressee and request attribution | `A = Routing` |
+| **T — Threading** | Keeping and resuming task threads | `T = Continuity` |
+| **C — Coordination** | Boundary compliance and applicable multi-user service equity | `C = (Isolation + Equity) / 2`; when Equity is inapplicable, `C = Isolation` |
+
+Scores use `[0, 1]`; inapplicable Equity is excluded, while an observed zero is included. ATC is computed per case from the preserved RICE components without another judge call.
+
+In tool cases, the explicit public `caller_id` identifies the requester for execution-time permission checks; semantic review separately checks whether that caller matches the actual source of the request. Judges assess the case's designed goals; simulator-added requests do not become mandatory goals. Complete trajectories can be judged offline without replaying the agent.
+
+[Scoring and evidence flow](docs/EVALUATION.md) · [Tool evaluation contracts](docs/TOOL_EVALUATION.md) · [Outputs and automatic cleanup](docs/USAGE.md#outputs-and-cleanup)
 
 ## Quick Start
 
@@ -161,35 +201,6 @@ output_root/<model>/<subset>/<condition>/
 `<subset>` is `tool_free` or `tool_augmented`. `<condition>` is `baseline`, `serial`, `serial_identity` or `serial_identity_semantics`; group size, acoustics and comprehension are part of `<case_id>`.
 
 Automatic cleanup runs only after the required scores and final stereo audio are present. It removes redundant audio fragments, mono stems and temporary oracle audio while preserving the final recording, ASR, trajectories, tool records and judge audits. Publication uses hardlinks where possible to avoid duplicating file contents. Incomplete evidence is retained. [Output and cleanup details →](docs/USAGE.md#outputs-and-cleanup)
-
-## Architecture and Evaluation Protocol
-
-**Case playbook → reactive users ⇄ tested agent and tools → recorded evidence → task and ATC scores**
-
-1. **Define the shared work.** Each case specifies participants, their knowledge, goals, constraints, initial assistant materials and an event graph. Tool cases also define executable APIs and an initial business state.
-2. **Run the conversation.** The orchestrator releases events from actual observations. The scriptwriter generates participant-specific utterances, and the voice actor renders them using fixed reference voices. The agent's audible output and tool effects shape subsequent events.
-3. **Preserve delivered evidence.** The runner records played user and assistant audio, assistant ASR, event delivery, tool arguments/results and final business state. Playback receipts and logical time establish which information was available before an action or answer.
-4. **Verify completion.** Deterministic checks evaluate applicable tool effects and business state. Semantic judges assess the authored obligations against the recorded evidence, followed by independent review, conflict arbitration when needed and targeted source checks.
-
-The [Protocol](docs/PROTOCOL.md) specifies registration, public participant codes, tool disclosure, playback, interruption and logical-time pauses during simulator computation. [Architecture](docs/ARCHITECTURE.md) maps these components to the implementation.
-
-## Evaluation
-
-**Task Success** measures whether the case's applicable goals, required business effects, final state and privacy constraints are satisfied. **Authorization and caller-source violations are reported separately**, with the underlying records retained.
-
-**ATC** explains the interaction capabilities behind the outcome:
-
-| Axis | Meaning | Component mapping |
-|---|---|---|
-| **A — Attribution** | Speaker, addressee and request attribution | `A = Routing` |
-| **T — Threading** | Keeping and resuming task threads | `T = Continuity` |
-| **C — Coordination** | Boundary compliance and applicable multi-user service equity | `C = (Isolation + Equity) / 2`; when Equity is inapplicable, `C = Isolation` |
-
-Scores use `[0, 1]`; inapplicable Equity is excluded, while an observed zero is included. ATC is computed per case from the preserved RICE components without another judge call.
-
-Evaluation combines deterministic tool/state checks, itemized semantic assessment, independent full review, conflict arbitration when needed and targeted source review. In tool cases, the explicit public `caller_id` identifies the requester for execution-time permission checks; semantic review separately checks whether that caller matches the actual source of the request. Judges assess the case's designed goals; simulator-added requests do not become mandatory goals. Complete trajectories can be judged offline without replaying the agent.
-
-[Scoring and evidence flow](docs/EVALUATION.md) · [Tool evaluation contracts](docs/TOOL_EVALUATION.md) · [Outputs and automatic cleanup](docs/USAGE.md#outputs-and-cleanup)
 
 ## Supported models and tracks
 
