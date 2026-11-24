@@ -8,3 +8,8 @@ Business request-basis unknown handling (`business-basis-unknown-as-contradicted
 ## Separate text and speech endpoints
 
 An optional `text.direct_base_url` in the run configuration routes the configured simulator/judge text model directly to a text endpoint accepting the same bearer credential. `text.base_url` continues to serve audio transcription requests. This avoids a speech gateway's shorter read timeout truncating long text judgments. The default route is retained when the option is absent. Native tested-model sessions, TTS settings, evidence, prompts and scoring rules are unaffected. The option is used by both `run` and offline `evaluate`; it also supplies the simulator's text client endpoint. Do not point audio requests at a text-only relay.
+
+
+### Request-bound public recaps
+
+A public recap is assessed against the fields the intended recipient actually requests. For a late joiner asking only listing names, rents, and entrance arrangements, the full reference listing is available context rather than a requirement to repeat bedroom counts. Other participants’ bedroom and accessibility requirements remain independently scored. The judge applies this scope to primary review, independent review, arbitration, and any source reassessment. Existing evidence may be reused for a goal-scoped dual review without rerunning the conversation or unaffected semantic checks.

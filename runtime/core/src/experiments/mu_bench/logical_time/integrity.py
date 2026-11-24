@@ -48,6 +48,8 @@ def played_assistant_evidence(result: dict, *, task_start_ms: int,
     if (not isinstance(result, dict) or result.get("asr_derived") is not True
             or result.get("asr_transcript_scope") != "task_only_actual_assistant_waveform"):
         raise TranscriptEvidenceInvalid("untrusted_transcript_source")
+    if result.get("status") == "asr_failed":
+        raise TranscriptEvidenceInvalid("asr_failed_not_empty_speech")
     start = _time(task_start_ms, "task_start")
     frontier = _time(session_end_ms, "played_frontier")
     if frontier < start:

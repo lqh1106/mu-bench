@@ -1,10 +1,11 @@
 """Portable CLI. Every episode runs in an isolated interpreter/profile."""
 from pathlib import Path
-import argparse,concurrent.futures,json,os,subprocess,sys,time,fcntl,hashlib
+import argparse,concurrent.futures,json,os,subprocess,sys,time,fcntl,hashlib,threading
 from .config import ROOT,MODELS,ARMS,load,profile,environment
+from .provider_errors import attempt_admission_block
 
 def write(p,obj):
-    p=Path(p);p.parent.mkdir(parents=True,exist_ok=True);tmp=p.with_suffix('.tmp');tmp.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n');os.replace(tmp,p)
+    p=Path(p);p.parent.mkdir(parents=True,exist_ok=True);tmp=p.with_name('.'+p.name+f'.{os.getpid()}.{threading.get_ident()}.tmp');tmp.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n');os.replace(tmp,p)
 def selected(subset,ids):
     cases=sorted((ROOT/'cases'/subset).glob('*.json'))
     if ids:cases=[p for p in cases if p.stem in ids or p.stem.split('__')[0] in ids]
@@ -54,7 +55,7 @@ def run_one(cfg,subset,case,arm,slot):
             else:args+=['--realtime-provider',{'openai':'openai','xai':'xai','gemini':'gemini','seeduplex':'seeduplex'}[provider]]
         if provider=='seeduplex' and transport=='audio' and sut.get('voice'):
             args+=['--seeduplex-voice',sut['voice']]
-        started=time.time();status='technical_error'
+        started=time.time();status='technical_error';block_reason=None
         try:
             with (attempt/'case.log').open('ab') as log:
                 p=subprocess.run(args,env=env,cwd=ROOT,stdout=log,stderr=subprocess.STDOUT,timeout=cfg.get('case_timeout_seconds',6000))
@@ -66,10 +67,13 @@ def run_one(cfg,subset,case,arm,slot):
             status='complete'
             return {'case_id':case.stem,'status':status,'task_success':json.loads((published/'score.json').read_text())['task_success']}
         except Exception as exc:
-            write(attempt/'error.json',{'type':type(exc).__name__,'message':str(exc),'model_failure':False})
-            return {'case_id':case.stem,'status':status,'error_type':type(exc).__name__}
+            block_reason=attempt_admission_block(attempt,result,exc)
+            write(attempt/'error.json',{'type':type(exc).__name__,'message':str(exc),'model_failure':False,'admission_block_reason':block_reason})
+            row={'case_id':case.stem,'status':status,'error_type':type(exc).__name__}
+            if block_reason:row['admission_block_reason']=block_reason
+            return row
         finally:
-            write(attempt/'run_receipt.json',{'case_id':case.stem,'subset':subset,'transport':transport,'model':name,'profile':rt.relative_to(ROOT).as_posix(),'status':status,'started':started,'ended':time.time(),'evidence_dir':str(result),'config_secrets_removed':True})
+            write(attempt/'run_receipt.json',{'case_id':case.stem,'subset':subset,'transport':transport,'model':name,'profile':rt.relative_to(ROOT).as_posix(),'status':status,'started':started,'ended':time.time(),'evidence_dir':str(result),'config_secrets_removed':True,'admission_block_reason':block_reason})
             envfile.unlink(missing_ok=True);Path(env['MUBENCH_CONFIG_FILE']).unlink(missing_ok=True)
 
 def run(args):
@@ -78,13 +82,28 @@ def run(args):
     if sut['provider']=='moss' and args.workers>len(sut.get('endpoints') or [sut['endpoint_file']]):raise ValueError('MOSS requires one independent key endpoint per lane')
     # Each lane holds its own endpoint/key; it never changes credentials inside a case.
     buckets=[cases[i::args.workers] for i in range(args.workers)]
+    stop_new=threading.Event();pause_lock=threading.Lock();blocked={}
+    runroot=Path(cfg.get('output_root','outputs')).expanduser().resolve()/sut['model']/args.subset/(args.ablation or 'baseline')
     def lane(index):
         results=[]
         for case in buckets[index]:
-            result=run_one(cfg,args.subset,case,args.ablation,index);print(json.dumps(result),flush=True);results.append(result)
+            if stop_new.is_set():
+                result={'case_id':case.stem,'status':'not_started','reason':'provider_admission_blocked'}
+            else:
+                result=run_one(cfg,args.subset,case,args.ablation,index)
+                if result.get('admission_block_reason'):
+                    with pause_lock:
+                        if not stop_new.is_set():
+                            blocked.update(reason=result['admission_block_reason'],trigger_case_id=case.stem,at=time.time())
+                            stop_new.set()
+                            write(runroot/'admission_status.json',dict(blocked,state='paused',active_cases_finish_naturally=True))
+            print(json.dumps(result),flush=True);results.append(result)
         return results
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
         rows=[r for chunk in pool.map(lane,range(args.workers)) for r in chunk]
+    if stop_new.is_set():
+        write(runroot/'admission_status.json',dict(blocked,state='paused',active_cases_finish_naturally=True,
+              pending_case_ids=[r['case_id'] for r in rows if r['status']=='not_started'],model_failure=False))
     write(Path(cfg.get('output_root','outputs'))/'latest_run_summary.json',rows)
     return int(any(r['status']=='technical_error' for r in rows))
 

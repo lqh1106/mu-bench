@@ -14,6 +14,17 @@ from experiments.tau_multiuser_voice.completion_tools import comparable_state
 
 def case(scene):return MultiUserVoiceCase.model_validate_json((R/'cases/tool_augmented'/(scene+'__g-small__a-clean__c-strong.json')).read_text())
 class ValueTests(unittest.TestCase):
+ def test_entree_equivalence_is_comparison_only(self):
+  from experiments.tau_multiuser_voice.business_values import normalize_arguments
+  scene='hospitality_03_table_side_talk'
+  for value in ['vegetarian','Vegetarian Entree','vegetarian entrée']:
+   self.assertEqual(canonical(scene,{'entree':value}),{'entree':'vegetarian'})
+  for value in ['vegan','vegetarian pasta','vegetarian entree without nuts','chicken entree']:
+   self.assertNotEqual(canonical(scene,{'entree':value}),{'entree':'vegetarian'})
+  raw={'entree':'vegetarian entree','guest_user_id':'p02'}
+  self.assertEqual(normalize_arguments(scene,raw),raw)
+  self.assertEqual(canonical(scene,{'guest_user_id':'P02','other':'vegetarian entree'}),{'guest_user_id':'P02','other':'vegetarian entree'})
+  self.assertEqual(canonical('retail_01',raw),raw)
  def test_timer_labels_only(self):
   s='shared_home_01_parallel_timers';raw={'caller_id':'P01','household_task_id':'HSHMU001','timers_by_owner':{'p01':{'label':' Oven ','minutes':30},'p02':{'label':'Stovetop','minutes':12}}}
   v=canonical(s,raw);self.assertEqual(v['timers_by_owner']['p01']['label'],'oven');self.assertEqual(v['caller_id'],'P01');self.assertEqual(v['household_task_id'],'HSHMU001');self.assertEqual(raw['timers_by_owner']['p01']['label'],' Oven ')

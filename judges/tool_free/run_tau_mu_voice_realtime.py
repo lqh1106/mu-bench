@@ -2150,6 +2150,8 @@ def run_semantic_judge(
         TARGETED_REASK_POLICY_ID,
     )
     review = review_for_case(case)
+    from experiments.tau_multiuser_voice.judge_goal_scope import review_for_delivered_requests
+    review = review_for_delivered_requests(case, trace, review)
     task_evidence_contract = build_task_evidence_contract(case, review)
     privacy_evidence_contract = build_privacy_evidence_contract(case, review)
     if not task_evidence_contract.get("enabled"):

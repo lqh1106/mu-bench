@@ -917,6 +917,8 @@ def build_task_evidence_contract(case: Any, review: dict) -> dict:
     interaction = case.task_contract_revision.get('interaction_contract')
     if interaction:
         review.update(case.task_contract_revision['review'])
+    from .judge_goal_scope import review_for_delivered_requests
+    review = review_for_delivered_requests(case, None, review)
     contract = enrich_contract(case, review, _build_task_evidence_contract_legacy(case, review))
     if interaction:
         contract['interaction_contract'] = interaction

@@ -12,7 +12,15 @@ def finalize(case,rt,envfile,model,formal,transport,cleanup=False):
     activate(rt)
     score=json.loads((case/'score.json').read_text())
     if not isinstance(score.get('task_success'),bool):raise ValueError('No task verdict')
+    review_file=case/'full_review_audit.json'
+    review=json.loads(review_file.read_text()) if review_file.is_file() else {}
+    if (not review.get('completed') or not review.get('item_ids') or
+            set(review['item_ids'])!=set(review.get('covered_item_ids',[]))):
+        raise ValueError('No complete independent review audit; preserve evidence for offline recovery')
     if transport=='audio':
+        asr_file=case/'audible_asr_result.json'
+        if asr_file.exists() and json.loads(asr_file.read_text()).get('status')=='asr_failed':
+            raise ValueError('ASR failure cannot be published as an empty assistant response')
         with wave.open(str(case/'audio/both.wav'),'rb') as w:
             if w.getnchannels()!=2 or w.getnframes()==0:raise ValueError('Final stereo waveform is incomplete')
     # The complete current judge/evaluator already contains recognition_split,

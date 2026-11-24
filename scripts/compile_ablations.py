@@ -13,7 +13,7 @@ for arm in ('serial','serial_identity','serial_identity_semantics'):
   experiment=Experiment(arm,case.model_dump(mode='json'),out)
   experiment.manifest.update(task_success_policy='separate-authorization')
   write(out/'case.json',experiment.transformed);write(out/'manifest.json',experiment.manifest);count+=1
-shared=['runtime/core','runtime/ablations','runtime/protocols/ablations','judges/common','judges/tool_free','judges/ablations','mubench/config.py']
+shared=['runtime/core','runtime/ablations','runtime/protocols/ablations','judges/common','judges/tool_free','judges/ablations','mubench/config.py','mubench/judge_retry_io.py','runtime/runners/ablations']
 for provider,additional in [('minicpm',['adapters/native/minicpm/ablation.py','adapters/native/minicpm/src']),('moss',['adapters/providers/moss'])]:
  files={}
  for name in shared+additional:

@@ -691,14 +691,7 @@ class LogicalTimeOpenAIAdapter(DiscreteTimeOpenAIAdapter):
             played_bytes = self._played_bytes_by_item.get(current_item_id, 0)
             played_bytes += current_tick_played.get(current_item_id, 0)
             truncate_end_ms = int(played_bytes / result.bytes_per_second * 1000)
-            await self.provider.truncate_item(
-                item_id=current_item_id,
-                content_index=0,
-                audio_end_ms=truncate_end_ms,
-            )
-            self._pending_truncate_acks[current_item_id].append(truncate_end_ms)
-            self._audit(
-                "truncate_sent",
+            await self._request_item_truncate(
                 item_id=current_item_id,
                 content_index=0,
                 audio_end_ms=truncate_end_ms,
@@ -731,6 +724,20 @@ class LogicalTimeOpenAIAdapter(DiscreteTimeOpenAIAdapter):
             deleted_unplayed_item_ids=unplayed_item_ids,
             cancel_strategy="server_vad_auto_no_unscoped_client_cancel",
         )
+
+    async def _request_item_truncate(
+        self, *, item_id: str, content_index: int, audio_end_ms: int,
+        prior_item_played_bytes: int, current_tick_item_played_bytes: int,
+    ) -> None:
+        """Provider hook; preserve the existing OpenAI request/ACK behavior."""
+        await self.provider.truncate_item(
+            item_id=item_id, content_index=content_index, audio_end_ms=audio_end_ms)
+        self._pending_truncate_acks[item_id].append(audio_end_ms)
+        self._audit(
+            "truncate_sent", item_id=item_id, content_index=content_index,
+            audio_end_ms=audio_end_ms,
+            prior_item_played_bytes=prior_item_played_bytes,
+            current_tick_item_played_bytes=current_tick_item_played_bytes)
 
     @staticmethod
     def _split_chunks_at(

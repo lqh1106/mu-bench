@@ -237,7 +237,7 @@ def semantic_review(bridge, values, case, contract, catalog, packet, path, write
             try:
                 candidate=json.loads(json.loads(raw_path.read_text())['content'])
                 repairs=bind_raw_format_quotes(candidate,catalog)
-                primary,audit=validate_and_bind_judge_payload(case,contract,candidate,catalog)
+                primary,audit=validate_and_bind_judge_payload(case,contract,candidate,catalog,**({'jt5_accept_third':raw_path.name=='jt3_primary_raw_3.json'} if active_version() in {'jt5','jt6','jt7'} else {}))
             except (ValueError,TypeError,KeyError):continue
             save(path,'judge_evidence_audit',audit)
             save(path,'jt3_primary_resume',{'source':str(raw_path),'repairs':repairs,

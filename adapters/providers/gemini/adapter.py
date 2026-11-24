@@ -35,6 +35,10 @@ class GeminiLogicalAdapter(DiscreteTimeAdapter):
         self._reader = self._ws = None
         self._transport_error = None
         self._handle = None
+        self._resumable = False
+        self._wire_turn_active = False
+        self._unanswered_calls = set()
+        self._input_stream_ended = True
         self._goaway = False
         self._deadline = None
         self._resumptions = 0
@@ -77,7 +81,8 @@ class GeminiLogicalAdapter(DiscreteTimeAdapter):
                        benchmark_interface='ulaw_8000', tick_ms=self.tick_duration_ms,
                        input_packet_ms=20, native_vad=True, cloud_pause_supported=False,
                        native_history_truncation_supported=False, context_compression='native_sliding_window',
-                       tool_behavior='BLOCKING', tools=[f['name'] for f in declarations],
+                       tool_behavior='BLOCKING', recovery_contract='native-safe-boundary-v2',
+                       pause_contract='stream-end-after-1s-and-every-30s', tools=[f['name'] for f in declarations],
                        session_id_origin='client_generated_not_provider_receipt')
         except Exception:
             self._bg_loop.stop()
@@ -99,6 +104,8 @@ class GeminiLogicalAdapter(DiscreteTimeAdapter):
         self._transport_error = None
         self._goaway = False
         self._deadline = None
+        self._resumable = False
+        self._input_stream_ended = True
         self._reader = asyncio.create_task(self._receive())
         self.audit('session_resumed' if resume else 'session_setup_complete', model=self.model,
                    physical_connection=self._resumptions + 1, sent_input_replay=False)
@@ -110,15 +117,24 @@ class GeminiLogicalAdapter(DiscreteTimeAdapter):
                 now = time.monotonic()
                 update = msg.get('sessionResumptionUpdate')
                 if update is not None:
-                    if update.get('resumable') and update.get('newHandle'):
+                    self._resumable = bool(update.get('resumable') and update.get('newHandle'))
+                    if self._resumable:
                         self._handle = update['newHandle']
-                    self.audit('session_resumption_available', resumable=bool(update.get('resumable')))
+                    # Retaining an older handle is allowed; using it while the
+                    # latest server state is non-resumable is not.
+                    self.audit('session_resumption_available', resumable=self._resumable,
+                               cached_handle_present=bool(self._handle))
                     msg.pop('sessionResumptionUpdate')
                 if 'goAway' in msg:
                     self._goaway = True
                     left = float(msg['goAway'].get('timeLeft', '30s').rstrip('s'))
                     self._deadline = now + max(0, left - 5)
                     self.audit('go_away', time_left_seconds=left)
+                sc = msg.get('serverContent', {})
+                if sc.get('modelTurn') or msg.get('toolCall'):
+                    self._wire_turn_active = True
+                if sc.get('turnComplete') or sc.get('interrupted'):
+                    self._wire_turn_active = False
                 if msg:
                     self._messages.append((now, msg, len(raw)))
                     self._queued_bytes += len(raw)
@@ -130,20 +146,52 @@ class GeminiLogicalAdapter(DiscreteTimeAdapter):
         except Exception as exc:
             self._transport_error = (type(exc).__name__ + ': ' + str(exc)).replace(self.key, '[REDACTED]')[:2000]
 
+    def _reconnect_blockers(self):
+        blockers = []
+        if not self._resumable or not self._handle:
+            blockers.append('latest_server_state_not_resumable')
+        if self._wire_turn_active or self._turn_active:
+            blockers.append('active_response')
+        if self._pending_tool_results or self._unanswered_calls:
+            blockers.append('unsettled_tool_calls')
+        if self._buffered_agent_audio:
+            blockers.append('unplayed_audio')
+        if any(m.get('serverContent') or m.get('toolCall') or m.get('toolCallCancellation')
+               or m.get('error') for _, m, _ in self._messages):
+            blockers.append('unprocessed_server_events')
+        return blockers
+
     async def _ensure_transport(self):
-        due = self._goaway and (self._transport_error or not self._turn_active
-                               or (self._deadline is not None and time.monotonic() >= self._deadline))
-        if due:
-            if not self._handle or self._resumptions >= 16:
-                raise RuntimeError('Gemini planned reconnect has no usable native handle or reached limit')
-            if self._reader:
-                self._reader.cancel()
-                await asyncio.gather(self._reader, return_exceptions=True)
-            await self._ws.close()
-            self._resumptions += 1
-            await self._connect_transport(resume=True)
-        elif self._transport_error:
-            raise RuntimeError(self._transport_error)
+        if not self._goaway:
+            if self._transport_error:
+                raise RuntimeError(self._transport_error)
+            return
+        blockers = self._reconnect_blockers()
+        expired = self._deadline is not None and time.monotonic() >= self._deadline
+        if blockers:
+            if self._transport_error or expired:
+                self.audit('unsafe_resume_refused', blockers=blockers,
+                           cached_handle_present=bool(self._handle), sent_input_replay=False)
+                raise RuntimeError('Gemini technical interruption: no safe native resume boundary: '
+                                   + ', '.join(blockers))
+            return
+        if self._resumptions >= 16:
+            raise RuntimeError('Gemini native session resumption limit reached')
+        if self._reader:
+            self._reader.cancel()
+            await asyncio.gather(self._reader, return_exceptions=True)
+        # Recheck after cancelling the reader: a final receive may have queued
+        # output or changed resumability before cancellation was delivered.
+        blockers = self._reconnect_blockers()
+        if blockers:
+            if self._transport_error or expired:
+                self.audit('unsafe_resume_refused', blockers=blockers, sent_input_replay=False)
+                raise RuntimeError('Gemini technical interruption: resume boundary changed')
+            self._reader = asyncio.create_task(self._receive())
+            return
+        await self._ws.close()
+        self._resumptions += 1
+        await self._connect_transport(resume=True)
 
     def disconnect(self):
         if self._bg_loop.is_running:
@@ -183,6 +231,7 @@ class GeminiLogicalAdapter(DiscreteTimeAdapter):
             await asyncio.sleep(1.0)
             while self._paused is not None and not self._transport_error:
                 await self._ws.send(json.dumps(dict(realtimeInput=dict(audioStreamEnd=True))))
+                self._input_stream_ended = True
                 self.audit('pause_audio_stream_end', logical_time_ms=self._paused[1],
                            audio_bytes_sent=0, logical_clock_advanced=False, heartbeat_interval_seconds=30)
                 await asyncio.sleep(30)
@@ -242,6 +291,7 @@ class GeminiLogicalAdapter(DiscreteTimeAdapter):
             original, name = self._calls[cid]
             if original in self._cancelled_calls:
                 self.audit('cancelled_tool_result_not_sent', call_id=cid)
+                self._unanswered_calls.discard(cid)
                 continue
             response = dict(name=name, response={('error' if is_error else 'output'): result})
             if original:
@@ -250,6 +300,8 @@ class GeminiLogicalAdapter(DiscreteTimeAdapter):
         if responses:
             await self._ws.send(json.dumps(dict(toolResponse=dict(functionResponses=responses))))
             self.audit('tool_results_sent', call_ids=[r.get('id') for r in responses], count=len(responses))
+            for cid, _, _, _ in self._pending_tool_results:
+                self._unanswered_calls.discard(cid)
         self._pending_tool_results.clear()
 
     async def _execute_tick(self, user_audio, tick_number, result, tick_start):
@@ -260,6 +312,7 @@ class GeminiLogicalAdapter(DiscreteTimeAdapter):
                 packet = pcm[offset:offset + 640]
                 await self._ws.send(json.dumps(dict(realtimeInput=dict(audio=dict(
                     mimeType='audio/pcm;rate=16000', data=base64.b64encode(packet).decode())))))
+                self._input_stream_ended = False
                 await asyncio.sleep(len(packet) / 32000)
         async def receive():
             deadline = tick_start + self.tick_duration_ms / 1000
@@ -282,6 +335,7 @@ class GeminiLogicalAdapter(DiscreteTimeAdapter):
         if 'toolCallCancellation' in msg:
             ids = msg['toolCallCancellation'].get('ids', [])
             self._cancelled_calls.update(ids)
+            self._unanswered_calls.difference_update(ids)
             result.tool_calls[:] = [c for c in result.tool_calls if c.id not in ids]
             self.audit('native_tool_call_cancellation', call_ids=ids)
         sc = msg.get('serverContent', {})
@@ -332,6 +386,7 @@ class GeminiLogicalAdapter(DiscreteTimeAdapter):
             cid = original or 'gemini-tool-' + uuid.uuid4().hex
             self._seen_calls.add(cid)
             self._calls[cid] = (original, fc['name'])
+            self._unanswered_calls.add(cid)
             result.tool_calls.append(ToolCall(id=cid, name=fc['name'], arguments=fc.get('args', {})))
             result.events.append(BaseGeminiEvent(type='function_call.done'))
             self._turn_active = True

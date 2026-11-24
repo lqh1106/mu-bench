@@ -14,3 +14,8 @@ The field rules are published in each tool's argument descriptions. Input proces
 A historical interaction can be checked for JT6 compatibility without replaying the agent. Its original case, tool schema and semantic judgments remain preserved. A marker must state whether the score was unchanged, deterministic items were recomputed, or a new semantic review was actually run. A JT6 compatibility label is not evidence that the agent received the T-R4 interface.
 
 Explicit local `HH:MM AM/PM` values normalize to the equivalent 24-hour `HH:MM` on the declared event-time fields. Bare `06:00` and `18:00` remain different; the case must supply the daypart. Historical interactions retain the information they actually received.
+
+
+### Menu-category comparison
+
+For the table-side-talk order, `vegetarian`, `vegetarian entree`, and `vegetarian entrée` denote the same menu category in expected-action and business-state comparisons for `entree` and `primary_order`. Original submitted arguments and returned records remain intact. This equivalence does not remove preparation or allergy qualifiers, equate vegan and vegetarian dishes, change dish identities, or affect participant and resource IDs.

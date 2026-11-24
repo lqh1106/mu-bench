@@ -1,4 +1,13 @@
 {
   "default_version": "jt5",
-  "preserve_jt4_evidence_dirs": []
+  "at": 1795108576.6899168,
+  "preserve_jt4_evidence_dirs": [
+    "/mnt/shared-storage-user/ai4good2-share/chenguanxu/mubench_tools_native_luna_20261119_r1/models/gpt-realtime-2/tool_augmented/baseline/runs/emergency_incident_02_lost_child_description__g-small__a-clean__c-weak/attempt_001/output/emergency_incident_02_lost_child_description__g-small__a-clean__c-weak",
+    "/mnt/shared-storage-user/ai4good2-share/chenguanxu/mubench_tools_native_luna_20261119_r1/models/gpt-realtime-2/tool_augmented/baseline/runs/events_entertainment_03_accessible_seat__g-small__a-realistic__c-strong/attempt_001/output/events_entertainment_03_accessible_seat__g-small__a-realistic__c-strong",
+    "/mnt/shared-storage-user/ai4good2-share/chenguanxu/mubench_tools_native_luna_20261119_r1/models/gpt-realtime-2/tool_augmented/baseline/runs/family_coordination_01_pickup_assignments__g-small__a-realistic__c-weak/attempt_001/output/family_coordination_01_pickup_assignments__g-small__a-realistic__c-weak",
+    "/mnt/shared-storage-user/ai4good2-share/chenguanxu/mubench_tools_native_luna_20261119_r1/models/gpt-realtime-2/tool_augmented/baseline/runs/finance_billing_04_invoice_amount_revision__g-large__a-clean__c-strong/attempt_001/output/finance_billing_04_invoice_amount_revision__g-large__a-clean__c-strong",
+    "/mnt/shared-storage-user/ai4good2-share/chenguanxu/mubench_tools_native_luna_20261119_r1/models/gpt-realtime-2/tool_augmented/baseline/runs/healthcare_care_01_appointment_consent__g-large__a-clean__c-weak/attempt_001/output/healthcare_care_01_appointment_consent__g-large__a-clean__c-weak"
+  ],
+  "third_generation": "accept judge output, retain any validation warning; no rewriting verdicts",
+  "quote_comparison": "case insensitive, no semantic fuzzy matching"
 }

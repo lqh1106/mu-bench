@@ -73,14 +73,14 @@ def scalar(kind,value):
   return table.get(key,value)
  return value
 
-def canonical(scene,value,path=()):
+def canonical(scene,value,path=(),*,for_comparison=True):
  if isinstance(value,dict):
   child_names=scene=='family_coordination_01_pickup_assignments' and path and path[-1] in {'assignments_by_child','assignments'}
   out={}
   for k,v in value.items():
    key=scalar('label',k) if child_names and isinstance(k,str) else k
    if key in out:raise ValueError('ambiguous child names after case-insensitive normalization')
-   out[key]=canonical(scene,v,path+(k,))
+   out[key]=canonical(scene,v,path+(k,),for_comparison=for_comparison)
   return out
  if isinstance(value,list):
   # Numeric positions are preserved for derived [label, number] records;
@@ -88,16 +88,25 @@ def canonical(scene,value,path=()):
   out=[]
   for i,v in enumerate(value):
    kind=_rule(scene,path+('[]',))
-   out.append(scalar(kind,v) if isinstance(v,str) and kind else canonical(scene,v,path+(str(i),)))
+   out.append(scalar(kind,v) if isinstance(v,str) and kind else canonical(scene,v,path+(str(i),),for_comparison=for_comparison))
   return out
- if isinstance(value,str):return scalar(_rule(scene,path),value)
+ if isinstance(value,str):
+  normalized=scalar(_rule(scene,path),value)
+  # Only an explicitly equivalent menu-category spelling is folded for scoring.
+  # Actual submitted arguments, returned state, IDs, qualifiers and other dishes
+  # remain unchanged. This is not a reference-answer lookup or fuzzy matcher.
+  if (for_comparison and scene=='hospitality_03_table_side_talk' and path
+      and path[-1] in {'entree','primary_order'}
+      and normalized in {'vegetarian','vegetarian entree','vegetarian entrée'}):
+   return 'vegetarian'
+  return normalized
  return deepcopy(value)
 
 def normalize_arguments(scene,value):
  # Preserve the public spelling of child names in actual tool results; only
  # the comparison copy resolves case-insensitive child-name keys.
  if scene=='family_coordination_01_pickup_assignments':return deepcopy(value)
- return canonical(scene,value) if enabled() else deepcopy(value)
+ return canonical(scene,value,for_comparison=False) if enabled() else deepcopy(value)
 
 def annotate_schema(schema,scene):
  """Publish representation rules, not the expected value or speaker mapping."""
@@ -118,6 +127,7 @@ def annotate_schema(schema,scene):
   kinds={kind for path,kind in RULES[scene].items() if path.split('.')[0]==field}
   note=' '.join(notes[k] for k in sorted(kinds))
   prop['description']=prop.get('description','')+' '+note
+  if scene=='hospitality_03_table_side_talk' and field=='entree':prop['description']+=' For scoring the category labels vegetarian, vegetarian entree and vegetarian entrée are equivalent. Vegan, meat dishes, named dishes, allergy qualifiers and preparation constraints are not interchangeable or removed. The submitted value and returned record are preserved.'
   if field=='seat_preference':prop['description']+=' State the seat-position preference only (for example aisle, window, or middle). Do not bury a separate adjacency constraint inside this value or claim adjacency was executed by this endpoint.'
   if field=='appointment_slot':prop['description']+=' State the actual requested appointment period; morning and afternoon are not equivalent.'
   if field=='stance':prop['description']+=' Vote labels are support, oppose and abstain, with different meanings.'

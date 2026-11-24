@@ -342,7 +342,7 @@ def run_case(
         adapter = make_gemini_logical_adapter(
             key=values["REALTIME_GEMINI_KEY"], model=args.realtime_model, bridge=bridge,
             tick_duration_ms=simulator.tick_ms,
-            proxy=os.environ.get("HTTPS_PROXY"))
+            proxy=os.environ.get("https_proxy") or os.environ.get("HTTPS_PROXY"))
     elif realtime_provider == "xai":
         from experiments.mu_bench.logical_time.grok_adapter import make_grok_logical_adapter
         adapter = make_grok_logical_adapter(
@@ -1306,11 +1306,16 @@ def run_case(
     last_judge_error = None
     for judge_attempt in range(1, 4):
         judge_audit_dir = output_dir if judge_attempt == 1 else output_dir / f"semantic_judge_retry_{judge_attempt}"
+        if judge_attempt > 1:
+            from mubench.judge_retry_io import prepare_retry
+            prepare_retry(output_dir, judge_audit_dir)
         try:
             capabilities, goals, privacy_leaks = run_semantic_judge(
                 bridge, values, case, trace, assistant_turns, tool_log, audit_dir=judge_audit_dir
             )
             if judge_attempt > 1:
+                from mubench.judge_retry_io import promote_retry
+                promote_retry(output_dir, judge_audit_dir, judge_attempt)
                 write_json(output_dir / "semantic_judge_retry_success.json", {"judge_attempt": judge_attempt})
             break
         except JudgeEvidenceInvalid as exc:

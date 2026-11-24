@@ -2,8 +2,8 @@
 
 Reuse tau2's xAI audio/tool wire methods and μ-Bench's played-prefix ledger.
 Do not use xAI's old typed parser: it drops VAD timestamps and truncate ACKs.
-Registration stays server-VAD with explicit auto-response flags, never a new
-manual-commit enrollment protocol. Missing/ignored flags fail closed.
+Registration uses native server VAD and the shared spoken instructions.
+No undocumented auto-response switches or model-specific task coaching are added.
 """
 from __future__ import annotations
 
@@ -17,9 +17,8 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 import websockets
 
 from tau2.data_model.audio import TELEPHONY_AUDIO_FORMAT
-from tau2.voice.audio_native.openai.discrete_time_adapter import DiscreteTimeOpenAIAdapter
 from tau2.voice.audio_native.openai.events import (
-    ResponseCreatedEvent, SessionUpdatedEvent, parse_realtime_event,
+    ResponseCreatedEvent, SessionUpdatedEvent, ConversationItemTruncatedEvent, parse_realtime_event,
 )
 from tau2.voice.audio_native.xai.provider import XAIAudioFormat, XAIRealtimeProvider
 
@@ -34,6 +33,12 @@ class GrokSessionUpdatedEvent(SessionUpdatedEvent):
     """Retain xAI's acknowledged settings instead of dropping them on parsing."""
 
     raw: dict
+
+
+class GrokTruncatedEvent(ConversationItemTruncatedEvent):
+    """Keep the content index for exact request/ACK correlation."""
+
+    content_index: int
 
 
 class GrokResponseCreatedEvent(ResponseCreatedEvent):
@@ -74,7 +79,7 @@ def grok_lifecycle_metadata(raw, *, secrets=()):
     out = {}
     for key in ("type", "event_id", "response_id", "item_id", "previous_item_id",
                 "audio_start_ms", "audio_end_ms", "content_index", "output_index",
-                "status"):
+                "status", "call_id", "name"):
         if key in raw:
             out[key] = safe(raw[key])
     for name, fields in (("response", ("id", "status")),
@@ -92,7 +97,7 @@ def grok_lifecycle_metadata(raw, *, secrets=()):
         out["response"]["status_details"] = safe(details)
     session = raw.get("session")
     if isinstance(session, dict):
-        out["session"] = {"id": safe(session.get("id"))}
+        out["session"] = {key: safe(session.get(key)) for key in ("id", "model")}
         turn = session.get("turn_detection")
         if isinstance(turn, dict):
             out["session"]["turn_detection"] = {key: safe(turn[key]) for key in (
@@ -114,10 +119,10 @@ def grok_websocket_url(realtime_url, model):
     return urlunsplit((schemes[parsed.scheme], parsed.netloc, path, urlencode(query), ""))
 
 
-def grok_turn_detection(enabled):
-    return {"type": "server_vad", "threshold": 0.5, "prefix_padding_ms": 300,
-            "silence_duration_ms": 500, "create_response": enabled,
-            "interrupt_response": enabled}
+def grok_turn_detection(enabled=None):
+    # The public xAI contract supplies native VAD. It does not document the
+    # OpenAI create_response/interrupt_response switches as silence controls.
+    return {"type": "server_vad"}
 
 
 def verify_grok_auto_response_ack(raw, enabled):
@@ -125,7 +130,7 @@ def verify_grok_auto_response_ack(raw, enabled):
     turn = session.get("turn_detection") if isinstance(session, dict) else None
     if not isinstance(turn, dict) or turn.get("type") != "server_vad":
         raise GrokProtocolError("Grok did not acknowledge server_vad registration policy")
-    # This single case records boolean echoes without gating on them.
+    # Confirm native VAD only; registration silence is not a demonstrated flag.
     return turn
 
 
@@ -168,6 +173,11 @@ def normalize_grok_event(raw):
         if (not data.get("item_id") or isinstance(value, bool)
                 or not isinstance(value, int) or value < 0):
             raise GrokProtocolError("Grok truncate acknowledgement lacks item-relative frontier")
+        content_index = data.get("content_index")
+        if isinstance(content_index, bool) or not isinstance(content_index, int) or content_index < 0:
+            raise GrokProtocolError("Grok truncate acknowledgement lacks content_index")
+        return GrokTruncatedEvent(type=data["type"], event_id=data.get("event_id"),
+            item_id=data["item_id"], content_index=content_index, audio_end_ms=value)
     if data["type"] == "session.updated":
         return GrokSessionUpdatedEvent(type="session.updated", event_id=data.get("event_id"), raw=data)
     # In particular, input_audio_transcription.updated is cumulative, not a
@@ -188,6 +198,12 @@ class GrokLogicalProvider(XAIRealtimeProvider):
         self._open_http_tunnel = getattr(bridge, "open_http_tunnel", None)
         self._wire_receive_sequence = 0
         self._lifecycle_audit_callback = None
+        self._reader_task = None
+        self._incoming = asyncio.Queue()
+        self._queued_wire_bytes = 0
+        self._receive_error = None
+        self._closing = False
+        self.max_queued_wire_bytes = 256 * 2**20
 
     async def connect(self):
         if self.is_connected:
@@ -212,11 +228,18 @@ class GrokLogicalProvider(XAIRealtimeProvider):
             self.ws = await websockets.connect(self._url, **wire_options,
                 sock=tunnel, max_size=16 * 1024 * 1024, open_timeout=30, close_timeout=5)
             raw = await self._receive_raw(asyncio.get_running_loop().time() + 20)
+            if raw.get("type") == "error":
+                error = raw.get("error") or {}
+                raise GrokProtocolError("Grok handshake error code="
+                    + str(error.get("code", "unknown")) + ": " + str(error.get("message", "")))
             if raw.get("type") not in {"session.created", "conversation.created"}:
                 raise GrokProtocolError("Grok handshake did not create a session")
             self.session_id = (raw.get("session") or raw.get("conversation") or {}).get("id")
             if not self.session_id:
                 raise GrokProtocolError("Grok handshake is missing a session/conversation ID")
+            self._closing = False
+            self._receive_error = None
+            self._reader_task = asyncio.create_task(self._receiver_loop())
         except Exception:
             if self.ws is not None:
                 await self.disconnect()
@@ -224,11 +247,63 @@ class GrokLogicalProvider(XAIRealtimeProvider):
                 tunnel.close()
             raise
 
+    async def disconnect(self):
+        self._closing = True
+        if self._reader_task is not None:
+            self._reader_task.cancel()
+            await asyncio.gather(self._reader_task, return_exceptions=True)
+            self._reader_task = None
+        if self.ws is not None:
+            await self.ws.close()
+            self.ws = None
+        if self._lifecycle_audit_callback is not None:
+            self._lifecycle_audit_callback("grok_transport_closed",
+                pending_wire_events=self._incoming.qsize(),
+                pending_wire_bytes=self._queued_wire_bytes)
+
+    async def _receiver_loop(self):
+        # Own ws.recv even while simulator computation freezes logical media.
+        # Only retain wire events here: never play audio, advance time, execute
+        # a function, request a response or truncate cloud history in this task.
+        try:
+            while not self._closing:
+                raw, size = await self._read_wire()
+                if self._queued_wire_bytes + size > self.max_queued_wire_bytes:
+                    raise GrokProtocolError("Grok unconsumed receive queue exceeded limit")
+                self._queued_wire_bytes += size
+                self._incoming.put_nowait((raw, size))
+        except asyncio.CancelledError:
+            raise
+        except Exception as exc:
+            if not self._closing:
+                message = type(exc).__name__ + ": " + str(exc)
+                for secret in (self.api_key, self._url):
+                    message = message.replace(secret, "[REDACTED]")
+                self._receive_error = message[:1500]
+                # Sentinel wakes an idle consumer without fabricating an API event.
+                self._incoming.put_nowait((None, 0))
+
+    @property
+    def has_pending_events(self):
+        return not self._incoming.empty()
+
     async def _receive_raw(self, deadline):
         remaining = deadline - asyncio.get_running_loop().time()
         if remaining <= 0:
             raise asyncio.TimeoutError
-        message = await asyncio.wait_for(self.ws.recv(), timeout=remaining)
+        if self._reader_task is None:
+            raw, _ = await asyncio.wait_for(self._read_wire(), timeout=remaining)
+            return raw
+        if self._incoming.empty() and self._receive_error:
+            raise GrokProtocolError(self._receive_error)
+        raw, size = await asyncio.wait_for(self._incoming.get(), timeout=remaining)
+        self._queued_wire_bytes -= size
+        if raw is None:
+            raise GrokProtocolError(self._receive_error or "Grok transport stopped")
+        return raw
+
+    async def _read_wire(self):
+        message = await self.ws.recv()
         if not isinstance(message, str):
             raise GrokProtocolError("Grok unexpectedly switched to binary transport")
         try:
@@ -247,12 +322,17 @@ class GrokLogicalProvider(XAIRealtimeProvider):
                 direction="received", wire_sequence=self._wire_receive_sequence,
                 payload=grok_lifecycle_metadata(raw, secrets=(self.api_key, self._url)))
         if raw.get("type") == "error":
-            # Do not propagate provider error text that could echo a key/URL.
-            code = str((raw.get("error") or {}).get("code", "unknown"))
-            for secret in (self.api_key, self._url):
-                code = code.replace(secret, "[REDACTED]")
-            raise GrokProtocolError(f"Grok provider error code={code}")
-        return raw
+            # Preserve correlation and error classification for the common
+            # continuation scheduler, while redacting provider-echoed secrets.
+            raw = dict(raw)
+            error = dict(raw.get("error") or {})
+            for key, value in list(error.items()):
+                if isinstance(value, str):
+                    for secret in (self.api_key, self._url):
+                        value = value.replace(secret, "[REDACTED]")
+                    error[key] = value
+            raw["error"] = error
+        return raw, len(message)
 
     async def send_tool_result(self, call_id: str, result: str, request_response: bool = True) -> None:
         """Return a custom function result, then ask Grok to speak.
@@ -271,16 +351,14 @@ class GrokLogicalProvider(XAIRealtimeProvider):
             },
         }))
         if request_response:
-            await self.ws.send(json.dumps({
-                "type": "response.create",
-                "response": {
-                    "instructions": (
-                        "The tool result is now available. Continue the user's request: "
-                        "call an appropriate business tool if needed, or answer in audio. Do not call "
-                        "report_speaker_attribution again until the user speaks again."
-                    )
-                },
-            }))
+            await self.request_response("grok_tool_" + call_id)
+
+    async def request_response(self, event_id):
+        if not self.is_connected:
+            raise RuntimeError("Not connected to API")
+        # Native continuation only: the same public protocol already delivered
+        # to every model supplies task behavior and attribution requirements.
+        await self.ws.send(json.dumps({"type": "response.create", "event_id": event_id}))
 
     async def configure_session(self, *, system_prompt, tools, vad_config=None,
                                 modality="audio", audio_format=None, **kwargs):
@@ -299,6 +377,11 @@ class GrokLogicalProvider(XAIRealtimeProvider):
             deadline = asyncio.get_running_loop().time() + 10
             while True:
                 raw = await self._receive_raw(deadline)
+                if raw.get("type") == "error":
+                    error = raw.get("error") or {}
+                    raise GrokProtocolError("Grok session configuration failed: "
+                                            + str(error.get("code", "unknown")) + ": "
+                                            + str(error.get("message", "")))
                 if raw.get("type") == "session.updated":
                     verify_grok_auto_response_ack(raw, True)
                     for direction in ("input", "output"):
@@ -344,8 +427,45 @@ class LogicalTimeGrokAdapter(LogicalTimeOpenAIAdapter):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._grok_created_response_ids = set()
         self.provider._lifecycle_audit_callback = self._audit
+        self._grok_confirmed_truncates = set()
+        self._grok_pending_truncate_at = {}
+        self._grok_truncate_ack_timeout_ms = 10000
+
+    def connect(self, *args, **kwargs):
+        # A new connection owns a fresh ledger. No reconnect/history replay is added.
+        if self._connected:
+            self.disconnect()
+        self._grok_confirmed_truncates.clear()
+        self._grok_pending_truncate_at.clear()
+        self._pending_truncate_acks.clear()
+        return super().connect(*args, **kwargs)
+
+    async def _request_item_truncate(self, **request):
+        key = (request["item_id"], request["content_index"], request["audio_end_ms"])
+        state = ("confirmed" if key in self._grok_confirmed_truncates else
+                 "pending" if key in self._grok_pending_truncate_at else None)
+        if state:
+            self._audit("grok_duplicate_truncate_skipped", item_id=key[0],
+                content_index=key[1], audio_end_ms=key[2], prior_state=state,
+                new_wait_created=False)
+            return
+        await super()._request_item_truncate(**request)
+        self._grok_pending_truncate_at[key] = self._current_logical_time_ms
+
+    def _check_truncate_ack_timeout(self):
+        expired = [{"item_id":key[0], "content_index":key[1], "audio_end_ms":key[2]}
+            for key, started in self._grok_pending_truncate_at.items()
+            if self._current_logical_time_ms - started >= self._grok_truncate_ack_timeout_ms]
+        if expired:
+            self._audit("grok_truncate_ack_timeout", targets=expired,
+                timeout_logical_ms=self._grok_truncate_ack_timeout_ms,
+                server_history_alignment_verified=False, technical_error=True)
+            raise GrokProtocolError("Grok truncate acknowledgement timed out after 10s of media time")
+
+    async def _execute_tick(self, *args, **kwargs):
+        await super()._execute_tick(*args, **kwargs)
+        self._check_truncate_ack_timeout()
 
     async def _process_event(self, result, event):
         # xAI server-VAD interruption can omit response.done for the response
@@ -355,6 +475,7 @@ class LogicalTimeGrokAdapter(LogicalTimeOpenAIAdapter):
         # forever, pacing waits in silence, and xAI eventually times out.
         if event.type == "input_audio_buffer.speech_started" and self._active_response_ids:
             interrupted = sorted(self._active_response_ids)
+            self._suppressed_response_ids.update(interrupted)
             for response_id in interrupted:
                 self._mark_response_terminal(response_id, "interrupted_by_user_speech")
             self._audit(
@@ -364,40 +485,21 @@ class LogicalTimeGrokAdapter(LogicalTimeOpenAIAdapter):
                 audio_start_ms=getattr(event, "audio_start_ms", None),
             )
 
-        if event.type == "response.created":
-            # A later named response proves that the provider moved past the
-            # interrupted item. xAI can omit a duplicate conversation.item
-            # truncated ACK forever; retaining that frontier in the drain gate
-            # would deadlock ordinary response-opportunity pacing.
-            if self._pending_truncate_acks:
-                stale = self.pending_truncate_acks
-                self._pending_truncate_acks.clear()
-                self._audit(
-                    "grok_stale_truncate_acks_cleared",
-                    stale_frontiers=stale,
-                    trigger_event_type=event.type,
-                    new_response_id=getattr(event, "response_id", None),
-                    policy="later_named_response_precedes_missing_ack",
-                )
-            response_id = getattr(event, "response_id", None)
-            if not isinstance(response_id, str) or not response_id:
-                raise GrokProtocolError("Grok created event lost its response ID")
-            duplicate = response_id in self._grok_created_response_ids
-            terminal_before_created = response_id in self._terminal_response_ids
-            self._grok_created_response_ids.add(response_id)
-            if not terminal_before_created:
-                self._active_response_ids.add(response_id)
-            if self._pending_truncate_acks:
-                self._record_pre_ack_provider_event(event)
-            # Keep tau2's event forwarding/logging, bypass only the shared
-            # anonymous +1 counter. A duplicate or late created cannot reopen
-            # a completed response or invent a second in-flight response.
-            await DiscreteTimeOpenAIAdapter._process_event(self, result, event)
-            self._audit("response_created", response_id=response_id,
-                status=getattr(event, "status", None), duplicate=duplicate,
-                terminal_before_created=terminal_before_created,
-                active_response_ids=sorted(self._active_response_ids))
+        if isinstance(event, GrokTruncatedEvent):
+            result.events.append(event)
+            key = (event.item_id, event.content_index, event.audio_end_ms)
+            if key in self._grok_pending_truncate_at:
+                self._record_truncate_ack(item_id=event.item_id, audio_end_ms=event.audio_end_ms)
+                self._grok_pending_truncate_at.pop(key)
+                self._grok_confirmed_truncates.add(key)
+                self._audit("grok_truncate_target_confirmed", item_id=key[0],
+                    content_index=key[1], audio_end_ms=key[2])
+            else:
+                self._audit("grok_duplicate_truncate_ack" if key in self._grok_confirmed_truncates
+                    else "grok_unmatched_truncate_ack", item_id=key[0],
+                    content_index=key[1], audio_end_ms=key[2], new_wait_created=False)
             return
+        # A new response is not a truncate confirmation. Keep accepting late ACKs.
         await super()._process_event(result, event)
 
     def _mark_response_terminal(self, response_id, status):
@@ -412,40 +514,20 @@ class LogicalTimeGrokAdapter(LogicalTimeOpenAIAdapter):
             duplicate=duplicate, active_response_ids=sorted(self._active_response_ids))
 
     async def _async_configure_auto_response(self, enabled, timeout_seconds):
-        await self.provider.ws.send(json.dumps({"type": "session.update", "session": {
-            "turn_detection": grok_turn_detection(enabled)}}))
-        self._audit("auto_response_update_sent", enabled=enabled,
-                    transport="grok_native_websocket_ordered_at_logical_boundary")
-        deadline = asyncio.get_running_loop().time() + timeout_seconds
-        deferred_count = 0
-        while asyncio.get_running_loop().time() < deadline:
-            event = await self.provider.receive_event_until(deadline)
-            if event is None:
-                break
-            if event.type == "session.updated":
-                turn = verify_grok_auto_response_ack(getattr(event, "raw", None) or {}, enabled)
-                self._audit("auto_response_update_ack", enabled=enabled,
-                            provider="xai", flags_echo_required=False,
-                            flags_echo_verified=all(turn.get(field) is enabled for field in
-                                                    ("create_response", "interrupt_response")),
-                            echoed_create_response=turn.get("create_response"),
-                            echoed_interrupt_response=turn.get("interrupt_response"),
-                            deferred_event_count=deferred_count)
-                return
-            self._raise_if_fatal_provider_event(event)
-            self._deferred_provider_events.append(event)
-            deferred_count += 1
-            self._audit("configuration_interleaved_event_deferred", event_type=event.type,
-                        enabled=enabled)
-        self._audit("auto_response_update_timeout", enabled=enabled, fail_closed=True)
-        raise GrokProtocolError("Grok auto-response session.updated acknowledgement timed out")
+        self._audit("auto_response_request", requested=enabled, supported=False,
+                    provider_action="none", enrollment_replies_preserved=True,
+                    registration_policy="shared_spoken_instructions_native_server_vad")
+
+    def is_output_drained(self):
+        return (not self.provider.has_pending_events
+                and super().is_output_drained())
 
 
 def make_grok_logical_adapter(*, realtime_url, realtime_key, model,
                               tick_duration_ms, audio_format, bridge):
     """Factory without monkey-patching the GPT runner or shared tau2 modules."""
-    if model != "grok-voice-think-fast-2.0":
-        raise GrokProtocolError("this run requires the pinned grok-voice-think-fast-2.0 model")
+    if model not in {"grok-voice-3.0", "grok-voice-2.0", "grok-voice-think-fast-2.0"}:
+        raise GrokProtocolError("Grok requires an explicit supported version, not a floating alias")
     if audio_format != TELEPHONY_AUDIO_FORMAT:
         raise GrokProtocolError("Grok track requires the unchanged PCMU telephony format")
     provider = GrokLogicalProvider(realtime_url=realtime_url, realtime_key=realtime_key,
@@ -457,5 +539,7 @@ def make_grok_logical_adapter(*, realtime_url, realtime_key, model,
     adapter._audit("grok_provider_facade_installed", model=model, voice="eve",
         audio_codec="audio/pcmu", sample_rate=8000,
         interruption_strategy="shared_played_prefix_ledger_server_vad",
-        enrollment_strategy="unchanged_server_vad_explicit_auto_response_flags")
+        enrollment_strategy="spoken_instructions_native_server_vad",
+        continuation_strategy="shared_acknowledged_output_epoch_scheduler",
+        transport_receive="continuous_bounded_queue", cloud_pause_supported=False)
     return adapter

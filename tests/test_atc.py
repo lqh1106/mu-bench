@@ -41,6 +41,7 @@ class ATCTests(unittest.TestCase):
         rice={'routing_score':.25,'continuity_score':1,'isolation_score':.5,'equity_score':1}
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);case=root/'case';case.mkdir();(case/'score.json').write_text('{"task_success": true}')
+            (case/'full_review_audit.json').write_text(json.dumps({'completed':True,'item_ids':['fixture:all'],'covered_item_ids':['fixture:all']}))
             score_before=(case/'score.json').read_bytes();formal=root/'formal'
             module=types.ModuleType('rice_compute');module.compute_rice=lambda score,overlay:dict(rice)
             with patch('mubench.config.activate'),patch.dict(sys.modules,{'rice_compute':module}):

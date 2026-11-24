@@ -51,3 +51,7 @@ Registration speech is synthesized in short, punctuation-aligned segments. Segme
 ### Structured-input retry policy
 
 The semantic-input ablation attempts at most three parses of each actual utterance. The next generation receives the previous candidate and the full parser or independent-review rejection, including its reason. The third candidate is adopted without another independent review, even if its validation fails; this is recorded as a forced adoption, never as a passed check. If no JSON object is available, the original utterance is relayed verbatim in a minimal record. HTTP or transport failures are not relabeled as valid parses. Per-utterance audits preserve the candidate, failed checks, feedback and adoption policy. Case goals and judge obligations are unchanged.
+
+### Provider admission failures
+
+HTTP 402 and recognized billing/authentication failures stop new case admission for that CLI batch. Cases already running finish naturally. The batch saves its reason and unstarted case IDs in `admission_status.json`; unstarted cases do not create attempts or count as task failures. Ordinary transient case errors retain the existing continue-to-next-case behavior. After restoring provider access, rerun the selected batch to resume; published cases are skipped. Shared credentials across separately launched CLI processes require a coordinator to honor the same block reason.

@@ -55,3 +55,7 @@ Publication requires a task verdict, required ATC axes and their source RICE com
 
 
 The tool-augmented track applies the [business, caller, evidence and privacy contracts](TOOL_EVALUATION.md). Tool-free and ablation tracks use their corresponding evidence profiles.
+
+### Judge retries and publication
+
+A semantic retry receives copies of the original delivered-input receipts. Once a retry completes, its actual judge audit is adopted at the episode root while the previous failed audit remains in history. Publication requires the completed independent-review audit to cover every listed item. A score file alone is insufficient. Missing or incomplete audit evidence remains a technical recovery item, not an automatic task failure.

@@ -192,6 +192,8 @@ class PlayedPrefixObserver:
                 }
                 (self.root / f"played_prefix_{self.index-1:05d}.asr_failed.json").write_text(
                     json.dumps(self.last_result, ensure_ascii=False, indent=2) + "\n")
+                # Missing observation is a technical failure, never an empty answer.
+                raise
             self.last_digest = digest
         if observation is None:
             return self.last_result

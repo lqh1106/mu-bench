@@ -21,11 +21,19 @@ def full_review(bridge,values,case,contract,primary,catalog,judge_request,audit_
     from .participant_context import PROTOCOL, POLICY_ID as PARTICIPANTS_POLICY
     active_policy = judge_request.get('judge_policy_id') or (PARTICIPANTS_POLICY if judge_request.get('judge_protocol') == PROTOCOL else POLICY_ID)
     source_ids={r['source_id'] for r in catalog['sources']}
-    expected=verdicts(primary)
+    from .review_structure import manifest, project
+    structure_manifest = manifest(contract, judge_request)
+    projected_primary, missing_primary = project(primary, structure_manifest)
+    expected = projected_primary if missing_primary else verdicts(primary)
+    if missing_primary and audit_dir is not None:
+        write(audit_dir/'primary_structure_compatibility.json', {
+            'policy':'accepted-partial-review-r1', 'missing_item_ids':missing_primary,
+            'missing_is_not_a_verdict':True, 'accepted_primary_preserved':True,
+            'requires_complete_independent_review_and_arbitration':True})
     coverage={'policy_id':active_policy,'judge_protocol':judge_request.get('judge_protocol','J-Full'),
         'evidence_bundle_sha256':judge_request.get('evidence_bundle_sha256'), 'evidence_contract_version':judge_request.get('evidence_contract_version'), 'participants_sha256':judge_request.get('participants_sha256'),'item_ids':list(expected),'item_count':len(expected),
-        'goal_count':len(primary['goal_results']),'completion_count':sum(len(g['completion_checks']) for g in primary['goal_results']),
-        'fact_count':len(primary['fact_checks']),'capability_count':len(primary['capability_results']),
+        'goal_count':sum(k=='goal' for _,k,_,_ in structure_manifest),'completion_count':sum(k=='completion' for _,k,_,_ in structure_manifest),
+        'fact_count':sum(k=='fact' for _,k,_,_ in structure_manifest),'capability_count':sum(k=='capability' for _,k,_,_ in structure_manifest),
         'privacy_requirements_reviewed':True,'negative_items_included':True,'full_source_count':len(source_ids),
         'independent_context':True,'independent_model':False,'deterministic_checks':'unchanged original evaluator; not delegated to semantic judge'}
     request=deepcopy(judge_request)
@@ -89,7 +97,15 @@ def full_review(bridge,values,case,contract,primary,catalog,judge_request,audit_
                     spec=packet['source_guard'];obj=merge_affected(spec['previous_final'],obj,spec['affected_item_ids'])
                 from .jt5_policy import enabled as jt5_enabled
                 bound,audit=validate_and_bind_judge_payload(case,contract,obj,catalog,**({'jt5_accept_third':attempt==3} if jt5_enabled() else {}))
-                got=verdicts(bound)
+                projected, missing = project(bound, structure_manifest)
+                if missing:
+                    if stage=='full_review' and bound.get('_jt5_third_generation_accepted'):
+                        if audit_dir is not None:write(audit_dir/f'{stage}_structure_compatibility.json', {
+                            'policy':'accepted-partial-review-r1','missing_item_ids':missing,
+                            'missing_is_not_a_verdict':True,'requires_arbitration':True})
+                        return bound
+                    raise JudgeEvidenceInvalid([{'path':'coverage','reason':'required review items not returned','item_ids':missing}], {'evaluation_valid':False})
+                got=projected if missing_primary else verdicts(bound)
                 if set(got)!=set(expected):raise JudgeEvidenceInvalid([{'path':'coverage','reason':'full semantic item IDs differ'}],{'evaluation_valid':False})
                 if audit_dir is not None:write(audit_dir/f'{stage}_validation.json',audit)
                 return bound
@@ -128,8 +144,13 @@ def full_review(bridge,values,case,contract,primary,catalog,judge_request,audit_
         raise last
     second=ask(request,'full_review','You are an independent full-coverage benchmark reviewer. Judge every supplied item from scratch in this fresh context. You are not shown another judge\'s decisions. Return the full required JSON schema, not checks[]. ')
     if audit_dir is not None:write(audit_dir/'semantic_verifier_response.json',second)
-    second_values=verdicts(second)
-    conflicts=[cid for cid,value in expected.items() if value!=second_values[cid]]
+    projected_second, missing_second = project(second, structure_manifest)
+    if missing_primary or missing_second:
+        expected=projected_primary
+        second_values=projected_second
+    else:
+        second_values=verdicts(second)
+    conflicts=[cid for cid,value in expected.items() if cid in missing_primary or cid in missing_second or value!=second_values[cid]]
     final=second
     if conflicts:
         packet=deepcopy(request)
@@ -138,10 +159,16 @@ def full_review(bridge,values,case,contract,primary,catalog,judge_request,audit_
         if swapped:pair.reverse()
         packet['judge_records']=[{'anonymous_judge':'A','output':pair[0]},{'anonymous_judge':'B','output':pair[1]}]
         packet['conflicting_item_ids']=conflicts
+        if missing_primary or missing_second:
+            packet['missing_item_ids_by_judge']={name:project(row,structure_manifest)[1] for name,row in zip(['A','B'],pair)}
+            packet['partial_review_rule']='A missing item is an absent judgment, not a negative or positive judgment. Independently decide every authored item from the full evidence. Return the complete required schema.'
         packet['arbitration_policy']='Resolve disagreements against full evidence; neither a higher score nor a more conservative answer has priority. Return the complete final schema and independently correct either judge if evidence requires it.'
         if audit_dir is not None:write(audit_dir/'full_review_arbitration_request.json',packet)
         final=ask(packet,'full_review_arbitration','You are a neutral adjudicator of two disagreeing complete reviews. Evaluate their differences against the original case contract and full evidence; no preferred judge or outcome. Return the entire required JSON schema. ')
         if audit_dir is not None:write(audit_dir/'full_review_arbitration_response.json',final)
+    final_projected, final_missing = project(final, structure_manifest)
+    if final_missing:
+        raise JudgeEvidenceInvalid([{'path':'coverage','reason':'final review incomplete','item_ids':final_missing}], {'evaluation_valid':False})
     # Keep ordinary primary/independent/arbitration packets unchanged.
     from .source_guard import enabled as v4_enabled, apply_guard
     v4_guard = None
@@ -154,7 +181,9 @@ def full_review(bridge,values,case,contract,primary,catalog,judge_request,audit_
                 'You re-evaluate only source-affected judgments after a validated provenance check. Read the source_guard instructions and return the complete original JSON schema. Do not equate a factual source with task completion. '))
     coverage.update(completed=True,covered_item_ids=list(second_values),covered_item_count=len(second_values),conflict_item_ids=conflicts,
         final_source='full_review_arbitration' if conflicts else 'independent_full_review',same_model_family_disclosed=True,
-        final_changes_from_primary=[cid for cid,value in expected.items() if value!=verdicts(final)[cid]])
+        final_changes_from_primary=[cid for cid,value in expected.items() if value!=(project(final,structure_manifest)[0] if missing_primary or missing_second else verdicts(final))[cid]])
+    if missing_primary or missing_second:
+        coverage['structure_compatibility']={'policy':'accepted-partial-review-r1','missing_primary_item_ids':missing_primary,'missing_independent_item_ids':missing_second,'final_missing_item_ids':project(final,structure_manifest)[1],'missing_was_not_imputed':True}
     if v4_guard is not None:
         coverage['source_guard'] = v4_guard
         coverage['source_guard_completed'] = v4_guard['completed']
