@@ -57,3 +57,8 @@ A privacy finding identifies the protected field, its case-defined or owner-spec
 ## Input coverage
 
 Required input delivery, simulator truncation and full-case comparability are reported separately. A score on the delivered prefix does not establish that the complete case ran. Rejected simulated candidates do not enter the tested model's history or judge evidence.
+
+
+### Subsecond temporal ASR evidence
+
+When a tool-result boundary splits the actual played assistant waveform, an alignment clip shorter than 1,000 ms may retain an audited `unintelligible` ASR result and continue through the normal judge stages. The interval and original waveform remain preserved; its transcript is empty and explicitly marked unknown, so it cannot supply a quoted completion claim. Exactly 1,000 ms or longer clips retain the existing rules. API errors, missing or corrupt audio, and unmatched ASR audits are not covered by this exception. This does not relax tool execution, permission, business-state or evidence-citation requirements.

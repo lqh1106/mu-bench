@@ -45,7 +45,7 @@
     "runtime/core/src/experiments/tau_multiuser_voice/contract_revision.py": "d1261b6fc77f7194081fa1f6ba644d779f30763001726151c03526c65801b87c",
     "runtime/core/src/experiments/tau_multiuser_voice/authorization.py": "ffe7ea86fde938e664d9b44018a7f1530b3ac1943b5a26f840d772fad6d665df",
     "runtime/core/src/experiments/tau_multiuser_voice/voice_bank.py": "c23dbe17223df0542ee9c43a5d491e2f1ac5a5d7ce51ebf0c1ee132f576ce06c",
-    "runtime/core/src/experiments/tau_multiuser_voice/tts_backends.py": "4c80ec76cfd9d5d49b47d6b3c7a14277826116f7f9e116a5ecadd6ec247ccf80",
+    "runtime/core/src/experiments/tau_multiuser_voice/tts_backends.py": "c8bbceee79579ef32d07a525f4fa6c15bf777ffeeaa18f2b6a74ca997fcd363c",
     "runtime/core/src/experiments/tau_multiuser_voice/scene_audio.py": "22735df00c5b1164e49cb7979ff987a662b3c14be8aa0b64c3193904a1db9b54",
     "runtime/core/src/experiments/tau_multiuser_voice/cases_scale_expansion.py": "3fbd250256c37a41ef98546b5c0335989e0fea99d713dfc9e203b7681c0307a6",
     "runtime/core/src/experiments/tau_multiuser_voice/domain_tooling_v07.py": "4e1dca3113a409c58cea5627491ca1835f4e2fe801f2c16fbcd5ef84e2f06f99",
@@ -148,7 +148,7 @@
     "adapters/providers/moss/base.py": "5e6f3218ca96848c7942ac4542200a4ca4b94cfd4824efc27699dc47b3a05a0f",
     "adapters/providers/moss/ablation.py": "65f8b3a7f9c370167942fa99b6986a6605ab957c949ad4967c73a9786c6696b0"
   },
-  "scoring_sha256": "bbd62682f960115eafe142360226f7f5426724b96eb9b66d3cbba790b59c3015",
+  "scoring_sha256": "38429a56d253319f2665a24e2f371f2523703a18e3313ef197495ff2aa3b6c23",
   "task_success_policy": "separate-authorization",
   "provider": "moss",
   "shared_cases": "cases/ablations"
