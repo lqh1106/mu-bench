@@ -4,10 +4,10 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>μ-Bench · Multi-User Voice Agents</title>
 <meta name="description" content="A full-duplex benchmark for multi-user task completion. Explore 800 cases, two evaluation tracks, and the JTS and ATC leaderboard.">
-<meta name="theme-color" content="#2a5bf4"><link rel="icon" type="image/svg+xml" href="assets/mu-bench-logo.svg"><link rel="stylesheet" href="assets/site.css?v=3">
+<meta name="theme-color" content="#2a5bf4"><link rel="icon" type="image/svg+xml" href="assets/mu-bench-logo.svg"><link rel="stylesheet" href="assets/site.css?v=5">
 <meta property="og:title" content="μ-Bench: Many voices. One shared outcome."><meta property="og:description" content="Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents"><meta property="og:image" content="https://lqh1106.github.io/mu-bench/assets/intro-teaser.png">
 <script src="assets/site.js" defer></script>
-<script src="assets/experience.js?v=4" defer></script>
+<script src="assets/experience.js?v=6" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -17,6 +17,7 @@
 <div class="ambient-grid" aria-hidden="true"></div>
 <section class="hero shell">
 <div class="hero-copy">
+<div class="hero-emblem-wrap"><svg id="hero-emblem" viewBox="118 181 200 178" role="img" aria-label="Three mu symbols form the μ-Bench logo"><path data-identity="dad" d="M177.5 188.5C180.3 185.5 184.8 184.5 190.1 184.5H206.3V210.4C206.3 219.2 214.1 226.3 223.9 226.3C233.7 226.3 241.8 219.2 241.8 210.4V184.5H252.1C262.6 184.5 270.2 189.3 276 198.5L310.6 256.8C315.7 265.1 316.7 271.1 314.4 276.1L266.8 248.6C258.1 243.5 252.7 240.8 244.3 245L229.3 252.3C221.2 254.2 212.9 252.9 206.2 249.8V254.1L196.7 267.7L187.9 263C181.1 259.1 177.5 253.9 177.5 245.9V188.5Z"/><path data-identity="child" d="M171.7 190.3V246.4C171.7 257.3 176.7 264.2 187.1 269.7L195.3 274.2L199.8 284.3C201.5 288 202.3 290.8 202.5 293.2L205.5 291.9L222.8 293.1V306.5C222.8 313.2 219.4 317.5 212.4 321.5L162.5 347.9C159.2 349.3 157.6 346.6 155.5 343.5L146.1 327C145.6 326 145.6 325.3 146.6 324.6L166.3 313.2C175.8 308 177.6 301.8 174.5 292.8C171.5 284.2 162.6 278.3 154.4 281.9L129.7 294.3L125.1 286.4C119.8 277.9 119.7 267.6 124.3 259.5L163.3 200.3C166.1 196.1 168.8 192.8 171.7 190.3Z"/><path data-identity="agent" d="M233.3 258.4L245.9 251.7C251.4 248.7 255.6 248.7 261.6 251.6L311.4 280.6C314.5 282.1 312.3 286.8 310.5 289.8L299.8 305.1C299.4 305.9 299 305.9 298.2 305.4L279.9 294.5C270.9 289.2 265.6 289.4 259.3 295.1C249.2 304.4 250.9 317 260.9 323.6L280.1 335.3C281 335.9 281 336.2 280.2 337.3L274.3 346.9C269.3 353 262.8 356 252.6 356H180C173.8 356 169.6 354.8 165.3 352.3L214.7 325.5C224.9 319.7 228.7 313.3 228.8 302.4V293.2C231.9 287.7 234.7 283.1 237.9 279.1L244 273.9L239.6 270.4L233.3 258.4Z"/></svg><span class="emblem-caption">A shared space. Distinct identities.</span></div>
 <a class="release-pill" href="https://github.com/lqh1106/mu-bench"><span class="pill-icon" aria-hidden="true">μ</span> Open-source benchmark <span class="pill-divider"></span> Built for shared interaction</a>
 <h1>Many voices.<br><span>One shared outcome.</span></h1>
 <p class="hero-description">Real conversations don’t wait their turn.<br>Can your voice agent keep up with <em>everyone</em>?</p>
@@ -31,7 +32,7 @@
 <div class="demo-top"><div class="demo-title"><span class="demo-mark" aria-hidden="true">μ</span><div><strong>A shared ride to the airport</strong><span>Animated walkthrough · adapted from the paper teaser</span></div></div><span id="demo-status" class="demo-status">Ready to play</span></div>
 <div class="timeline-toolbar"><span><b class="timeline-dot"></b>Shared audio · three participants</span><span id="timeline-time">00:00 <span>/ 00:40</span></span></div>
 <div class="timeline-viewport" id="timeline-viewport" tabindex="0" role="region" aria-label="Scrollable conversation timeline">
-<div class="timeline-canvas" id="timeline-canvas">
+<div class="timeline-canvas" id="timeline-canvas"><div class="time-grid" aria-hidden="true"><i style="left:0%"></i><i style="left:25%"></i><i style="left:50%"></i><i style="left:75%"></i><i style="left:100%"></i></div>
 <div class="time-axis" id="time-axis" role="slider" tabindex="0" aria-label="Timeline position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="00:00 of 00:40"><div class="time-baseline"></div><div class="time-elapsed" id="time-elapsed"></div><div class="time-ticks"><span style="--tick:0%"><b>00:00</b></span><span style="--tick:25%"><b>00:10</b></span><span style="--tick:50%"><b>00:20</b></span><span style="--tick:75%"><b>00:30</b></span><span style="--tick:100%"><b>00:40</b></span></div><div class="audio-strips" id="audio-strips" aria-hidden="true"></div><span class="axis-handle" id="axis-handle" aria-hidden="true"></span></div>
 <div class="time-cursor" id="time-cursor" aria-hidden="true"><i></i></div>
 <div class="timeline-lane lane-dad"><div class="lane-label"><span class="lane-avatar">D</span><span>Dad</span></div><div class="lane-track" id="lane-dad"></div></div>
