@@ -2,6 +2,7 @@
 (()=>{
  const demo=document.getElementById('demo');if(!demo)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ const durationSeconds=18;
  const progress=document.getElementById('demo-progress'),play=document.getElementById('demo-play');
  const canvas=document.getElementById('timeline-canvas'),viewport=document.getElementById('timeline-viewport'),axis=document.getElementById('time-axis');
  const steps=[
@@ -30,7 +31,7 @@
   const next=steps.reduce((n,s,i)=>fraction>=s.at?i:n,-1);
   demo.dataset.phase=String(next);const cursor=axis.offsetLeft+axis.clientWidth*fraction;document.getElementById('time-cursor').style.left=`${cursor}px`;document.getElementById('time-elapsed').style.width=`${fraction*100}%`;document.getElementById('audio-strips').style.clipPath=`inset(0 ${(1-fraction)*100}% 0 0)`;document.getElementById('retained-progress').style.width=`${fraction*100}%`;
   document.getElementById('axis-handle').style.left=`${fraction*100}%`;axis.setAttribute('aria-valuenow',String(Math.round(fraction*1000)/10));
-  const seconds=Math.min(40,Math.floor(fraction*40));axis.setAttribute('aria-valuetext',`00:${String(seconds).padStart(2,'0')} of 00:40`);document.getElementById('timeline-time').innerHTML=`00:${String(seconds).padStart(2,'0')} <span>/ 00:40</span>`;progress.value=String(fraction*100);progress.style.setProperty('--progress',`${fraction*100}%`);
+  const seconds=Math.min(durationSeconds,Math.floor(fraction*durationSeconds));axis.setAttribute('aria-valuetext',`00:${String(seconds).padStart(2,'0')} of 00:18`);document.getElementById('timeline-time').innerHTML=`00:${String(seconds).padStart(2,'0')} <span>/ 00:18</span>`;progress.value=String(fraction*100);progress.style.setProperty('--progress',`${fraction*100}%`);
   events.forEach(event=>{const {el,step,words}=event;const delivered=fraction>=step.at;const active=delivered&&fraction<step.end;el.classList.toggle('delivered',delivered);el.classList.toggle('speaking',active);el.setAttribute('aria-hidden',String(!delivered));
    const spoken=Math.max(0,Math.min(1,(fraction-step.at)/(step.end-step.at)));
    const wordCount=delivered?Math.min(words.length,Math.max(1,Math.ceil(spoken*words.length))):0;
@@ -48,7 +49,7 @@
    progress.setAttribute('aria-valuetext',index<0?'Ready to play':`Step ${index+1}: ${s.title}`);
   }
  }
- function tick(now){if(!playing)return;fraction=Math.min(1,fraction+(now-lastTime)/40000);lastTime=now;render();pan();if(fraction>=1){pause();return;}frame=requestAnimationFrame(tick);}
+ function tick(now){if(!playing)return;fraction=Math.min(1,fraction+(now-lastTime)/(durationSeconds*1000));lastTime=now;render();pan();if(fraction>=1){pause();return;}frame=requestAnimationFrame(tick);}
  function resumeClock(){cancelAnimationFrame(frame);frame=null;if(playing&&!scrubbing){if(fraction>=1){playing=false;controls();return;}lastTime=performance.now();frame=requestAnimationFrame(tick);}}
  function start(){started=true;if(fraction>=1)fraction=0;playing=true;controls();resumeClock();}
  function pause(){playing=false;cancelAnimationFrame(frame);frame=null;controls();}
@@ -81,7 +82,7 @@
  const source=document.getElementById('hero-emblem');if(!source)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  const overlay=document.createElement('div');overlay.className='identity-morph';overlay.setAttribute('aria-hidden','true');document.body.append(overlay);
- const colors={dad:[244,199,120],child:[255,153,127],agent:[145,173,255]},blue=[42,91,244];
+ const colors={dad:[207,185,150],child:[208,158,166],agent:[145,168,232]},blue=[42,91,244];
  const pieces=Array.from(source.querySelectorAll('path')).map(path=>{
   const person=path.dataset.identity,bounds=path.getBBox();
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.classList.add('identity-piece');svg.setAttribute('viewBox',`${bounds.x} ${bounds.y} ${bounds.width} ${bounds.height}`);svg.append(path.cloneNode(true));overlay.append(svg);
