@@ -3,7 +3,7 @@
  const demo=document.getElementById('demo');if(!demo)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  const progress=document.getElementById('demo-progress'),play=document.getElementById('demo-play');
- const canvas=document.getElementById('timeline-canvas'),viewport=document.getElementById('timeline-viewport');
+ const canvas=document.getElementById('timeline-canvas'),viewport=document.getElementById('timeline-viewport'),axis=document.getElementById('time-axis');
  const steps=[
   {at:.025,end:.17,left:1,width:19,who:'dad',tag:'To agent',text:'Get us to the airport by 10.',axis:'A',title:'The shared task begins.',insight:'Dad sets the destination and deadline. They remain in force throughout the conversation.',eta:'Not checked',approval:'Not requested',result:'Main task received'},
   {at:.17,end:.32,left:17,width:17,who:'agent',tag:'Planning the route',text:'The fast route to…',tool:'route_planner()',axis:'T',title:'The agent starts the main thread.',insight:'The route is being planned when another participant speaks.',eta:'Not checked',approval:'Not requested',result:'Route planned'},
@@ -16,20 +16,22 @@
  ];
  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  steps.forEach((s,i)=>{
-  const el=document.createElement('article');el.className=`timeline-event event-${s.who}`;el.dataset.event=i;el.style.left=`${s.left}%`;el.style.width=`${s.width}%`;el.setAttribute('aria-hidden','true');
+  const el=document.createElement('article');el.className=`timeline-event event-${s.who}`;el.dataset.event=i;el.style.left=`${s.at*100}%`;el.style.width=`${s.width}%`;el.setAttribute('aria-hidden','true');
   el.innerHTML=`<span class="event-tag">${s.tag}</span>${s.tool?`<code>${esc(s.tool)}</code>`:''}<p>“${esc(s.text)}”</p>${i===1?'<span class="interrupted-tag">Interrupted</span>':''}`;
   document.getElementById(`lane-${s.who}`).append(el);
   const strip=document.createElement('span');strip.className=`audio-segment segment-${s.who}`;strip.style.left=`${s.at*100}%`;strip.style.width=`${(s.end-s.at)*100}%`;document.getElementById('audio-strips').append(strip);
  });
- const events=Array.from(document.querySelectorAll('.timeline-event'));
+ // Speaker lanes reorder the DOM; bind each bubble to its chronological event explicitly.
+ const events=steps.map((step,eventId)=>({step,el:demo.querySelector(`[data-event="${eventId}"]`)}));
  let fraction=0,index=-2,playing=false,frame=null,lastTime=0,autoConsumed=false,started=false;
  function controls(){demo.dataset.playing=String(playing);document.getElementById('play-label').textContent=playing?'Pause':fraction>=1?'Replay':'Play';document.getElementById('play-symbol').textContent=playing?'Ⅱ':'▶';play.setAttribute('aria-label',playing?'Pause walkthrough':fraction>=1?'Replay walkthrough':'Play walkthrough');document.getElementById('demo-status').textContent=playing?'Playing illustration':fraction>=1?'Walkthrough complete':started?'Paused':'Ready to play';}
- function pan(){const x=96+(canvas.clientWidth-120)*fraction;viewport.scrollLeft=Math.max(0,x-viewport.clientWidth*.72);}
+ function pan(){const x=axis.offsetLeft+axis.clientWidth*fraction;viewport.scrollLeft=Math.max(0,x-viewport.clientWidth*.72);}
  function render(){
   const next=steps.reduce((n,s,i)=>fraction>=s.at?i:n,-1);
-  demo.dataset.phase=String(next);const cursor=96+(canvas.clientWidth-120)*fraction;document.getElementById('time-cursor').style.left=`${cursor}px`;document.getElementById('time-elapsed').style.width=`${fraction*100}%`;document.getElementById('audio-strips').style.clipPath=`inset(0 ${(1-fraction)*100}% 0 0)`;document.getElementById('retained-progress').style.width=`${fraction*100}%`;
-  const seconds=Math.min(40,Math.floor(fraction*40));document.getElementById('timeline-time').innerHTML=`00:${String(seconds).padStart(2,'0')} <span>/ 00:40</span>`;progress.value=String(fraction*100);progress.style.setProperty('--progress',`${fraction*100}%`);
-  events.forEach((el,i)=>{const delivered=fraction>=steps[i].at;el.classList.toggle('delivered',delivered);el.classList.toggle('speaking',delivered&&fraction<steps[i].end);el.setAttribute('aria-hidden',String(!delivered));});
+  demo.dataset.phase=String(next);const cursor=axis.offsetLeft+axis.clientWidth*fraction;document.getElementById('time-cursor').style.left=`${cursor}px`;document.getElementById('time-elapsed').style.width=`${fraction*100}%`;document.getElementById('audio-strips').style.clipPath=`inset(0 ${(1-fraction)*100}% 0 0)`;document.getElementById('retained-progress').style.width=`${fraction*100}%`;
+  document.getElementById('axis-handle').style.left=`${fraction*100}%`;axis.setAttribute('aria-valuenow',String(Math.round(fraction*1000)/10));
+  const seconds=Math.min(40,Math.floor(fraction*40));axis.setAttribute('aria-valuetext',`00:${String(seconds).padStart(2,'0')} of 00:40`);document.getElementById('timeline-time').innerHTML=`00:${String(seconds).padStart(2,'0')} <span>/ 00:40</span>`;progress.value=String(fraction*100);progress.style.setProperty('--progress',`${fraction*100}%`);
+  events.forEach(({el,step})=>{const delivered=fraction>=step.at;el.classList.toggle('delivered',delivered);el.classList.toggle('speaking',delivered&&fraction<step.end);el.setAttribute('aria-hidden',String(!delivered));});
   document.querySelector('.interrupted-tag').classList.toggle('shown',fraction>=steps[2].at);
   document.getElementById('thread-status').textContent=fraction>=.8?'Retained through the detour':'Main thread';
   if(next!==index){index=next;const s=steps[Math.max(0,index)];
@@ -44,7 +46,15 @@
  function pause(){playing=false;cancelAnimationFrame(frame);frame=null;controls();}
  play.addEventListener('click',()=>{autoConsumed=true;playing?pause():start();});
  document.getElementById('demo-replay').addEventListener('click',()=>{autoConsumed=true;pause();fraction=0;render();pan();start();});
- progress.addEventListener('input',e=>{autoConsumed=true;started=true;pause();fraction=Number(e.target.value)/100;render();pan();controls();});
+ function seek(value,follow=true){autoConsumed=true;started=true;pause();fraction=Math.max(0,Math.min(1,value));render();if(follow)pan();controls();}
+ progress.addEventListener('input',e=>seek(Number(e.target.value)/100));
+ let dragPointer=null;
+ function seekPointer(e){const bounds=axis.getBoundingClientRect();seek((e.clientX-bounds.left)/bounds.width,false);}
+ axis.addEventListener('pointerdown',e=>{if(e.button!==0)return;dragPointer=e.pointerId;axis.setPointerCapture(e.pointerId);axis.classList.add('dragging');seekPointer(e);e.preventDefault();});
+ axis.addEventListener('pointermove',e=>{if(e.pointerId===dragPointer)seekPointer(e);});
+ function endDrag(e){if(e.pointerId!==dragPointer)return;dragPointer=null;axis.classList.remove('dragging');if(axis.hasPointerCapture(e.pointerId))axis.releasePointerCapture(e.pointerId);}
+ axis.addEventListener('pointerup',endDrag);axis.addEventListener('pointercancel',endDrag);axis.addEventListener('lostpointercapture',()=>{dragPointer=null;axis.classList.remove('dragging');});
+ axis.addEventListener('keydown',e=>{let target;switch(e.key){case 'ArrowLeft':case 'ArrowDown':target=fraction-.025;break;case 'ArrowRight':case 'ArrowUp':target=fraction+.025;break;case 'PageDown':target=fraction-.1;break;case 'PageUp':target=fraction+.1;break;case 'Home':target=0;break;case 'End':target=1;break;default:return;}e.preventDefault();seek(target);});
  document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=null;}else if(playing){lastTime=performance.now();frame=requestAnimationFrame(tick);}});reduced.addEventListener('change',()=>{if(reduced.matches)pause();});
  if('ResizeObserver' in window)new ResizeObserver(()=>{render();if(playing)pan();}).observe(canvas);
  render();controls();
