@@ -1,0 +1,175 @@
+{
+  "source": "Paper Table 2 supplied by the project author",
+  "unit": "percent",
+  "metrics": [
+    "JTS",
+    "A",
+    "T",
+    "C"
+  ],
+  "models": [
+    {
+      "name": "MiniCPM-o 4.5",
+      "family": "open",
+      "tool_free": [
+        19.39,
+        36.89,
+        35.95,
+        87.17
+      ],
+      "tool_augmented": null
+    },
+    {
+      "name": "Raon-Speech",
+      "family": "open",
+      "tool_free": [
+        7.14,
+        24.67,
+        15.89,
+        81.22
+      ],
+      "tool_augmented": null
+    },
+    {
+      "name": "PersonaPlex",
+      "family": "open",
+      "tool_free": [
+        3.57,
+        13.7,
+        8.07,
+        79.27
+      ],
+      "tool_augmented": null
+    },
+    {
+      "name": "Lychee-FD",
+      "family": "open",
+      "tool_free": [
+        3.32,
+        7.86,
+        5.97,
+        82.24
+      ],
+      "tool_augmented": null
+    },
+    {
+      "name": "Moshi",
+      "family": "open",
+      "tool_free": [
+        1.79,
+        5.07,
+        3.64,
+        77.78
+      ],
+      "tool_augmented": null
+    },
+    {
+      "name": "Voila",
+      "family": "open",
+      "tool_free": [
+        1.53,
+        4.14,
+        2.26,
+        79.49
+      ],
+      "tool_augmented": null
+    },
+    {
+      "name": "FLM-Audio",
+      "family": "open",
+      "tool_free": [
+        0,
+        1.49,
+        0.61,
+        79.33
+      ],
+      "tool_augmented": null
+    },
+    {
+      "name": "Freeze-Omni",
+      "family": "open",
+      "tool_free": [
+        0,
+        0.57,
+        0,
+        76.43
+      ],
+      "tool_augmented": null
+    },
+    {
+      "name": "MOSS-Live",
+      "family": "proprietary",
+      "tool_free": [
+        57.91,
+        62.63,
+        71.32,
+        94.81
+      ],
+      "tool_augmented": null
+    },
+    {
+      "name": "GPT-Realtime-2",
+      "family": "proprietary",
+      "tool_free": [
+        58.42,
+        68.61,
+        81.66,
+        96.87
+      ],
+      "tool_augmented": [
+        65.44,
+        84.61,
+        81.14,
+        83.29
+      ]
+    },
+    {
+      "name": "Gemini 3.8 Live",
+      "family": "proprietary",
+      "tool_free": [
+        53.32,
+        61.05,
+        78.87,
+        96.06
+      ],
+      "tool_augmented": [
+        64.95,
+        75.8,
+        82.89,
+        74.98
+      ]
+    },
+    {
+      "name": "Grok Voice 3.0",
+      "family": "proprietary",
+      "tool_free": [
+        62.24,
+        67.32,
+        77.82,
+        96.25
+      ],
+      "tool_augmented": [
+        57.6,
+        81.99,
+        82.5,
+        78.1
+      ]
+    },
+    {
+      "name": "Seeduplex 3.0",
+      "family": "proprietary",
+      "tool_free": [
+        37.5,
+        61.05,
+        78.67,
+        97.11
+      ],
+      "tool_augmented": [
+        50,
+        76.81,
+        61.9,
+        55.98
+      ]
+    }
+  ]
+}
