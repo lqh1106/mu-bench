@@ -24,8 +24,8 @@
  });
  // Speaker lanes reorder the DOM; bind each bubble to its chronological event explicitly.
  const events=steps.map((step,eventId)=>{const el=demo.querySelector(`[data-event="${eventId}"]`);return {step,el,words:Array.from(el.querySelectorAll('.spoken-word')),wordCount:-1};});
- let fraction=0,index=-2,playing=false,frame=null,lastTime=0,autoConsumed=false,started=false,scrubbing=false,dragPointer=null;
- function controls(){demo.dataset.playing=String(playing);demo.dataset.scrubbing=String(scrubbing);document.getElementById('play-label').textContent=playing?'Pause':fraction>=1?'Replay':'Play';document.getElementById('play-symbol').textContent=playing?'Ⅱ':'▶';play.setAttribute('aria-label',playing?'Pause walkthrough':fraction>=1?'Replay walkthrough':'Play walkthrough');document.getElementById('demo-status').textContent=scrubbing?'Seeking…':playing?'Playing illustration':fraction>=1?'Walkthrough complete':started?'Paused':'Ready to play';}
+ let fraction=0,index=-2,playing=false,frame=null,lastTime=0,autoConsumed=false,started=false,scrubbing=false,dragPointer=null,loopHoldUntil=0,loopCount=0;
+ function controls(){demo.dataset.playing=String(playing);demo.dataset.scrubbing=String(scrubbing);document.getElementById('play-label').textContent=playing?'Pause':fraction>=1?'Replay':'Play';document.getElementById('play-symbol').textContent=playing?'Ⅱ':'▶';play.setAttribute('aria-label',playing?'Pause walkthrough':fraction>=1?'Replay walkthrough':'Play walkthrough');document.getElementById('demo-status').textContent=scrubbing?'Seeking…':playing?(fraction>=1?'Loop complete · restarting':'Playing illustration'):fraction>=1?'Walkthrough complete':started?'Paused':'Ready to play';}
  function pan(){const x=axis.offsetLeft+axis.clientWidth*fraction;viewport.scrollLeft=Math.max(0,x-viewport.clientWidth*.72);}
  function render(){
   const next=steps.reduce((n,s,i)=>fraction>=s.at?i:n,-1);
@@ -49,13 +49,13 @@
    progress.setAttribute('aria-valuetext',index<0?'Ready to play':`Step ${index+1}: ${s.title}`);
   }
  }
- function tick(now){if(!playing)return;fraction=Math.min(1,fraction+(now-lastTime)/(durationSeconds*1000));lastTime=now;render();pan();if(fraction>=1){pause();return;}frame=requestAnimationFrame(tick);}
- function resumeClock(){cancelAnimationFrame(frame);frame=null;if(playing&&!scrubbing){if(fraction>=1){playing=false;controls();return;}lastTime=performance.now();frame=requestAnimationFrame(tick);}}
+ function tick(now){if(!playing)return;if(fraction>=1){if(!loopHoldUntil)loopHoldUntil=now+1000;if(now>=loopHoldUntil){fraction=0;index=-2;loopHoldUntil=0;loopCount++;demo.dataset.loopCount=String(loopCount);}}else{fraction=Math.min(1,fraction+(now-lastTime)/(durationSeconds*1000));}lastTime=now;render();pan();controls();frame=requestAnimationFrame(tick);}
+ function resumeClock(){cancelAnimationFrame(frame);frame=null;if(playing&&!scrubbing){lastTime=performance.now();frame=requestAnimationFrame(tick);}}
  function start(){started=true;if(fraction>=1)fraction=0;playing=true;controls();resumeClock();}
- function pause(){playing=false;cancelAnimationFrame(frame);frame=null;controls();}
+ function pause(){loopHoldUntil=0;playing=false;cancelAnimationFrame(frame);frame=null;controls();}
  play.addEventListener('click',()=>{autoConsumed=true;playing?pause():start();});
  document.getElementById('demo-replay').addEventListener('click',()=>{autoConsumed=true;pause();fraction=0;render();pan();start();});
- function seek(value,follow=true){autoConsumed=true;started=true;cancelAnimationFrame(frame);frame=null;fraction=Math.max(0,Math.min(1,value));render();if(follow)pan();controls();resumeClock();}
+ function seek(value,follow=true){loopHoldUntil=0;autoConsumed=true;started=true;cancelAnimationFrame(frame);frame=null;fraction=Math.max(0,Math.min(1,value));render();if(follow)pan();controls();resumeClock();}
  function beginScrub(){autoConsumed=true;started=true;scrubbing=true;cancelAnimationFrame(frame);frame=null;controls();}
  function endScrub(){scrubbing=false;controls();resumeClock();}
  progress.addEventListener('pointerdown',beginScrub);
@@ -77,45 +77,24 @@
  const reveal=new IntersectionObserver(entries=>{for(const e of entries)if(e.isIntersecting){e.target.classList.add('visible');reveal.unobserve(e.target);}},{threshold:.08});document.querySelectorAll('.overview .section-heading,.track-grid,.framework .section-heading,.metric-explainer,#leaderboard .section-heading,.board,.start-grid').forEach(el=>{el.classList.add('reveal');reveal.observe(el);});}
 })();
 
-// The three original logo paths separate into the three participant identities.
+// Scroll-driven contour morph: the original mu shapes become the three portraits.
 (()=>{
  const source=document.getElementById('hero-emblem');if(!source)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  const overlay=document.createElement('div');overlay.className='identity-morph';overlay.setAttribute('aria-hidden','true');document.body.append(overlay);
- const colors={dad:[207,185,150],child:[208,158,166],agent:[145,168,232]},blue=[42,91,244];
- const pieces=Array.from(source.querySelectorAll('path')).map(path=>{
-  const person=path.dataset.identity,bounds=path.getBBox();
-  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.classList.add('identity-piece');svg.setAttribute('viewBox',`${bounds.x} ${bounds.y} ${bounds.width} ${bounds.height}`);svg.append(path.cloneNode(true));overlay.append(svg);
-  return {person,bounds,svg,target:document.querySelector(`.lane-${person} .lane-avatar`)};
- });
+ const colors={dad:[207,185,150],child:[208,158,166],agent:[145,168,232]},blue=[42,91,244],count=100;
+ function contour(path,normalize){const length=path.getTotalLength(),b=path.getBBox(),size=Math.max(b.width,b.height);return Array.from({length:count},(_,i)=>{const p=path.getPointAtLength(length*i/count);return normalize?[(p.x-b.x-b.width/2)/size*40+20,(p.y-b.y-b.height/2)/size*40+20]:[p.x,p.y];});}
+ function match(a,b){let best=null,cost=Infinity;for(const candidate of [b,b.slice().reverse()])for(let shift=0;shift<count;shift++){let distance=0;for(let i=0;i<count;i++){const q=candidate[(i+shift)%count];distance+=(a[i][0]-q[0])**2+(a[i][1]-q[1])**2;}if(distance<cost){cost=distance;best=Array.from({length:count},(_,i)=>candidate[(i+shift)%count]);}}return best;}
+ const pieces=Array.from(source.querySelectorAll('path')).map(path=>{const person=path.dataset.identity,target=document.querySelector(`.lane-${person} .lane-avatar`),from=contour(path,true),to=match(from,contour(target.querySelector('.avatar-silhouette'),false)),bounds=path.getBBox();const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.classList.add('identity-piece','morphing-portrait');svg.setAttribute('viewBox','0 0 40 40');const shape=document.createElementNS('http://www.w3.org/2000/svg','path');svg.append(shape);overlay.append(svg);return {person,target,from,to,bounds,svg,shape};});
  let queued=false;
- function draw(){queued=false;const origin=source.getBoundingClientRect(),last=pieces[2].target.getBoundingClientRect();
-  const end=Math.max(400,last.top+scrollY-innerHeight*.72);
-  const p=Math.max(0,Math.min(1,scrollY/end));
+ function draw(){queued=false;const origin=source.getBoundingClientRect(),last=pieces[2].target.getBoundingClientRect(),end=Math.max(400,last.top+scrollY-innerHeight*.72),p=Math.max(0,Math.min(1,scrollY/end));
   if(reduced.matches){source.style.opacity='1';overlay.style.visibility='hidden';pieces.forEach(o=>o.target.style.setProperty('--identity-appearance','1'));return;}
-  const blend=p*p*(3-2*p),arrival=Math.max(0,Math.min(1,(p-.82)/.18));
-  source.style.opacity=p<.002?'1':'0';overlay.style.visibility=p>.002&&p<1?'visible':'hidden';
-  pieces.forEach(({person,bounds,svg,target},i)=>{
-   const destination=target.getBoundingClientRect();
-   const sx=origin.left+(bounds.x-118+bounds.width/2)/200*origin.width;
-   const sy=origin.top+(bounds.y-181+bounds.height/2)/178*origin.height;
-   const dx=destination.left+destination.width/2,dy=destination.top+destination.height/2;
-   const horizontal=1-Math.pow(1-p,6);
-   const mobile=innerWidth<=640;
-   const edge=mobile?15:dx;
-   const approach=Math.max(0,(p-.72)/.28);
-   const x=mobile?sx+(edge-sx)*horizontal+(dx-edge)*approach:sx+(dx-sx)*horizontal+Math.sin(Math.PI*p)*(i-1)*12;
-   const y=sy+(dy-sy)*blend;
-   const scale=origin.width/200,w=bounds.width*scale,h=bounds.height*scale;const shrink=1-Math.pow(1-p,3);
-   const fit=23/Math.max(bounds.width,bounds.height);
-   svg.style.width=`${w+(bounds.width*fit-w)*shrink}px`;svg.style.height=`${h+(bounds.height*fit-h)*shrink}px`;
-   svg.style.transform=`translate(${x}px,${y}px) translate(-50%,-50%) rotate(${Math.sin(Math.PI*p)*(i-1)*14}deg)`;
-   svg.style.color=`rgb(${blue.map((c,k)=>Math.round(c+(colors[person][k]-c)*blend)).join(',')})`;
-   svg.style.opacity=String(1-arrival);target.style.setProperty('--identity-appearance',String(arrival));
+  const blend=p*p*(3-2*p),m=Math.max(0,Math.min(1,(p-.58)/.38)),morph=m*m*(3-2*m),arrival=Math.max(0,Math.min(1,(p-.96)/.04));source.style.opacity=p<.002?'1':'0';overlay.style.visibility=p>.002&&p<1?'visible':'hidden';
+  pieces.forEach(({person,target,from,to,bounds,svg,shape},i)=>{const dest=target.getBoundingClientRect(),sx=origin.left+(bounds.x-118+bounds.width/2)/200*origin.width,sy=origin.top+(bounds.y-181+bounds.height/2)/178*origin.height,dx=dest.left+dest.width/2,dy=dest.top+dest.height/2,horizontal=1-Math.pow(1-p,6),edge=innerWidth<=640?15:dx,approach=Math.max(0,(p-.72)/.28),x=innerWidth<=640?sx+(edge-sx)*horizontal+(dx-edge)*approach:sx+(dx-sx)*horizontal+Math.sin(Math.PI*p)*(i-1)*12,y=sy+(dy-sy)*blend,startSize=Math.max(bounds.width,bounds.height)/200*origin.width,size=startSize+(36-startSize)*(1-Math.pow(1-p,3));
+   const points=from.map((a,j)=>[a[0]+(to[j][0]-a[0])*morph,a[1]+(to[j][1]-a[1])*morph]);shape.setAttribute('d',points.map((v,j)=>(j?'L':'M')+v[0].toFixed(2)+' '+v[1].toFixed(2)).join(' ')+'Z');shape.style.fillOpacity=String(1-morph*.92);shape.style.strokeOpacity=String(morph);shape.style.strokeWidth='1.25';
+   svg.style.width=size+'px';svg.style.height=size+'px';svg.style.transform=`translate(${x}px,${y}px) translate(-50%,-50%) rotate(${Math.sin(Math.PI*p)*(i-1)*10*(1-morph)}deg)`;svg.style.color=`rgb(${blue.map((c,k)=>Math.round(c+(colors[person][k]-c)*blend)).join(',')})`;svg.style.opacity=String(1-arrival);target.style.setProperty('--identity-appearance',String(arrival));
   });
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(draw);}}
- addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule);reduced.addEventListener('change',schedule);
- if('ResizeObserver' in window)new ResizeObserver(schedule).observe(document.getElementById('main'));
- draw();
+ addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule);reduced.addEventListener('change',schedule);if('ResizeObserver'in window)new ResizeObserver(schedule).observe(document.getElementById('main'));draw();
 })();
