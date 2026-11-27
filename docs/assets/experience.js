@@ -3,6 +3,7 @@
 (() => {
   const demo = document.getElementById('demo');
   if (!demo) return;
+  const isZh = (document.documentElement.lang || '').toLowerCase().startsWith('zh');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const durationSeconds = 18;
   const progress = document.getElementById('demo-progress');
@@ -16,118 +17,231 @@
   const zoneSidetalk = document.getElementById('zone-sidetalk');
   const zoneBackchannel = document.getElementById('zone-backchannel');
 
-  const steps = [
-    {
-      at: 0.025,
-      end: 0.17,
-      who: 'dad',
-      tag: 'To Agent · Primary Goal',
-      text: 'Get us to the airport by 10.',
-      axis: 'A',
-      title: 'The shared task begins.',
-      insight: 'Dad sets the destination and hard 10:00 deadline. Both stay bound to him throughout the session.',
-      eta: 'Not checked',
-      approval: 'Not requested',
-      result: 'Main task registered (Dad)'
-    },
-    {
-      at: 0.17,
-      end: 0.32,
-      who: 'agent',
-      tag: 'Planning initial route',
-      text: 'The fast route to…',
-      tool: 'route_planner()',
-      axis: 'T',
-      title: 'The agent opens the main thread.',
-      insight: 'Initial route planning begins — right before a second participant speaks over the reply.',
-      eta: 'Not checked',
-      approval: 'Not requested',
-      result: 'route_planner() invoked'
-    },
-    {
-      at: 0.24,
-      end: 0.4,
-      who: 'child',
-      stacked: true,
-      tag: 'Barge-in · To Agent',
-      text: 'Can we stop by the park?',
-      axis: 'A',
-      title: 'A second voice barges in mid-reply.',
-      insight: 'The child interrupts with a detour request that must be checked against Dad’s 10:00 constraint and authority.',
-      eta: 'Checking…',
-      approval: 'Awaiting Dad’s approval',
-      result: 'Barge-in captured · main goal retained'
-    },
-    {
-      at: 0.4,
-      end: 0.61,
-      who: 'agent',
-      tag: 'Feasibility & permission check',
-      text: 'We’d still reach the airport by 9:52. Should I add the stop?',
-      tool: 'check_eta(via="park") → 09:52',
-      axis: 'C',
-      title: 'Verify feasibility before mutating state.',
-      insight: 'ETA 09:52 satisfies the 10:00 deadline, so the agent asks the authorized decision-maker for approval.',
-      eta: '09:52 (≤ 10:00)',
-      approval: 'Awaiting Dad’s approval',
-      result: 'check_eta() → 09:52 < 10:00'
-    },
-    {
-      at: 0.61,
-      end: 0.8,
-      who: 'dad',
-      tag: 'Approval · Constraint kept',
-      text: 'Yes, as long as we arrive by 10.',
-      axis: 'C',
-      title: 'Conditional approval from the authority.',
-      insight: 'Dad authorizes the park stop while explicitly keeping the 10:00 arrival requirement active.',
-      eta: '09:52 (≤ 10:00)',
-      approval: 'Approved by Dad',
-      result: 'Authorized · deadline ≤ 10:00'
-    },
-    {
-      at: 0.69,
-      end: 0.8,
-      who: 'child',
-      stacked: true,
-      tag: 'Peer side-talk · To Dad',
-      text: 'Yay! Thanks, Dad!',
-      axis: 'A',
-      title: 'Peer side-talk is not an agent command.',
-      insight: 'The child is addressing Dad, not issuing a new request. The agent must filter side-talk without derailing.',
-      eta: '09:52 (≤ 10:00)',
-      approval: 'Approved by Dad',
-      result: 'Side-talk ignored · no new tool call'
-    },
-    {
-      at: 0.8,
-      end: 1.0,
-      who: 'agent',
-      tag: 'Main thread resumed',
-      text: 'We’ll stop at the park first… then head to the airport.',
-      tool: 'route_planner(via="park")',
-      axis: 'T',
-      title: 'Resume and commit the jointly valid plan.',
-      insight: 'The agent executes the updated route including the park stop while preserving the airport destination.',
-      eta: '09:52 (≤ 10:00)',
-      approval: 'Approved by Dad',
-      result: 'route_planner(via="park") committed'
-    },
-    {
-      at: 0.89,
-      end: 1.0,
-      who: 'dad',
-      stacked: true,
-      tag: 'Backchannel',
-      text: 'Mm-hmm.',
-      axis: 'C',
-      title: 'Brief backchannel leaves final state intact.',
-      insight: 'A listener acknowledgment introduces no new obligation; all goals and constraints hold jointly.',
-      eta: '09:52 (≤ 10:00)',
-      approval: 'Approved by Dad',
-      result: 'Joint Task Success ✓'
-    }
-  ];
+  const steps = isZh
+    ? [
+        {
+          at: 0.025,
+          end: 0.17,
+          who: 'dad',
+          tag: '对智能体 · 主目标',
+          text: '10 点前送我们到机场。',
+          axis: 'A',
+          title: '共享任务正式建立。',
+          insight: '爸爸设定了目的地与 10:00 的硬性截止时间，两者在整个会话中必须始终绑定到他本人。',
+          eta: '尚未查询',
+          approval: '尚未请求',
+          result: '主任务已登记（爸爸）'
+        },
+        {
+          at: 0.17,
+          end: 0.32,
+          who: 'agent',
+          tag: '规划初始路线',
+          text: '前往机场最快路线是……',
+          tool: 'route_planner()',
+          axis: 'T',
+          title: '智能体开启主任务线索。',
+          insight: '初始路线规划刚刚启动——就在此时，第二位参与者中途开口打断了回复。',
+          eta: '尚未查询',
+          approval: '尚未请求',
+          result: '已调用 route_planner()'
+        },
+        {
+          at: 0.24,
+          end: 0.4,
+          who: 'child',
+          stacked: true,
+          tag: '中途打断 · 对智能体',
+          text: '能顺路去趟公园吗？',
+          axis: 'A',
+          title: '另一位用户在回复中途打断。',
+          insight: '孩子提出绕道请求，智能体必须结合爸爸的 10:00 时间约束和决策权限进行核查。',
+          eta: '正在核查…',
+          approval: '等待爸爸授权',
+          result: '捕获打断 · 主目标保持激活'
+        },
+        {
+          at: 0.4,
+          end: 0.61,
+          who: 'agent',
+          tag: '可行性与权限确认',
+          text: '绕道后 9:52 也能到机场，要加上公园经停吗？',
+          tool: 'check_eta(via="park") → 09:52',
+          axis: 'C',
+          title: '先验证可行性，再申请权限。',
+          insight: '预计到达时间 09:52 满足 10:00 截止要求，智能体据此向有决策权的爸爸请求批准。',
+          eta: '09:52（≤ 10:00）',
+          approval: '等待爸爸授权',
+          result: 'check_eta() → 09:52 < 10:00'
+        },
+        {
+          at: 0.61,
+          end: 0.8,
+          who: 'dad',
+          tag: '条件授权 · 约束保留',
+          text: '可以，只要 10 点前能到。',
+          axis: 'C',
+          title: '授权人给出附带条件的批准。',
+          insight: '爸爸同意增加公园经停点，同时明确重申 10:00 前抵达机场的约束继续有效。',
+          eta: '09:52（≤ 10:00）',
+          approval: '爸爸已批准',
+          result: '已获授权 · 截止 ≤ 10:00'
+        },
+        {
+          at: 0.69,
+          end: 0.8,
+          who: 'child',
+          stacked: true,
+          tag: '用户间旁白 · 对爸爸',
+          text: '太好啦！谢谢爸爸！',
+          axis: 'A',
+          title: '用户间旁白并非对智能体的指令。',
+          insight: '孩子是在向爸爸道谢而非发出新请求，智能体必须过滤旁白且不偏离主线。',
+          eta: '09:52（≤ 10:00）',
+          approval: '爸爸已批准',
+          result: '旁白已过滤 · 无多余工具调用'
+        },
+        {
+          at: 0.8,
+          end: 1.0,
+          who: 'agent',
+          tag: '主线索恢复并提交',
+          text: '好的，我们先去公园……然后直奔机场。',
+          tool: 'route_planner(via="park")',
+          axis: 'T',
+          title: '恢复主线并提交联合有效方案。',
+          insight: '智能体在保留机场目的地与时间约束的前提下，正式提交包含公园经停的新路线。',
+          eta: '09:52（≤ 10:00）',
+          approval: '爸爸已批准',
+          result: 'route_planner(via="park") 已提交'
+        },
+        {
+          at: 0.89,
+          end: 1.0,
+          who: 'dad',
+          stacked: true,
+          tag: '附和信号',
+          text: '嗯哼。',
+          axis: 'C',
+          title: '简短附和不破坏最终状态。',
+          insight: '听众的自然附和不会引入新义务；所有用户目标、工具效果与约束同时成立。',
+          eta: '09:52（≤ 10:00）',
+          approval: '爸爸已批准',
+          result: '联合任务成功 (JTS) ✓'
+        }
+      ]
+    : [
+        {
+          at: 0.025,
+          end: 0.17,
+          who: 'dad',
+          tag: 'To Agent · Primary Goal',
+          text: 'Get us to the airport by 10.',
+          axis: 'A',
+          title: 'The shared task begins.',
+          insight: 'Dad sets the destination and hard 10:00 deadline. Both stay bound to him throughout the session.',
+          eta: 'Not checked',
+          approval: 'Not requested',
+          result: 'Main task registered (Dad)'
+        },
+        {
+          at: 0.17,
+          end: 0.32,
+          who: 'agent',
+          tag: 'Planning initial route',
+          text: 'The fast route to…',
+          tool: 'route_planner()',
+          axis: 'T',
+          title: 'The agent opens the main thread.',
+          insight: 'Initial route planning begins — right before a second participant speaks over the reply.',
+          eta: 'Not checked',
+          approval: 'Not requested',
+          result: 'route_planner() invoked'
+        },
+        {
+          at: 0.24,
+          end: 0.4,
+          who: 'child',
+          stacked: true,
+          tag: 'Barge-in · To Agent',
+          text: 'Can we stop by the park?',
+          axis: 'A',
+          title: 'A second voice barges in mid-reply.',
+          insight: 'The child interrupts with a detour request that must be checked against Dad’s 10:00 constraint and authority.',
+          eta: 'Checking…',
+          approval: 'Awaiting Dad’s approval',
+          result: 'Barge-in captured · main goal retained'
+        },
+        {
+          at: 0.4,
+          end: 0.61,
+          who: 'agent',
+          tag: 'Feasibility & permission check',
+          text: 'We’d still reach the airport by 9:52. Should I add the stop?',
+          tool: 'check_eta(via="park") → 09:52',
+          axis: 'C',
+          title: 'Verify feasibility before mutating state.',
+          insight: 'ETA 09:52 satisfies the 10:00 deadline, so the agent asks the authorized decision-maker for approval.',
+          eta: '09:52 (≤ 10:00)',
+          approval: 'Awaiting Dad’s approval',
+          result: 'check_eta() → 09:52 < 10:00'
+        },
+        {
+          at: 0.61,
+          end: 0.8,
+          who: 'dad',
+          tag: 'Approval · Constraint kept',
+          text: 'Yes, as long as we arrive by 10.',
+          axis: 'C',
+          title: 'Conditional approval from the authority.',
+          insight: 'Dad authorizes the park stop while explicitly keeping the 10:00 arrival requirement active.',
+          eta: '09:52 (≤ 10:00)',
+          approval: 'Approved by Dad',
+          result: 'Authorized · deadline ≤ 10:00'
+        },
+        {
+          at: 0.69,
+          end: 0.8,
+          who: 'child',
+          stacked: true,
+          tag: 'Peer side-talk · To Dad',
+          text: 'Yay! Thanks, Dad!',
+          axis: 'A',
+          title: 'Peer side-talk is not an agent command.',
+          insight: 'The child is addressing Dad, not issuing a new request. The agent must filter side-talk without derailing.',
+          eta: '09:52 (≤ 10:00)',
+          approval: 'Approved by Dad',
+          result: 'Side-talk ignored · no new tool call'
+        },
+        {
+          at: 0.8,
+          end: 1.0,
+          who: 'agent',
+          tag: 'Main thread resumed',
+          text: 'We’ll stop at the park first… then head to the airport.',
+          tool: 'route_planner(via="park")',
+          axis: 'T',
+          title: 'Resume and commit the jointly valid plan.',
+          insight: 'The agent executes the updated route including the park stop while preserving the airport destination.',
+          eta: '09:52 (≤ 10:00)',
+          approval: 'Approved by Dad',
+          result: 'route_planner(via="park") committed'
+        },
+        {
+          at: 0.89,
+          end: 1.0,
+          who: 'dad',
+          stacked: true,
+          tag: 'Backchannel',
+          text: 'Mm-hmm.',
+          axis: 'C',
+          title: 'Brief backchannel leaves final state intact.',
+          insight: 'A listener acknowledgment introduces no new obligation; all goals and constraints hold jointly.',
+          eta: '09:52 (≤ 10:00)',
+          approval: 'Approved by Dad',
+          result: 'Joint Task Success ✓'
+        }
+      ];
 
   const esc = (s) =>
     String(s).replace(/[&<>"']/g, (c) => ({
@@ -139,16 +253,16 @@
     }[c]));
 
   steps.forEach((s, i) => {
-    const wordsArr = s.text.split(' ');
+    const wordsArr = isZh ? Array.from(s.text) : s.text.split(' ');
     const el = document.createElement('article');
     el.className = `timeline-event event-${s.who}`;
     el.dataset.event = String(i);
     el.style.left = `${s.at * 100}%`;
     el.style.width = `${(s.end - s.at) * 100}%`;
-    el.title = `Jump to ${(s.at * durationSeconds).toFixed(1)}s — ${s.title}`;
+    el.title = isZh ? `跳转至 ${(s.at * durationSeconds).toFixed(1)}s — ${s.title}` : `Jump to ${(s.at * durationSeconds).toFixed(1)}s — ${s.title}`;
     el.innerHTML = `<span class="event-tag">${esc(s.tag)}</span>${s.tool ? `<code>${esc(s.tool)}</code>` : ''}<p class="spoken-text" aria-label="${esc(s.text)}"><span aria-hidden="true">“</span>${wordsArr
-      .map((word, wi) => `<span class="spoken-word" aria-hidden="true">${esc(word)}${wi < wordsArr.length - 1 ? ' ' : ''}</span>`)
-      .join('')}<span class="closing-quote" aria-hidden="true">”</span></p>${i === 1 ? '<span class="interrupted-tag">Interrupted at 4.3s</span>' : ''}`;
+      .map((word, wi) => `<span class="spoken-word" aria-hidden="true">${esc(word)}${!isZh && wi < wordsArr.length - 1 ? ' ' : ''}</span>`)
+      .join('')}<span class="closing-quote" aria-hidden="true">”</span></p>${i === 1 ? `<span class="interrupted-tag">${isZh ? '4.3s 处被打断' : 'Interrupted at 4.3s'}</span>` : ''}`;
     document.getElementById(`lane-${s.who}`).append(el);
 
     const strip = document.createElement('span');
@@ -163,8 +277,8 @@
       btn.className = 'step-pill';
       btn.dataset.stepJump = String(i);
       btn.textContent = String(i + 1);
-      btn.title = `Step ${i + 1}: ${s.title}`;
-      btn.setAttribute('aria-label', `Jump to step ${i + 1}: ${s.title}`);
+      btn.title = isZh ? `第 ${i + 1} 步：${s.title}` : `Step ${i + 1}: ${s.title}`;
+      btn.setAttribute('aria-label', isZh ? `跳转至第 ${i + 1} 步：${s.title}` : `Jump to step ${i + 1}: ${s.title}`);
       stepPillsWrap.append(btn);
     }
   });
@@ -189,20 +303,39 @@
   function controls() {
     demo.dataset.playing = String(playing);
     demo.dataset.scrubbing = String(scrubbing);
-    document.getElementById('play-label').textContent = playing ? 'Pause' : fraction >= 1 ? 'Replay' : 'Play';
+    document.getElementById('play-label').textContent = isZh
+      ? (playing ? '暂停' : fraction >= 1 ? '重播' : '播放')
+      : (playing ? 'Pause' : fraction >= 1 ? 'Replay' : 'Play');
     document.getElementById('play-symbol').textContent = playing ? 'Ⅱ' : '▶';
-    play.setAttribute('aria-label', playing ? 'Pause walkthrough' : fraction >= 1 ? 'Replay walkthrough' : 'Play walkthrough');
-    document.getElementById('demo-status').textContent = scrubbing
-      ? 'Scrubbing timeline…'
-      : playing
-      ? fraction >= 1
-        ? 'Completed · looping'
-        : 'Live trace playing'
-      : fraction >= 1
-      ? 'Joint outcome verified'
-      : started
-      ? 'Paused'
-      : 'Ready to play';
+    play.setAttribute(
+      'aria-label',
+      isZh
+        ? (playing ? '暂停演示' : fraction >= 1 ? '重播演示' : '播放演示')
+        : (playing ? 'Pause walkthrough' : fraction >= 1 ? 'Replay walkthrough' : 'Play walkthrough')
+    );
+    document.getElementById('demo-status').textContent = isZh
+      ? (scrubbing
+        ? '拖动时间轴…'
+        : playing
+        ? fraction >= 1
+          ? '演示完成 · 循环中'
+          : '实时轨迹播放中'
+        : fraction >= 1
+        ? '联合结果已验证'
+        : started
+        ? '已暂停'
+        : '准备就绪')
+      : (scrubbing
+        ? 'Scrubbing timeline…'
+        : playing
+        ? fraction >= 1
+          ? 'Completed · looping'
+          : 'Live trace playing'
+        : fraction >= 1
+        ? 'Joint outcome verified'
+        : started
+        ? 'Paused'
+        : 'Ready to play');
   }
 
   function pan() {
@@ -260,7 +393,9 @@
 
     const intr = demo.querySelector('.interrupted-tag');
     if (intr) intr.classList.toggle('shown', fraction >= steps[2].at);
-    document.getElementById('thread-status').textContent = fraction >= 0.8 ? 'Retained ✓' : 'Active';
+    document.getElementById('thread-status').textContent = isZh
+      ? (fraction >= 0.8 ? '已保持 ✓' : '进行中')
+      : (fraction >= 0.8 ? 'Retained ✓' : 'Active');
 
     if (next !== index) {
       index = next;
@@ -269,11 +404,13 @@
       const updates = {
         'state-eta': s.eta,
         'state-approval': s.approval,
-        'tool-result': index < 0 ? 'Click play or any card to inspect' : s.result,
-        'insight-title': index < 0 ? 'Follow the shared full-duplex stream.' : s.title,
+        'tool-result': index < 0 ? (isZh ? '点击播放或任意话语卡片查看' : 'Click play or any card to inspect') : s.result,
+        'insight-title': index < 0 ? (isZh ? '追踪共享全双工音频流。' : 'Follow the shared full-duplex stream.') : s.title,
         'insight-text':
           index < 0
-            ? 'Ghosted blocks preview upcoming turns; play or click any utterance to inspect real-time Attribution, Threading, and Coordination.'
+            ? (isZh
+              ? '虚线卡片预览后续轮次；点击播放或任意话语，即可实时查看归属（A）、线索（T）与协调（C）的作用过程。'
+              : 'Ghosted blocks preview upcoming turns; play or click any utterance to inspect real-time Attribution, Threading, and Coordination.')
             : s.insight,
         'step-count': `${String(activeIdx + 1).padStart(2, '0')} / 08`
       };
@@ -287,7 +424,10 @@
       document.getElementById('state-eta').classList.toggle('positive', index >= 3);
       document.getElementById('state-approval').classList.toggle('positive', index >= 4);
       stepButtons.forEach((b, bi) => b.classList.toggle('active', bi === index));
-      progress.setAttribute('aria-valuetext', index < 0 ? 'Ready to play' : `Step ${index + 1}: ${s.title}`);
+      progress.setAttribute(
+        'aria-valuetext',
+        index < 0 ? (isZh ? '准备就绪' : 'Ready to play') : (isZh ? `第 ${index + 1} 步：${s.title}` : `Step ${index + 1}: ${s.title}`)
+      );
     }
   }
 

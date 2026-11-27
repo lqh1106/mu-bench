@@ -40,16 +40,11 @@
   pointer-events: none;
 }
 
-/* Hero Copy, Breathing Acoustic Rings & Staggered Entrance */
+/* Hero Centered Editorial Masthead & Acoustic Waveform Lockup */
 .hero {
   position: relative;
   text-align: center;
-  padding: 58px 0 0;
-}
-
-.hero-copy {
-  max-width: 860px;
-  margin-inline: auto;
+  padding: 50px 0 0;
 }
 
 .hero-emblem-wrap {
@@ -58,59 +53,83 @@
   width: fit-content;
   justify-content: center;
   align-items: center;
-  margin: 0 auto 22px;
+  gap: 22px;
+  margin: 0 auto 24px;
   cursor: pointer;
 }
 
-.emblem-halo {
-  position: absolute;
-  width: 132px;
-  height: 132px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(37, 87, 240, 0.16), transparent 70%);
-  pointer-events: none;
+.emblem-wave {
+  display: inline-flex;
+  align-items: center;
+  gap: 4.5px;
+  height: 40px;
 }
 
-.emblem-ring {
-  position: absolute;
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  border: 1px solid rgba(37, 87, 240, 0.22);
-  pointer-events: none;
-  animation: pulse-ring 5.4s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+.emblem-wave i {
+  display: block;
+  width: 3px;
+  height: var(--h, 18px);
+  border-radius: 999px;
+  opacity: 0.72;
+  transform-origin: center;
+  animation: wave-breathe 2.1s cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--d, 0ms) infinite alternate;
+  transition: opacity 0.25s ease;
 }
 
-.emblem-ring.r2 {
-  animation-delay: 2.7s;
+.emblem-wave i.w-dad {
+  background: linear-gradient(180deg, rgba(168, 107, 20, 0.45), #b87a1c, rgba(168, 107, 20, 0.45));
 }
 
-@keyframes pulse-ring {
+.emblem-wave i.w-child {
+  background: linear-gradient(180deg, rgba(190, 67, 90, 0.42), #cc5269, rgba(190, 67, 90, 0.42));
+}
+
+.emblem-wave i.w-agent {
+  background: linear-gradient(180deg, rgba(37, 87, 240, 0.42), #2557f0, rgba(37, 87, 240, 0.42));
+}
+
+.hero-emblem-wrap:hover .emblem-wave i {
+  opacity: 0.95;
+}
+
+@keyframes wave-breathe {
   0% {
-    transform: scale(0.82);
-    opacity: 0;
-  }
-  28% {
-    opacity: 0.55;
+    transform: scaleY(0.36);
+    opacity: 0.45;
   }
   100% {
-    transform: scale(1.75);
-    opacity: 0;
+    transform: scaleY(1);
+    opacity: 0.9;
   }
 }
 
 #hero-emblem {
   position: relative;
-  width: 88px;
+  width: 82px;
   height: auto;
   overflow: visible;
-  filter: drop-shadow(0 8px 20px rgba(37, 87, 240, 0.2));
+  filter: drop-shadow(0 6px 16px rgba(37, 87, 240, 0.16));
 }
 
 #hero-emblem path {
-  fill: var(--blue);
+  stroke: rgba(255, 255, 255, 0.72);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
   transition: fill 0.32s ease, transform 0.36s cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: 218px 270px;
+}
+
+/* Subtle multi-voice tonal hierarchy at rest (breaks monochrome trefoil look) */
+#hero-emblem path[data-identity="dad"] {
+  fill: #3e6ef2;
+}
+
+#hero-emblem path[data-identity="child"] {
+  fill: #648bf7;
+}
+
+#hero-emblem path[data-identity="agent"] {
+  fill: #1f4bd4;
 }
 
 /* Hovering the emblem reveals the 3-voice triad before scrolling */
@@ -187,11 +206,11 @@
 }
 
 .hero h1 {
-  font-size: clamp(44px, 6vw, 74px);
+  font-size: clamp(44px, 6.2vw, 76px);
   line-height: 1.05;
-  letter-spacing: -3.2px;
+  letter-spacing: -3px;
   font-weight: 700;
-  margin: 0 0 20px;
+  margin: 0 auto 20px;
   color: var(--ink);
 }
 
@@ -203,11 +222,11 @@
 }
 
 .hero-description {
-  font-size: 18.5px;
+  font-size: 18px;
   line-height: 1.62;
   color: var(--muted);
-  margin: 0 auto 14px;
-  max-width: 650px;
+  margin: 0 auto 12px;
+  max-width: 680px;
 }
 
 .hero-description em {
@@ -217,10 +236,10 @@
 }
 
 .paper-title {
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--muted-2);
-  margin: 0 0 28px;
+  margin: 0 auto 26px;
 }
 
 .hero .actions {
@@ -1956,7 +1975,17 @@ select {
     padding-top: 34px;
   }
   #hero-emblem {
-    width: 72px;
+    width: 68px;
+  }
+  .hero-emblem-wrap {
+    gap: 14px;
+  }
+  .emblem-wave {
+    gap: 3.5px;
+    height: 32px;
+  }
+  .emblem-wave i {
+    width: 2.5px;
   }
   .release-pill {
     flex-wrap: wrap;

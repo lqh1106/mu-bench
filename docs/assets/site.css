@@ -234,6 +234,39 @@ svg {
   color: var(--blue);
 }
 
+.lang-switch {
+  padding: 6px 10px;
+  font-weight: 600;
+  color: var(--blue-deep);
+  background: var(--blue-soft);
+  border-color: var(--blue-border);
+  white-space: nowrap;
+}
+
+.lang-switch:hover {
+  background: #e1ebff;
+  border-color: #9eb8ff;
+}
+
+html[lang^="zh"] {
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+html[lang^="zh"] .hero h1 {
+  letter-spacing: -0.025em;
+  line-height: 1.14;
+}
+
+html[lang^="zh"] .section-heading h2,
+html[lang^="zh"] .experience-heading h2,
+html[lang^="zh"] .start-intro h2 {
+  letter-spacing: -0.02em;
+}
+
+html[lang^="zh"] .eyebrow {
+  letter-spacing: 0.04em;
+}
+
 .nav-code {
   display: inline-flex;
   align-items: center;

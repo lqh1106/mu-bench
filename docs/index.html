@@ -10,8 +10,8 @@
 <meta property="og:title" content="μ-Bench: Many voices. One shared outcome.">
 <meta property="og:description" content="Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents — Paper (arXiv:2611.34920), Dataset, Code & Leaderboard.">
 <meta property="og:image" content="https://lqh1106.github.io/mu-bench/assets/intro-teaser.png">
-<link rel="stylesheet" href="assets/site.css?v=18">
-<link rel="stylesheet" href="assets/experience.css?v=18">
+<link rel="stylesheet" href="assets/site.css?v=22">
+<link rel="stylesheet" href="assets/experience.css?v=22">
 <script id="leaderboard-data" type="application/json">{
   "source": "Paper Table 2 supplied by the project author",
   "unit": "percent",
@@ -32,8 +32,8 @@
     {"name": "Seeduplex 3.0", "family": "proprietary", "tool_free": [37.5, 61.05, 78.67, 97.11], "tool_augmented": [50, 76.81, 61.9, 55.98], "pure_jts": 26.0, "unauth_episode_pct": 71.8}
   ]
 }</script>
-<script src="assets/site.js?v=18" defer></script>
-<script src="assets/experience.js?v=18" defer></script>
+<script src="assets/site.js?v=22" defer></script>
+<script src="assets/experience.js?v=22" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -53,6 +53,7 @@
       <a href="#get-started">Quick Start</a>
     </div>
     <div class="nav-actions">
+      <a class="nav-pill lang-switch" href="zh.html" title="切换到中文版">中文</a>
       <a class="nav-pill" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener" title="Read paper on arXiv (2611.34920)">
         <img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="15" height="15">
         <span>arXiv</span>
@@ -76,51 +77,64 @@
     <div class="ambient-grid" aria-hidden="true"></div>
 
     <section class="hero shell">
-      <div class="hero-copy">
-        <div class="hero-emblem-wrap" title="Three voices, one shared space — scroll to watch identities unfold">
-          <div class="emblem-halo" aria-hidden="true"></div>
-          <span class="emblem-ring r1" aria-hidden="true"></span>
-          <span class="emblem-ring r2" aria-hidden="true"></span>
-          <svg id="hero-emblem" viewBox="118 181 200 178" role="img" aria-label="Three interlocking mu symbols form the μ-Bench logo">
-            <path data-identity="dad" d="M177.5 188.5C180.3 185.5 184.8 184.5 190.1 184.5H206.3V210.4C206.3 219.2 214.1 226.3 223.9 226.3C233.7 226.3 241.8 219.2 241.8 210.4V184.5H252.1C262.6 184.5 270.2 189.3 276 198.5L310.6 256.8C315.7 265.1 316.7 271.1 314.4 276.1L266.8 248.6C258.1 243.5 252.7 240.8 244.3 245L229.3 252.3C221.2 254.2 212.9 252.9 206.2 249.8V254.1L196.7 267.7L187.9 263C181.1 259.1 177.5 253.9 177.5 245.9V188.5Z"/>
-            <path data-identity="child" d="M171.7 190.3V246.4C171.7 257.3 176.7 264.2 187.1 269.7L195.3 274.2L199.8 284.3C201.5 288 202.3 290.8 202.5 293.2L205.5 291.9L222.8 293.1V306.5C222.8 313.2 219.4 317.5 212.4 321.5L162.5 347.9C159.2 349.3 157.6 346.6 155.5 343.5L146.1 327C145.6 326 145.6 325.3 146.6 324.6L166.3 313.2C175.8 308 177.6 301.8 174.5 292.8C171.5 284.2 162.6 278.3 154.4 281.9L129.7 294.3L125.1 286.4C119.8 277.9 119.7 267.6 124.3 259.5L163.3 200.3C166.1 196.1 168.8 192.8 171.7 190.3Z"/>
-            <path data-identity="agent" d="M233.3 258.4L245.9 251.7C251.4 248.7 255.6 248.7 261.6 251.6L311.4 280.6C314.5 282.1 312.3 286.8 310.5 289.8L299.8 305.1C299.4 305.9 299 305.9 298.2 305.4L279.9 294.5C270.9 289.2 265.6 289.4 259.3 295.1C249.2 304.4 250.9 317 260.9 323.6L280.1 335.3C281 335.9 281 336.2 280.2 337.3L274.3 346.9C269.3 353 262.8 356 252.6 356H180C173.8 356 169.6 354.8 165.3 352.3L214.7 325.5C224.9 319.7 228.7 313.3 228.8 302.4V293.2C231.9 287.7 234.7 283.1 237.9 279.1L244 273.9L239.6 270.4L233.3 258.4Z"/>
-          </svg>
-        </div>
+      <div class="hero-emblem-wrap hero-stagger s1" title="Three voices, one shared space — hover or scroll to watch identities unfold">
+        <span class="emblem-wave wave-left" aria-hidden="true">
+          <i class="w-dad" style="--h:10px;--d:0ms"></i>
+          <i class="w-child" style="--h:18px;--d:180ms"></i>
+          <i class="w-dad" style="--h:28px;--d:340ms"></i>
+          <i class="w-child" style="--h:20px;--d:120ms"></i>
+          <i class="w-dad" style="--h:34px;--d:460ms"></i>
+          <i class="w-child" style="--h:24px;--d:260ms"></i>
+          <i class="w-dad" style="--h:14px;--d:80ms"></i>
+        </span>
+        <svg id="hero-emblem" viewBox="118 181 200 178" role="img" aria-label="Three interlocking mu symbols form the μ-Bench logo">
+          <path data-identity="dad" d="M177.5 188.5C180.3 185.5 184.8 184.5 190.1 184.5H206.3V210.4C206.3 219.2 214.1 226.3 223.9 226.3C233.7 226.3 241.8 219.2 241.8 210.4V184.5H252.1C262.6 184.5 270.2 189.3 276 198.5L310.6 256.8C315.7 265.1 316.7 271.1 314.4 276.1L266.8 248.6C258.1 243.5 252.7 240.8 244.3 245L229.3 252.3C221.2 254.2 212.9 252.9 206.2 249.8V254.1L196.7 267.7L187.9 263C181.1 259.1 177.5 253.9 177.5 245.9V188.5Z"/>
+          <path data-identity="child" d="M171.7 190.3V246.4C171.7 257.3 176.7 264.2 187.1 269.7L195.3 274.2L199.8 284.3C201.5 288 202.3 290.8 202.5 293.2L205.5 291.9L222.8 293.1V306.5C222.8 313.2 219.4 317.5 212.4 321.5L162.5 347.9C159.2 349.3 157.6 346.6 155.5 343.5L146.1 327C145.6 326 145.6 325.3 146.6 324.6L166.3 313.2C175.8 308 177.6 301.8 174.5 292.8C171.5 284.2 162.6 278.3 154.4 281.9L129.7 294.3L125.1 286.4C119.8 277.9 119.7 267.6 124.3 259.5L163.3 200.3C166.1 196.1 168.8 192.8 171.7 190.3Z"/>
+          <path data-identity="agent" d="M233.3 258.4L245.9 251.7C251.4 248.7 255.6 248.7 261.6 251.6L311.4 280.6C314.5 282.1 312.3 286.8 310.5 289.8L299.8 305.1C299.4 305.9 299 305.9 298.2 305.4L279.9 294.5C270.9 289.2 265.6 289.4 259.3 295.1C249.2 304.4 250.9 317 260.9 323.6L280.1 335.3C281 335.9 281 336.2 280.2 337.3L274.3 346.9C269.3 353 262.8 356 252.6 356H180C173.8 356 169.6 354.8 165.3 352.3L214.7 325.5C224.9 319.7 228.7 313.3 228.8 302.4V293.2C231.9 287.7 234.7 283.1 237.9 279.1L244 273.9L239.6 270.4L233.3 258.4Z"/>
+        </svg>
+        <span class="emblem-wave wave-right" aria-hidden="true">
+          <i class="w-agent" style="--h:14px;--d:140ms"></i>
+          <i class="w-agent" style="--h:26px;--d:320ms"></i>
+          <i class="w-agent" style="--h:34px;--d:60ms"></i>
+          <i class="w-agent" style="--h:22px;--d:420ms"></i>
+          <i class="w-agent" style="--h:28px;--d:220ms"></i>
+          <i class="w-agent" style="--h:16px;--d:380ms"></i>
+          <i class="w-agent" style="--h:10px;--d:100ms"></i>
+        </span>
+      </div>
 
-        <a class="release-pill hero-stagger s1" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">
-          <img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="14" height="14">
-          <span>arXiv:2611.34920</span>
-          <span class="pill-divider" aria-hidden="true"></span>
-          <span>Closed-Loop Full-Duplex Benchmark</span>
+      <a class="release-pill hero-stagger s2" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">
+        <img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="14" height="14">
+        <span>arXiv:2611.34920</span>
+        <span class="pill-divider" aria-hidden="true"></span>
+        <span>Closed-Loop Full-Duplex Benchmark</span>
+      </a>
+
+      <h1 class="hero-stagger s2">Many voices.<br><span>One shared outcome.</span></h1>
+
+      <p class="hero-description hero-stagger s3">
+        Real conversations don’t wait their turn. Shared voice agents must track <em>who wants what</em>, survive barge-ins and side-talk, and bring interdependent goals to a jointly valid state.
+      </p>
+
+      <p class="paper-title hero-stagger s3">μ-Bench · Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents</p>
+
+      <div class="actions hero-stagger s4">
+        <a class="button primary" href="#experience">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="m6.5 4.2 9.5 5.8-9.5 5.8Z"/></svg>
+          <span>Watch live trace</span>
         </a>
-
-        <h1 class="hero-stagger s2">Many voices.<br><span>One shared outcome.</span></h1>
-
-        <p class="hero-description hero-stagger s3">
-          Real conversations don’t wait their turn. Shared voice agents must track <em>who wants what</em>, survive barge-ins and side-talk, and bring interdependent goals to a jointly valid state.
-        </p>
-
-        <p class="paper-title hero-stagger s3">μ-Bench · Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents</p>
-
-        <div class="actions hero-stagger s4">
-          <a class="button primary" href="#experience">
-            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="m6.5 4.2 9.5 5.8-9.5 5.8Z"/></svg>
-            <span>Watch live trace</span>
-          </a>
-          <a class="button hero-secondary" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">
-            <img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="15" height="15">
-            <span>Paper (arXiv)</span>
-          </a>
-          <a class="button hero-ghost" href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener">
-            <img class="brand-icon hf-icon" src="assets/hf-logo.png" alt="" width="18" height="18">
-            <span>Hugging Face</span>
-          </a>
-          <a class="button hero-ghost" href="https://github.com/lqh1106/mu-bench" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.82c.85 0 1.71.12 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
-            <span>GitHub Code</span>
-          </a>
-        </div>
+        <a class="button hero-secondary" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">
+          <img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="15" height="15">
+          <span>Paper (arXiv)</span>
+        </a>
+        <a class="button hero-ghost" href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener">
+          <img class="brand-icon hf-icon" src="assets/hf-logo.png" alt="" width="18" height="18">
+          <span>Hugging Face</span>
+        </a>
+        <a class="button hero-ghost" href="https://github.com/lqh1106/mu-bench" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.82c.85 0 1.71.12 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+          <span>GitHub Code</span>
+        </a>
       </div>
 
       <div class="hero-scale hero-stagger s5" aria-label="Benchmark scale">
@@ -871,6 +885,7 @@ bash scripts/bootstrap.sh
       <a href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">arXiv</a>
       <a href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener">Hugging Face</a>
       <a href="https://github.com/lqh1106/mu-bench" target="_blank" rel="noopener">GitHub</a>
+      <a href="zh.html" class="lang-switch-link">中文主页</a>
       <a href="https://github.com/lqh1106/mu-bench/blob/main/README.zh-CN.md" target="_blank" rel="noopener">中文文档</a>
       <a href="https://github.com/lqh1106/mu-bench/blob/main/LICENSE" target="_blank" rel="noopener">Apache-2.0</a>
     </div>

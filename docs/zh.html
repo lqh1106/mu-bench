@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>μ-Bench · 共享交互场景下的多用户语音智能体评测基准</title>
+<meta name="description" content="面向共享交互场景的全双工闭环多用户语音智能体评测基准。涵盖 20 个真实领域、800 个因子化音频用例、交互式轨迹演示以及 JTS / ATC 评测榜单。">
+<meta name="theme-color" content="#f6f9fe">
+<link rel="icon" type="image/svg+xml" href="assets/mu-bench-logo.svg">
+<meta property="og:title" content="μ-Bench：多人同场，一局共成。">
+<meta property="og:description" content="共享交互语音智能体多用户任务完成评测基准 — 论文 (arXiv:2611.34920)、数据集、代码与榜单。">
+<meta property="og:image" content="https://lqh1106.github.io/mu-bench/assets/intro-teaser.png">
+<link rel="stylesheet" href="assets/site.css?v=22">
+<link rel="stylesheet" href="assets/experience.css?v=22">
+<script id="leaderboard-data" type="application/json">{
+  "source": "Paper Table 2 supplied by the project author",
+  "unit": "percent",
+  "metrics": ["JTS", "A", "T", "C"],
+  "models": [
+    {"name": "MiniCPM-o 4.5", "family": "open", "tool_free": [19.39, 36.89, 35.95, 87.17], "tool_augmented": null},
+    {"name": "Raon-Speech", "family": "open", "tool_free": [7.14, 24.67, 15.89, 81.22], "tool_augmented": null},
+    {"name": "PersonaPlex", "family": "open", "tool_free": [3.57, 13.7, 8.07, 79.27], "tool_augmented": null},
+    {"name": "Lychee-FD", "family": "open", "tool_free": [3.32, 7.86, 5.97, 82.24], "tool_augmented": null},
+    {"name": "Moshi", "family": "open", "tool_free": [1.79, 5.07, 3.64, 77.78], "tool_augmented": null},
+    {"name": "Voila", "family": "open", "tool_free": [1.53, 4.14, 2.26, 79.49], "tool_augmented": null},
+    {"name": "FLM-Audio", "family": "open", "tool_free": [0, 1.49, 0.61, 79.33], "tool_augmented": null},
+    {"name": "Freeze-Omni", "family": "open", "tool_free": [0, 0.57, 0, 76.43], "tool_augmented": null},
+    {"name": "MOSS-Live", "family": "proprietary", "tool_free": [57.91, 62.63, 71.32, 94.81], "tool_augmented": null},
+    {"name": "GPT-Realtime-2", "family": "proprietary", "tool_free": [58.42, 68.61, 81.66, 96.87], "tool_augmented": [65.44, 84.61, 81.14, 83.29], "pure_jts": 52.5, "unauth_episode_pct": 21.8},
+    {"name": "Gemini 3.8 Live", "family": "proprietary", "tool_free": [53.32, 61.05, 78.87, 96.06], "tool_augmented": [64.95, 75.8, 82.89, 74.98], "pure_jts": 46.8, "unauth_episode_pct": 35.5},
+    {"name": "Grok Voice 3.0", "family": "proprietary", "tool_free": [62.24, 67.32, 77.82, 96.25], "tool_augmented": [57.6, 81.99, 82.5, 78.1], "pure_jts": 46.6, "unauth_episode_pct": 30.9},
+    {"name": "Seeduplex 3.0", "family": "proprietary", "tool_free": [37.5, 61.05, 78.67, 97.11], "tool_augmented": [50, 76.81, 61.9, 55.98], "pure_jts": 26.0, "unauth_episode_pct": 71.8}
+  ]
+}</script>
+<script src="assets/site.js?v=22" defer></script>
+<script src="assets/experience.js?v=22" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">跳至正文</a>
+
+<header class="header">
+  <nav class="nav shell" aria-label="主导航">
+    <a class="brand" href="#">
+      <img src="assets/mu-bench-logo.svg" alt="" width="28" height="25">
+      <span>μ-Bench</span>
+    </a>
+    <div class="nav-links">
+      <a href="#experience">交互演示</a>
+      <a href="#leaderboard">评测榜单</a>
+      <a href="#diagnostics">诊断分析</a>
+      <a href="#overview">基准设计</a>
+      <a href="#framework">评测架构</a>
+      <a href="#get-started">快速开始</a>
+    </div>
+    <div class="nav-actions">
+      <a class="nav-pill lang-switch" href="index.html" title="Switch to English">EN</a>
+      <a class="nav-pill" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener" title="阅读 arXiv 论文 (2611.34920)">
+        <img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="15" height="15">
+        <span>arXiv</span>
+      </a>
+      <a class="nav-pill" href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener" title="Hugging Face 数据集 (linqihao/mu-bench)">
+        <img class="brand-icon hf-icon" src="assets/hf-logo.png" alt="" width="17" height="17">
+        <span class="nav-hf-full">Hugging Face</span>
+        <span class="nav-hf-short">HF</span>
+      </a>
+      <a class="nav-code" href="https://github.com/lqh1106/mu-bench" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.82c.85 0 1.71.12 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+        <span>GitHub</span>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="hero-world">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="ambient-grid" aria-hidden="true"></div>
+
+    <section class="hero shell">
+      <div class="hero-emblem-wrap hero-stagger s1" title="多方语音，同场协作 — 悬停或向下滚动查看三方身份展开">
+        <span class="emblem-wave wave-left" aria-hidden="true">
+          <i class="w-dad" style="--h:10px;--d:0ms"></i>
+          <i class="w-child" style="--h:18px;--d:180ms"></i>
+          <i class="w-dad" style="--h:28px;--d:340ms"></i>
+          <i class="w-child" style="--h:20px;--d:120ms"></i>
+          <i class="w-dad" style="--h:34px;--d:460ms"></i>
+          <i class="w-child" style="--h:24px;--d:260ms"></i>
+          <i class="w-dad" style="--h:14px;--d:80ms"></i>
+        </span>
+        <svg id="hero-emblem" viewBox="118 181 200 178" role="img" aria-label="三个互锁的 μ 符号构成 μ-Bench 标志">
+          <path data-identity="dad" d="M177.5 188.5C180.3 185.5 184.8 184.5 190.1 184.5H206.3V210.4C206.3 219.2 214.1 226.3 223.9 226.3C233.7 226.3 241.8 219.2 241.8 210.4V184.5H252.1C262.6 184.5 270.2 189.3 276 198.5L310.6 256.8C315.7 265.1 316.7 271.1 314.4 276.1L266.8 248.6C258.1 243.5 252.7 240.8 244.3 245L229.3 252.3C221.2 254.2 212.9 252.9 206.2 249.8V254.1L196.7 267.7L187.9 263C181.1 259.1 177.5 253.9 177.5 245.9V188.5Z"/>
+          <path data-identity="child" d="M171.7 190.3V246.4C171.7 257.3 176.7 264.2 187.1 269.7L195.3 274.2L199.8 284.3C201.5 288 202.3 290.8 202.5 293.2L205.5 291.9L222.8 293.1V306.5C222.8 313.2 219.4 317.5 212.4 321.5L162.5 347.9C159.2 349.3 157.6 346.6 155.5 343.5L146.1 327C145.6 326 145.6 325.3 146.6 324.6L166.3 313.2C175.8 308 177.6 301.8 174.5 292.8C171.5 284.2 162.6 278.3 154.4 281.9L129.7 294.3L125.1 286.4C119.8 277.9 119.7 267.6 124.3 259.5L163.3 200.3C166.1 196.1 168.8 192.8 171.7 190.3Z"/>
+          <path data-identity="agent" d="M233.3 258.4L245.9 251.7C251.4 248.7 255.6 248.7 261.6 251.6L311.4 280.6C314.5 282.1 312.3 286.8 310.5 289.8L299.8 305.1C299.4 305.9 299 305.9 298.2 305.4L279.9 294.5C270.9 289.2 265.6 289.4 259.3 295.1C249.2 304.4 250.9 317 260.9 323.6L280.1 335.3C281 335.9 281 336.2 280.2 337.3L274.3 346.9C269.3 353 262.8 356 252.6 356H180C173.8 356 169.6 354.8 165.3 352.3L214.7 325.5C224.9 319.7 228.7 313.3 228.8 302.4V293.2C231.9 287.7 234.7 283.1 237.9 279.1L244 273.9L239.6 270.4L233.3 258.4Z"/>
+        </svg>
+        <span class="emblem-wave wave-right" aria-hidden="true">
+          <i class="w-agent" style="--h:14px;--d:140ms"></i>
+          <i class="w-agent" style="--h:26px;--d:320ms"></i>
+          <i class="w-agent" style="--h:34px;--d:60ms"></i>
+          <i class="w-agent" style="--h:22px;--d:420ms"></i>
+          <i class="w-agent" style="--h:28px;--d:220ms"></i>
+          <i class="w-agent" style="--h:16px;--d:380ms"></i>
+          <i class="w-agent" style="--h:10px;--d:100ms"></i>
+        </span>
+      </div>
+
+      <a class="release-pill hero-stagger s2" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">
+        <img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="14" height="14">
+        <span>arXiv:2611.34920</span>
+        <span class="pill-divider" aria-hidden="true"></span>
+        <span>闭环全双工多用户语音评测基准</span>
+      </a>
+
+      <h1 class="hero-stagger s2">多人同场。<br><span>一局共成。</span></h1>
+
+      <p class="hero-description hero-stagger s3">
+        真实对话从不排队发言。共享空间语音智能体必须准确追踪<em>谁提出了什么诉求</em>，经受住中途打断与用户旁白，将相互依赖的多方目标推进到联合有效状态。
+      </p>
+
+      <p class="paper-title hero-stagger s3">μ-Bench · Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents</p>
+
+      <div class="actions hero-stagger s4">
+        <a class="button primary" href="#experience">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="m6.5 4.2 9.5 5.8-9.5 5.8Z"/></svg>
+          <span>查看交互轨迹</span>
+        </a>
+        <a class="button hero-secondary" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">
+          <img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="15" height="15">
+          <span>论文 (arXiv)</span>
+        </a>
+        <a class="button hero-ghost" href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener">
+          <img class="brand-icon hf-icon" src="assets/hf-logo.png" alt="" width="18" height="18">
+          <span>Hugging Face 数据集</span>
+        </a>
+        <a class="button hero-ghost" href="https://github.com/lqh1106/mu-bench" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.82c.85 0 1.71.12 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+          <span>GitHub 代码</span>
+        </a>
+      </div>
+
+      <div class="hero-scale hero-stagger s5" aria-label="基准规模概览">
+        <div class="scale-item">
+          <strong data-count="800">800</strong>
+          <span>因子化评测用例</span>
+          <small>392 无工具 · 408 工具增强</small>
+        </div>
+        <div class="scale-item">
+          <strong data-count="100">100</strong>
+          <span>基础交互场景</span>
+          <small>2 × 2 × 2 受控条件网格</small>
+        </div>
+        <div class="scale-item">
+          <strong data-count="20">20</strong>
+          <span>真实应用领域</span>
+          <small>2–7 位参与者 · 3,200 条参考音色</small>
+        </div>
+        <div class="scale-item">
+          <strong data-count="13">13</strong>
+          <span>已评测语音系统</span>
+          <small>5 个闭源实时 · 8 个开源全双工</small>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="experience shell" aria-labelledby="experience-title">
+      <div class="experience-heading">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-num">01</span>共享交互实景</p>
+          <h2 id="experience-title">一段实时进行的共享行程。</h2>
+        </div>
+        <p>点击任意话语卡片或拖动时间轴，观察<strong>归属（Attribution）</strong>、<strong>线索（Threading）</strong>与<strong>协调（Coordination）</strong>如何在一条共享音频流中协同运作。</p>
+      </div>
+
+      <div class="demo" id="demo" data-phase="0" data-playing="false">
+        <div class="demo-top">
+          <div class="demo-title">
+            <div class="demo-title-row">
+              <strong>场景 · 共享机场接送行程</strong>
+              <span class="demo-badge">3 方参与 · 全双工轨迹</span>
+            </div>
+            <span>中途打断绕道请求、权限校验与预计到达时间核查、用户间旁白过滤、主任务恢复提交</span>
+          </div>
+          <div class="demo-playback-info">
+            <span id="demo-status" class="demo-status">准备就绪</span>
+            <span id="timeline-time">00:00 <span>/ 00:18</span></span>
+          </div>
+        </div>
+
+        <div class="timeline-viewport" id="timeline-viewport" tabindex="0" role="region" aria-label="可滚动对话时间轴">
+          <div class="timeline-canvas" id="timeline-canvas">
+            <div class="time-grid" aria-hidden="true">
+              <i style="left:0%"></i>
+              <i style="left:25%"></i>
+              <i style="left:50%"></i>
+              <i style="left:75%"></i>
+              <i style="left:100%"></i>
+            </div>
+
+            <div class="overlap-zones" aria-hidden="true">
+              <div class="overlap-zone zone-barge" id="zone-barge" style="left:24%;width:8%">
+                <span>中途打断重叠</span>
+              </div>
+              <div class="overlap-zone zone-sidetalk" id="zone-sidetalk" style="left:69%;width:11%">
+                <span>用户间旁白</span>
+              </div>
+              <div class="overlap-zone zone-backchannel" id="zone-backchannel" style="left:89%;width:11%">
+                <span>附和信号</span>
+              </div>
+            </div>
+
+            <div class="time-axis" id="time-axis" role="slider" tabindex="0" aria-label="时间轴位置" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="00:00 / 00:18">
+              <div class="time-baseline"></div>
+              <div class="time-elapsed" id="time-elapsed"></div>
+              <div class="time-ticks">
+                <span style="--tick:0%"><b>0s</b></span>
+                <span style="--tick:25%"><b>4.5s</b></span>
+                <span style="--tick:50%"><b>9.0s</b></span>
+                <span style="--tick:75%"><b>13.5s</b></span>
+                <span style="--tick:100%"><b>18.0s</b></span>
+              </div>
+              <div class="audio-strips" id="audio-strips" aria-hidden="true"></div>
+              <span class="axis-handle" id="axis-handle" aria-hidden="true"></span>
+            </div>
+
+            <div class="time-cursor" id="time-cursor" aria-hidden="true"><b id="cursor-clock">0.0s</b></div>
+
+            <div class="timeline-lane lane-dad">
+              <div class="lane-label">
+                <span class="lane-avatar">
+                  <svg class="avatar-portrait" viewBox="0 0 40 40" aria-hidden="true">
+                    <path class="avatar-silhouette" d="M6 34C6 27 11 23 16 22V19C12 17 11 14 11 10C11 4 15 2 20 2C25 2 29 5 29 10C29 14 27 17 24 19V22C30 23 34 27 34 34Z"/>
+                    <g class="portrait-detail">
+                      <path d="M11 10C16 10 17 7 20 6C22 9 26 10 29 10M16 22L20 26L24 22"/>
+                      <circle cx="17" cy="13" r=".8"/><circle cx="23" cy="13" r=".8"/>
+                    </g>
+                  </svg>
+                </span>
+                <strong>爸爸</strong>
+                <small>授权人</small>
+              </div>
+              <div class="lane-track" id="lane-dad"></div>
+            </div>
+
+            <div class="timeline-lane lane-child">
+              <div class="lane-label">
+                <span class="lane-avatar">
+                  <svg class="avatar-portrait" viewBox="0 0 40 40" aria-hidden="true">
+                    <path class="avatar-silhouette" d="M8 34C8 27 12 24 17 23V20C13 18 12 15 12 11C12 6 15 4 20 4C25 4 28 7 28 11C28 15 26 18 23 20V23C28 24 32 28 32 34Z"/>
+                    <g class="portrait-detail">
+                      <path d="M13 10C15 10 17 7 20 7C23 7 23 10 21 10M17 23Q20 26 23 23"/>
+                      <circle cx="17" cy="14" r=".8"/><circle cx="23" cy="14" r=".8"/>
+                    </g>
+                  </svg>
+                </span>
+                <strong>孩子</strong>
+                <small>同行乘客</small>
+              </div>
+              <div class="lane-track" id="lane-child"></div>
+            </div>
+
+            <div class="timeline-lane lane-agent">
+              <div class="lane-label">
+                <span class="lane-avatar">
+                  <svg class="avatar-portrait" viewBox="0 0 40 40" aria-hidden="true">
+                    <path class="avatar-silhouette" d="M7 34V31C7 27 12 25 16 24V22H13C10 22 8 20 8 17V9C8 6 10 4 13 4H27C30 4 32 6 32 9V17C32 20 30 22 27 22H24V24C30 25 33 28 33 31V34Z"/>
+                    <g class="portrait-detail">
+                      <path d="M8 11H5V17H8M32 11H35V17H32M20 4V1M16 18H24"/>
+                      <circle cx="16" cy="12" r="1"/><circle cx="24" cy="12" r="1"/>
+                    </g>
+                  </svg>
+                </span>
+                <strong>智能体</strong>
+                <small>语音助手</small>
+              </div>
+              <div class="lane-track" id="lane-agent"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-hud">
+          <div class="state-chip thread-chip">
+            <span class="thread-pin">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m8 3 8 0-1 7 4 4H5l4-4Z M12 14v7"/></svg>
+              <span>主目标：<b>10:00 前抵机场</b></span>
+            </span>
+            <span class="thread-line" aria-hidden="true"><i id="retained-progress"></i></span>
+            <strong id="thread-status" class="thread-badge">进行中</strong>
+          </div>
+          <div class="state-chip"><span>绕道审批</span><strong id="state-approval">尚未请求</strong></div>
+          <div class="state-chip"><span>预计抵达</span><strong id="state-eta">尚未查询</strong></div>
+          <div class="state-chip state-mono"><span>轨迹事件</span><strong id="tool-result">点击播放或任意话语卡片查看</strong></div>
+        </div>
+
+        <div class="demo-insight">
+          <span id="insight-axis" class="insight-axis">A</span>
+          <div class="insight-body">
+            <strong id="insight-title">将诉求与提出者准确绑定。</strong>
+            <p id="insight-text">爸爸设定了目的地与截止时间，二者必须在多轮打断与旁白中始终保持有效。</p>
+          </div>
+          <div class="step-pills" id="step-pills" role="group" aria-label="跳转至对话事件"></div>
+          <span id="step-count" class="step-counter">01 / 08</span>
+        </div>
+
+        <div class="demo-controls">
+          <button type="button" id="demo-play" class="play-control" aria-label="播放演示">
+            <span id="play-symbol" aria-hidden="true">▶</span>
+            <span id="play-label">播放</span>
+          </button>
+          <div class="demo-timeline">
+            <label class="sr-only" for="demo-progress">演示进度</label>
+            <input id="demo-progress" type="range" min="0" max="100" value="0" step="0.1" aria-valuetext="准备就绪">
+            <div class="timeline-labels">
+              <span>0s · 主目标与截止时间</span>
+              <span>4.3s · 孩子中途打断</span>
+              <span>11.0s · 权限审批与旁白</span>
+              <span>14.4s · 恢复提交方案</span>
+            </div>
+          </div>
+          <button type="button" id="demo-replay" class="replay-control" aria-label="重新播放" title="重新播放">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1.3 7.5M4 4v6h6"/></svg>
+          </button>
+        </div>
+      </div>
+      <p class="demo-disclaimer">基于论文开篇示例构建的 18 秒交互式轨迹。点击任意卡片、步骤按钮或时间轴即可定位，移动端支持横向滑动查看。</p>
+    </section>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <section id="leaderboard" class="leaderboard-section section">
+    <div class="shell">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span class="eyebrow-num">02</span>评测榜单 · 13 个语音系统</p>
+          <h2>以共享任务的最终结果为准。</h2>
+        </div>
+        <p><strong>联合任务成功率（JTS）</strong>严格检验单次实时会话中所有适用用户的目标、工具副作用、最终业务状态与隐私边界是否同时成立。</p>
+      </div>
+
+      <div class="finding-strip" aria-label="核心评测发现">
+        <article class="finding-card spotlight-card" data-reveal style="--stagger:0ms">
+          <span class="finding-kicker axis-kicker-a">能力代差显著</span>
+          <strong>62.24% <span>vs.</span> 19.39%</strong>
+          <p>无工具赛道（Tool-Free）最高闭源与最强开源 JTS 对比。8 个开源语音模型中有 6 个 JTS ≤ 3.57%，尽管它们具备低延迟轮流发言能力。</p>
+        </article>
+        <article class="finding-card spotlight-card" data-reveal style="--stagger:70ms">
+          <span class="finding-kicker axis-kicker-t">协调分假象</span>
+          <strong>76.4%–87.2% <span>Coord.</span></strong>
+          <p>即使 JTS 为 0% 且线索保持（Threading）跌破 1%，模型只要丢弃历史上下文、保持被动沉默，依然能拿到很高的协调分。</p>
+        </article>
+        <article class="finding-card spotlight-card" data-reveal style="--stagger:140ms">
+          <span class="finding-kicker axis-kicker-c">可追责执行审计</span>
+          <strong>−11.0 <span>至</span> −24.0 pp</strong>
+          <p>一旦要求零越权 <code>caller_id</code> 或超范围调用（<strong>Pure JTS</strong>），工具增强赛道得分普遍大幅下滑，并拉开原本接近的系统差距。</p>
+        </article>
+      </div>
+
+      <div class="rank-board" data-reveal style="--stagger:180ms">
+        <div class="rank-toolbar">
+          <div class="toolbar-group">
+            <div class="segmented" role="group" aria-label="评测赛道">
+              <button type="button" data-chart-track="tool_free" aria-pressed="true">Tool-Free 无工具 <small>392</small></button>
+              <button type="button" data-chart-track="tool_augmented" aria-pressed="false">Tool-Augmented 工具增强 <small>408</small></button>
+            </div>
+            <button type="button" id="pure-jts-toggle" class="pure-toggle" aria-pressed="false" title="对比标准工具增强 JTS 与零越权调用的 Pure JTS">
+              <span class="pure-dot" aria-hidden="true"></span>
+              <span>Pure JTS（0 越权调用）</span>
+            </button>
+          </div>
+
+          <div class="toolbar-group">
+            <label class="metric-selector" id="metric-selector-wrap">
+              <span>指标</span>
+              <select id="chart-metric" aria-label="指标选择">
+                <option value="0">JTS · 核心联合结果</option>
+                <option value="1">A · 归属 (Attribution)</option>
+                <option value="2">T · 线索 (Threading)</option>
+                <option value="3">C · 协调 (Coordination)</option>
+              </select>
+            </label>
+            <div class="segmented view-segmented" role="group" aria-label="榜单展示视图">
+              <button type="button" data-board-view="chart" aria-pressed="true">柱状图</button>
+              <button type="button" data-board-view="table" aria-pressed="false">论文 Table 2</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="rank-filters">
+          <label class="search">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg>
+            <input type="search" id="chart-search" placeholder="搜索已评测模型名称…" aria-label="搜索模型">
+          </label>
+          <div class="filter-right">
+            <label class="rank-family">
+              <span>阵营</span>
+              <select id="chart-family" aria-label="模型阵营筛选">
+                <option value="all">全部系统 (13)</option>
+                <option value="proprietary">闭源实时系统 (5)</option>
+                <option value="open">开源语音模型 (8)</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div id="chart-view-pane">
+          <div class="rank-legend">
+            <span><i class="legend-proprietary"></i>闭源语音智能体</span>
+            <span><i class="legend-open"></i>开源全双工语音模型</span>
+            <span id="pure-legend-item" class="pure-legend" hidden><i class="legend-pure-ghost"></i>标准 JTS → 零越权 Pure JTS</span>
+            <span id="chart-caption" class="legend-caption">联合任务成功率 (JTS)（%）· Tool-Free 无工具赛道（392 用例）</span>
+          </div>
+
+          <div id="rank-chart" class="rank-chart" aria-label="模型得分柱状图">
+            <div class="chart-ruler">
+              <span class="ruler-sys">排名与系统</span>
+              <div class="chart-scale">
+                <span style="left:0%">0</span>
+                <span style="left:25%">25</span>
+                <span style="left:50%">50</span>
+                <span style="left:75%">75</span>
+                <span style="left:100%">100%</span>
+              </div>
+              <span class="ruler-diag">ATC 诊断指标 (%)</span>
+            </div>
+            <div id="chart-rows" class="chart-rows" role="list"></div>
+          </div>
+        </div>
+
+        <div id="table-view-pane" class="table-view-pane" hidden>
+          <div class="table-scroll">
+            <table class="matrix-table" aria-label="论文 Table 2 完整成绩表">
+              <thead>
+                <tr>
+                  <th rowspan="2" class="model-heading">系统</th>
+                  <th colspan="4" class="group-heading">Tool-Free 无工具赛道（392 用例）</th>
+                  <th colspan="5" class="group-heading track-separator">Tool-Augmented 工具增强赛道（408 用例）</th>
+                </tr>
+                <tr>
+                  <th class="jts-head"><button type="button" class="metric-sort active" data-sort="tf_0">JTS <span class="sort-mark">↓</span></button></th>
+                  <th><button type="button" class="metric-sort" data-sort="tf_1">A <span class="sort-mark">↕</span></button></th>
+                  <th><button type="button" class="metric-sort" data-sort="tf_2">T <span class="sort-mark">↕</span></button></th>
+                  <th><button type="button" class="metric-sort" data-sort="tf_3">C <span class="sort-mark">↕</span></button></th>
+                  <th class="jts-head track-separator"><button type="button" class="metric-sort" data-sort="ta_0">JTS <span class="sort-mark">↕</span></button></th>
+                  <th class="pure-head"><button type="button" class="metric-sort" data-sort="pure">Pure JTS <span class="sort-mark">↕</span></button></th>
+                  <th><button type="button" class="metric-sort" data-sort="ta_1">A <span class="sort-mark">↕</span></button></th>
+                  <th><button type="button" class="metric-sort" data-sort="ta_2">T <span class="sort-mark">↕</span></button></th>
+                  <th><button type="button" class="metric-sort" data-sort="ta_3">C <span class="sort-mark">↕</span></button></th>
+                </tr>
+              </thead>
+              <tbody id="matrix-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="rank-footer">
+          <span id="result-count" aria-live="polite">共 13 个评测系统 · 单位 %</span>
+          <div class="export-actions">
+            <button type="button" id="download" class="text-button">导出 CSV ↓</button>
+            <a href="assets/leaderboard.json" download="mu-bench-leaderboard.json" class="text-button">JSON ↓</a>
+          </div>
+        </div>
+      </div>
+      <p class="rank-note" id="chart-note">数据同步自论文 Table 2（<a href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">arXiv:2611.34920</a>），所有得分均为评测用例均值，越高越好。8 个开源语音模型暂不具备原生工具调用接口；MOSS-Live 的工具调用能力在本次评测截稿后发布。</p>
+    </div>
+  </section>
+
+  <!-- DIAGNOSTIC INSIGHTS -->
+  <section id="diagnostics" class="section diagnostics-section">
+    <div class="shell">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span class="eyebrow-num">03</span>诊断分析</p>
+          <h2>多用户会话究竟为何崩溃。</h2>
+        </div>
+        <p>通过递进式能力消融、调用方溯源审计与 2³ 因子化压力测试，将实时声学重叠与更深层的多方状态追踪及权限执行解耦开来。</p>
+      </div>
+
+      <div class="diag-grid">
+        <!-- Card 1: Cumulative Capability Ablation -->
+        <article class="diag-card spotlight-card" data-reveal style="--stagger:0ms">
+          <div class="diag-card-top">
+            <div>
+              <span class="card-tag">递进式能力消融 · MiniCPM-o 4.5</span>
+              <h3>移除重叠有帮助——但仍有 68.6% 失败。</h3>
+            </div>
+            <span class="gain-pill">+11.99 pp JTS</span>
+          </div>
+          <p class="diag-desc">在 392 条无工具用例上保持语音输入与联合判定标准不变，逐层移除并发与感知瓶颈：</p>
+
+          <div class="ablation-stepper" role="tablist" aria-label="消融实验阶段">
+            <button type="button" class="ablation-btn active" role="tab" aria-selected="true" data-stage="0">0 · 全双工基线</button>
+            <button type="button" class="ablation-btn" role="tab" aria-selected="false" data-stage="1">1 · + 轮次串行</button>
+            <button type="button" class="ablation-btn" role="tab" aria-selected="false" data-stage="2">2 · + 身份标签</button>
+            <button type="button" class="ablation-btn" role="tab" aria-selected="false" data-stage="3">3 · + 结构语义</button>
+          </div>
+
+          <div class="ablation-visual">
+            <svg viewBox="0 0 520 218" class="ablation-svg" role="img" aria-label="MiniCPM-o 4.5 递进消融双轴图：JTS 从 19.39% 升至 31.38%">
+              <line x1="44" y1="24" x2="486" y2="24" stroke="#eaeef6"/>
+              <line x1="44" y1="76" x2="486" y2="76" stroke="#eaeef6"/>
+              <line x1="44" y1="128" x2="486" y2="128" stroke="#eaeef6"/>
+              <line x1="44" y1="180" x2="486" y2="180" stroke="#cbd5e6"/>
+              <text x="36" y="28" text-anchor="end" class="svg-axis">40%</text>
+              <text x="36" y="80" text-anchor="end" class="svg-axis">26%</text>
+              <text x="36" y="132" text-anchor="end" class="svg-axis">13%</text>
+              <text x="36" y="184" text-anchor="end" class="svg-axis">0%</text>
+              <text x="494" y="28" class="svg-axis">100</text>
+              <text x="494" y="104" class="svg-axis">50</text>
+              <text x="494" y="184" class="svg-axis">0</text>
+
+              <g class="ablation-bars">
+                <g data-bar="0" class="active">
+                  <rect x="74" y="104.4" width="52" height="75.6" rx="6"/>
+                  <text x="100" y="96" text-anchor="middle" class="bar-num">19.39%</text>
+                </g>
+                <g data-bar="1">
+                  <rect x="180" y="75.5" width="52" height="104.5" rx="6"/>
+                  <text x="206" y="67" text-anchor="middle" class="bar-num">26.79%</text>
+                </g>
+                <g data-bar="2">
+                  <rect x="286" y="64.6" width="52" height="115.4" rx="6"/>
+                  <text x="312" y="56" text-anchor="middle" class="bar-num">29.59%</text>
+                </g>
+                <g data-bar="3">
+                  <rect x="392" y="57.6" width="52" height="122.4" rx="6"/>
+                  <text x="418" y="49" text-anchor="middle" class="bar-num">31.38%</text>
+                </g>
+              </g>
+
+              <polyline class="ablation-line" fill="none" stroke="#b84a5c" stroke-width="2.3" points="100,44.0 206,39.7 312,40.1 418,39.2"/>
+              <polyline class="ablation-line" fill="none" stroke="#2557f0" stroke-width="2.3" points="100,122.5 206,96.4 312,81.2 418,83.5"/>
+              <polyline class="ablation-line" fill="none" stroke="#b57b1c" stroke-width="2.3" points="100,123.9 206,100.4 312,96.5 418,98.7"/>
+
+              <g class="ablation-dots">
+                <circle cx="100" cy="44.0" r="3.6" fill="#b84a5c"/><circle cx="206" cy="39.7" r="3.6" fill="#b84a5c"/><circle cx="312" cy="40.1" r="3.6" fill="#b84a5c"/><circle cx="418" cy="39.2" r="3.6" fill="#b84a5c"/>
+                <circle cx="100" cy="122.5" r="3.6" fill="#2557f0"/><circle cx="206" cy="96.4" r="3.6" fill="#2557f0"/><circle cx="312" cy="81.2" r="3.6" fill="#2557f0"/><circle cx="418" cy="83.5" r="3.6" fill="#2557f0"/>
+                <circle cx="100" cy="123.9" r="3.6" fill="#b57b1c"/><circle cx="206" cy="100.4" r="3.6" fill="#b57b1c"/><circle cx="312" cy="96.5" r="3.6" fill="#b57b1c"/><circle cx="418" cy="98.7" r="3.6" fill="#b57b1c"/>
+              </g>
+
+              <text x="100" y="202" text-anchor="middle" class="svg-stage">全双工基线</text>
+              <text x="206" y="202" text-anchor="middle" class="svg-stage">+ 轮次串行</text>
+              <text x="312" y="202" text-anchor="middle" class="svg-stage">+ 身份标签</text>
+              <text x="418" y="202" text-anchor="middle" class="svg-stage">+ 结构语义</text>
+            </svg>
+            <div class="ablation-legend">
+              <span><i class="swatch-jts"></i>JTS（左轴）</span>
+              <span><i class="swatch-a"></i>归属 (A)</span>
+              <span><i class="swatch-t"></i>线索 (T)</span>
+              <span><i class="swatch-c"></i>协调 (C，右轴)</span>
+            </div>
+          </div>
+
+          <div class="ablation-callout" id="ablation-callout">
+            <strong>阶段 0 · 全双工基线（19.39% JTS）</strong>
+            <p>语音重叠与中途打断显著拉低归属（36.89%）和线索（35.95%），尽管被动保持沉默仍可拿到 87.17% 的协调分。</p>
+          </div>
+        </article>
+
+        <!-- Card 2: Caller Provenance & Factorial Stressors -->
+        <article class="diag-card spotlight-card" data-reveal style="--stagger:90ms">
+          <div class="diag-card-top">
+            <div>
+              <span class="card-tag">调用方溯源与 2³ 因子压力测试</span>
+              <h3>隐性越权调用与人数扩张瓶颈。</h3>
+            </div>
+          </div>
+          <p class="diag-desc">许多智能体虽然达到了合法的最终业务状态，但在过程中借用了错误用户的 <code>caller_id</code> 或超范围调用工具——唯有在 <strong>Pure JTS</strong> 审计下才会暴露：</p>
+
+          <div class="provenance-list" aria-label="越权工具调用审计">
+            <div class="prov-header">
+              <span>支持工具的智能体</span>
+              <span>含 ≥1 次越权调用的会话占比</span>
+              <span>JTS → Pure JTS</span>
+            </div>
+            <div class="prov-row">
+              <strong>GPT-Realtime-2</strong>
+              <div class="prov-mini-bar"><i style="width:21.8%"></i><span>21.8%</span></div>
+              <span class="prov-drop">65.4 → <b>52.5%</b> <em>−12.9</em></span>
+            </div>
+            <div class="prov-row">
+              <strong>Gemini 3.8 Live</strong>
+              <div class="prov-mini-bar"><i style="width:35.5%"></i><span>35.5%</span></div>
+              <span class="prov-drop">65.0 → <b>46.8%</b> <em>−18.2</em></span>
+            </div>
+            <div class="prov-row">
+              <strong>Grok Voice 3.0</strong>
+              <div class="prov-mini-bar"><i style="width:30.9%"></i><span>30.9%</span></div>
+              <span class="prov-drop">57.6 → <b>46.6%</b> <em>−11.0</em></span>
+            </div>
+            <div class="prov-row">
+              <strong>Seeduplex 3.0</strong>
+              <div class="prov-mini-bar warn"><i style="width:71.8%"></i><span>71.8%</span></div>
+              <span class="prov-drop">50.0 → <b>26.0%</b> <em>−24.0</em></span>
+            </div>
+          </div>
+
+          <div class="stressor-summary">
+            <h4>2 × 2 × 2 受控条件对比效应</h4>
+            <div class="stressor-items">
+              <div>
+                <span class="stressor-badge neg">普遍瓶颈</span>
+                <strong>参与人数（2–3 人 → 4–7 人）</strong>
+                <p>所有强模型均显著退化：闭源系统综合 JTS 相对下降 −19.6% 至 −29.5%，MiniCPM-o 4.5 相对下降 −48.0%。</p>
+              </div>
+              <div>
+                <span class="stressor-badge split">分化效应</span>
+                <strong>追问压力与真实声学条件</strong>
+                <p>多次澄清追问有助于头部系统挽回任务结果（JTS +3.1% 至 +14.6%），却会拖垮上下文较弱的模型（MiniCPM-o 4.5 下降 −27.3%）。</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENCHMARK OVERVIEW & 20 DOMAINS -->
+  <section id="overview" class="overview section">
+    <div class="shell">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span class="eyebrow-num">04</span>基准设计</p>
+          <h2>不止于轮流发言。</h2>
+        </div>
+        <p>覆盖 20 个日常与专业领域的 100 个基础场景，按配对的 <strong>2 × 2 × 2</strong> 受控条件网格扩展为 800 个确定性音频评测用例。</p>
+      </div>
+
+      <div class="track-grid">
+        <article class="track-card spotlight-card" data-reveal style="--stagger:0ms">
+          <div class="track-card-head">
+            <span class="track-tag">Tool-Free 无工具赛道</span>
+            <span class="track-pill">49 个场景 · 392 个用例</span>
+          </div>
+          <h3>在纯口语对话中完成多方协调。</h3>
+          <p>无需后端写入，重点考察冲突偏好调解、用户旁白与公共广播过滤、口头隐私边界执行，以及被打断后的主任务恢复。</p>
+        </article>
+        <article class="track-card spotlight-card" data-reveal style="--stagger:80ms">
+          <div class="track-card-head">
+            <span class="track-tag">Tool-Augmented 工具增强赛道</span>
+            <span class="track-pill">51 个场景 · 408 个用例</span>
+          </div>
+          <h3>将共识落地到可执行业务状态。</h3>
+          <p>显式校验公开的 <code>caller_id</code> 权限，调用虚拟领域工具，在授权说话人修订约束时正确变更操作，并达成可程序验证的终态。</p>
+        </article>
+      </div>
+
+      <div class="factorial-strip" aria-label="2 × 2 × 2 受控条件因子">
+        <div class="factor-box" data-reveal style="--stagger:0ms">
+          <span>因子 1 · 参与规模</span>
+          <strong>小规模（2–3 人）vs. 大规模（4–7 人）</strong>
+          <small>检验说话人归属与发言公平性</small>
+        </div>
+        <div class="factor-box" data-reveal style="--stagger:60ms">
+          <span>因子 2 · 声学画像</span>
+          <strong>清晰（Clean）vs. 真实（Realistic）</strong>
+          <small>检验口语停顿、重复与声学鲁棒性</small>
+        </div>
+        <div class="factor-box" data-reveal style="--stagger:120ms">
+          <span>因子 3 · 追问强度</span>
+          <strong>直接（Direct）vs. 反复（Repeated）</strong>
+          <small>检验多轮线索保持与压力恢复能力</small>
+        </div>
+      </div>
+
+      <figure class="figure research-plate" data-reveal>
+        <div class="plate-bar">
+          <span class="plate-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="plate-title">图 01 · 共享空间交互拓扑与 20 领域旭日分布图</span>
+          <a class="pdf-chip" href="assets/intro-teaser.pdf" target="_blank" rel="noopener">矢量 PDF ↗</a>
+        </div>
+        <div class="plate-canvas">
+          <img src="assets/intro-teaser.png" alt="左图以共享机场行程为例展示中途打断、用户旁白与附和信号，以及归属、线索、协调三项机制；右图以旭日图展示覆盖工具增强与无工具两大赛道的 20 个领域与 100 个基础场景。" width="5600" height="1500" loading="lazy">
+        </div>
+        <figcaption>
+          左：以归属（Attribution）、线索（Threading）与协调（Coordination）拆解中途打断、旁白与附和现象。右：20 个领域的 100 个基础场景在工具增强（TA）与无工具（TF）赛道上的分布。
+        </figcaption>
+      </figure>
+
+      <div class="domain-explorer" data-reveal>
+        <div class="domain-explorer-head">
+          <div>
+            <h3>浏览全部 20 个领域与 100 个基础场景</h3>
+            <p>按大类筛选，查看各领域在工具增强（TA）与无工具（TF）赛道上的场景分配。</p>
+          </div>
+          <div class="domain-filters" role="group" aria-label="按大类筛选领域">
+            <button type="button" class="domain-chip active" data-cluster="all">全部 (20)</button>
+            <button type="button" class="domain-chip" data-cluster="mobility">出行与公共服务</button>
+            <button type="button" class="domain-chip" data-cluster="commerce">商业与生活服务</button>
+            <button type="button" class="domain-chip" data-cluster="home">家庭、照护与社交</button>
+            <button type="button" class="domain-chip" data-cluster="work">办公、技术与应急</button>
+          </div>
+        </div>
+        <div id="domain-grid" class="domain-grid" role="list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRAMEWORK & EVALUATION PROTOCOL -->
+  <section id="framework" class="section framework">
+    <div class="shell">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span class="eyebrow-num">05</span>架构与评测协议</p>
+          <h2>实时交互，证据核验。</h2>
+        </div>
+        <p>相互隔离的用户模拟器基于实际播放音频与工具执行结果动态响应；双路独立语义审计与确定性程序校验严格依据已交付证据打分。</p>
+      </div>
+
+      <div class="arch-pillars">
+        <article class="pillar-card spotlight-card" data-reveal style="--stagger:0ms">
+          <span class="pillar-step">阶段 A · 闭环多用户模拟器</span>
+          <h3>同一条音频流上的独立参与者。</h3>
+          <ul>
+            <li><strong>剧本与 200 ms 编排器：</strong>基于实时播放进度与工具状态动态调度事件、权限边界与有界追问。</li>
+            <li><strong>隔离的可听历史：</strong>每位参与者的台词生成器（<code>gpt-6-luna</code>）仅能看到自身人设、私有材料与实际听到的音频内容。</li>
+            <li><strong>确定性音色绑定：</strong><code>CosyVoice3</code> 从 3,200 条参考录音中合成角色一致的 16 kHz 语音流。</li>
+          </ul>
+        </article>
+        <article class="pillar-card spotlight-card" data-reveal style="--stagger:80ms">
+          <span class="pillar-step">阶段 B · 证据驱动的核验管线</span>
+          <h3>逐项语义审计 + 确定性状态校验。</h3>
+          <ul>
+            <li><strong>双路隔离语义复核：</strong>两路独立评审逐项核查目标达成、隐私边界与能力项，分歧项自动进入仲裁流程。</li>
+            <li><strong>定向源材料核查：</strong>一旦出现疑似编造或缺失信息标记，自动回溯已交付的初始及轮次材料进行核验。</li>
+            <li><strong>程序化确定性校验：</strong>由代码严格验证运行时 ACL、因果顺序、调用方溯源以及最终业务状态等价性。</li>
+          </ul>
+        </article>
+      </div>
+
+      <figure class="figure research-plate" data-reveal>
+        <div class="plate-bar">
+          <span class="plate-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="plate-title">图 02 · 闭环多用户模拟与双路审计核验管线</span>
+          <a class="pdf-chip" href="assets/framework.pdf" target="_blank" rel="noopener">矢量 PDF ↗</a>
+        </div>
+        <div class="plate-canvas">
+          <img src="assets/framework.png" alt="左图展示剧本与编排器如何通过可听历史、台词生成与语音合成驱动隔离的多用户模拟器在同一音频流上交互；右图展示录制证据与任务契约如何经过双路独立语义复核、仲裁与程序校验汇总产出 JTS 与 ATC。" width="5600" height="1410" loading="lazy">
+        </div>
+        <figcaption>
+          最终由确定性代码将逐项核验结论汇总为 JTS 与 ATC，避免单次粗粒度 LLM 整体打分偏差；技术性中断保留现场证据用于恢复重跑，不误扣模型得分。
+        </figcaption>
+      </figure>
+
+      <div class="metric-explainer" data-reveal>
+        <div class="outcome-card spotlight-card">
+          <span class="metric-label">核心二值会话结果指标</span>
+          <h3>联合任务成功率 (JTS)</h3>
+          <p>当且仅当同一会话轨迹中所有契约目标、必需工具执行、最终有效业务状态及隐私边界同时满足时记为 <code>1</code>。配套指标 <strong>Pure JTS</strong> 进一步要求 <code>n = 0</code> 次越权工具调用。</p>
+          <div class="outcome-links">
+            <a class="protocol-link" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">论文 §3–4 (arXiv) →</a>
+            <a class="protocol-link" href="https://github.com/lqh1106/mu-bench/blob/main/docs/EVALUATION.md" target="_blank" rel="noopener">评测规范文档 →</a>
+          </div>
+        </div>
+        <div class="diagnostics-cards">
+          <div class="axis-card">
+            <b class="axis-a">A</b>
+            <div>
+              <strong>归属 (Attribution) <span>· 身份与路由</span></strong>
+              <p>分辨谁在发言、对着谁说，以及正在提出或修改哪位用户的目标与约束。</p>
+            </div>
+          </div>
+          <div class="axis-card">
+            <b class="axis-t">T</b>
+            <div>
+              <strong>线索 (Threading) <span>· 任务连续性</span></strong>
+              <p>在打断、旁白与多轮追问之间保持、挂起、修订并恢复交错的任务线索。</p>
+            </div>
+          </div>
+          <div class="axis-card">
+            <b class="axis-c">C</b>
+            <div>
+              <strong>协调 (Coordination) <span>· 隔离与公平</span></strong>
+              <p>严格执行跨用户权限与隐私边界，同时公平照顾所有适用参与者的合理诉求。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GET STARTED & CITATION -->
+  <section id="get-started" class="section get-started">
+    <div class="shell">
+      <div class="start-grid">
+        <div class="start-intro" data-reveal>
+          <p class="eyebrow"><span class="eyebrow-num">06</span>复现与接入</p>
+          <h2>接入你的语音智能体。</h2>
+          <p>克隆开源评测框架，从 <a href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener">Hugging Face 数据集</a> 获取 800 个用例与 3,200 条参考音色，即可评测本地 GPU 全双工模型、云端实时 API 或流式文本智能体。</p>
+
+          <div class="resource-badges">
+            <a class="res-badge" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">
+              <span class="res-badge-top"><img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="13" height="13">论文</span>
+              <strong>arXiv:2611.34920 ↗</strong>
+            </a>
+            <a class="res-badge" href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener">
+              <span class="res-badge-top"><img class="brand-icon hf-icon" src="assets/hf-logo.png" alt="" width="15" height="15">数据集</span>
+              <strong>HF · linqihao/mu-bench ↗</strong>
+            </a>
+            <a class="res-badge" href="https://github.com/lqh1106/mu-bench" target="_blank" rel="noopener">
+              <span class="res-badge-top"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.82c.85 0 1.71.12 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>代码仓库</span>
+              <strong>GitHub · lqh1106/mu-bench ↗</strong>
+            </a>
+          </div>
+
+          <div class="doc-grid" aria-label="文档目录">
+            <a href="https://github.com/lqh1106/mu-bench/blob/main/docs/INSTALL.md" target="_blank" rel="noopener">
+              <strong>安装与依赖服务</strong>
+              <span>评测器、Faster-Whisper ASR 与 CosyVoice3 TTS</span>
+            </a>
+            <a href="https://github.com/lqh1106/mu-bench/blob/main/docs/MODELS.md" target="_blank" rel="noopener">
+              <strong>模型适配器</strong>
+              <span>8 个本地 GPU 语音环境与 5 个云端实时接口</span>
+            </a>
+            <a href="https://github.com/lqh1106/mu-bench/blob/main/docs/PROTOCOL.md" target="_blank" rel="noopener">
+              <strong>交互与消融协议</strong>
+              <span>逻辑时钟、音频通道与辅助消融配置</span>
+            </a>
+            <a href="https://github.com/lqh1106/mu-bench/blob/main/docs/TEXT_TRACK.md" target="_blank" rel="noopener">
+              <strong>流式文本赛道</strong>
+              <span>无需 GPU 的前缀打断与工具诊断赛道</span>
+            </a>
+            <a href="https://github.com/lqh1106/mu-bench/blob/main/docs/USAGE.md" target="_blank" rel="noopener">
+              <strong>批量评测与恢复</strong>
+              <span>多并发执行、离线评审与断点续跑</span>
+            </a>
+            <a href="https://github.com/lqh1106/mu-bench/blob/main/AGENTS.md" target="_blank" rel="noopener">
+              <strong>AGENTS.md</strong>
+              <span>面向编程智能体的自动化部署指南</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="terminal-stack" data-reveal style="--stagger:90ms">
+          <div class="code-panel">
+            <div class="code-header">
+              <div class="code-tabs" role="tablist" aria-label="快速开始命令示例">
+                <button type="button" class="code-tab active" role="tab" aria-selected="true" data-snippet="install">1. 初始化校验</button>
+                <button type="button" class="code-tab" role="tab" aria-selected="false" data-snippet="native">2. 本地语音</button>
+                <button type="button" class="code-tab" role="tab" aria-selected="false" data-snippet="cloud">3. 云端工具</button>
+                <button type="button" class="code-tab" role="tab" aria-selected="false" data-snippet="text">4. 文本赛道</button>
+              </div>
+              <button type="button" id="copy" class="copy-btn">复制</button>
+            </div>
+            <pre><code id="quickstart">export MUBENCH_REPO="$HOME/mu-bench"
+git clone https://github.com/lqh1106/mu-bench.git "$MUBENCH_REPO"
+cd "$MUBENCH_REPO"
+bash scripts/bootstrap.sh
+.venv/bin/python -m mubench validate --assets</code></pre>
+            <p id="code-caption">Linux · Python 3.10–3.12 · 校验全部 800 个评测用例、确定性音色绑定与运行时契约。</p>
+            <span class="sr-only" id="copy-status" aria-live="polite"></span>
+          </div>
+
+          <div class="cite-panel" id="cite">
+            <div class="code-header">
+              <span>BibTeX 引用 · arXiv:2611.34920</span>
+              <button type="button" id="copy-bib" class="copy-btn">复制 BibTeX</button>
+            </div>
+            <pre><code id="bibtex-code">@article{lin2026mubench,
+  author        = {Lin, Qihao},
+  title         = {$\mu$-Bench: Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents},
+  journal       = {arXiv preprint arXiv:2611.34920},
+  year          = {2026},
+  eprint        = {2611.34920},
+  archivePrefix = {arXiv},
+  url           = {https://arxiv.org/abs/2611.34920}
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer-wrap">
+  <div class="shell footer">
+    <a class="brand" href="#">
+      <img src="assets/mu-bench-logo.svg" alt="" width="26" height="24">
+      <span>μ-Bench</span>
+    </a>
+    <p>面向共享声学空间多用户语音智能体的闭环全双工评测基准。</p>
+    <div class="footer-links">
+      <a href="index.html" class="lang-switch-link">English</a>
+      <a href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">arXiv</a>
+      <a href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener">Hugging Face</a>
+      <a href="https://github.com/lqh1106/mu-bench" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/lqh1106/mu-bench/blob/main/README.zh-CN.md" target="_blank" rel="noopener">中文文档</a>
+      <a href="https://github.com/lqh1106/mu-bench/blob/main/LICENSE" target="_blank" rel="noopener">Apache-2.0</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
