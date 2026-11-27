@@ -6,13 +6,16 @@
 
 ### 面向共享语音助手的多人任务完成评测
 
+[![arXiv: 2611.34920](https://img.shields.io/badge/arXiv-2611.34920-b31b1b.svg?logo=arxiv&logoColor=white)](https://arxiv.org/abs/2611.34920)
+[![数据集：Hugging Face](https://img.shields.io/badge/Dataset-mu--bench-ffd21e.svg?logo=huggingface&logoColor=black)](https://huggingface.co/datasets/linqihao/mu-bench)
+[![项目主页](https://img.shields.io/badge/Project-Homepage-2557f0.svg)](https://lqh1106.github.io/mu-bench/)
 [![许可证：Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Python：3.10–3.12](https://img.shields.io/badge/Python-3.10--3.12-3776ab.svg)](pyproject.toml)
 [![案例：800](https://img.shields.io/badge/Cases-800-10b981.svg)](cases/)
 
 **在共享音频频道中，以闭环、全双工交互评测语音助手服务多位用户的能力。**
 
-[概览](#benchmark-概览) · [框架](#运行与评估框架) · [评分机制](#如何评价) · [快速开始](#快速开始) · [模型适配](#支持的模型与实验设置) · [English](README.md)
+[论文 (arXiv)](https://arxiv.org/abs/2611.34920) · [数据集 (Hugging Face)](https://huggingface.co/datasets/linqihao/mu-bench) · [项目主页](https://lqh1106.github.io/mu-bench/) · [概览](#benchmark-概览) · [框架](#运行与评估框架) · [评分机制](#如何评价) · [快速开始](#快速开始) · [模型适配](#支持的模型与实验设置) · [English](README.md)
 
 </div>
 
@@ -230,6 +233,21 @@ output_root/<model>/<subset>/<condition>/
 
 ## 引用与许可证
 
-作者与维护者：[Lin Qihao（@lqh1106）](https://github.com/lqh1106)。软件引用信息见 [CITATION.cff](CITATION.cff)。
+- **论文：** [μ-Bench: Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents (arXiv:2611.34920)](https://arxiv.org/abs/2611.34920)
+- **数据集：** [huggingface.co/datasets/linqihao/mu-bench](https://huggingface.co/datasets/linqihao/mu-bench)
+- **项目主页：** [lqh1106.github.io/mu-bench](https://lqh1106.github.io/mu-bench/)
+- **作者与维护者：** [Lin Qihao（@lqh1106）](https://github.com/lqh1106) · 软件引用信息见 [CITATION.cff](CITATION.cff)
+
+```bibtex
+@article{lin2026mubench,
+  author        = {Lin, Qihao},
+  title         = {$\mu$-Bench: Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents},
+  journal       = {arXiv preprint arXiv:2611.34920},
+  year          = {2026},
+  eprint        = {2611.34920},
+  archivePrefix = {arXiv},
+  url           = {https://arxiv.org/abs/2611.34920}
+}
+```
 
 原创代码和案例采用 [Apache-2.0](LICENSE)。第三方代码、参考声纹和外部权重保留各自许可证，详见 [NOTICE](NOTICE) 与[第三方组件说明](docs/THIRD_PARTY.md)。

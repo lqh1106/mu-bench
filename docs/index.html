@@ -1,241 +1,880 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>μ-Bench · Multi-User Voice Agents</title>
-<meta name="description" content="A full-duplex benchmark for multi-user task completion. Explore 800 cases, two evaluation tracks, and the JTS and ATC leaderboard.">
-<meta name="theme-color" content="#2a5bf4"><link rel="icon" type="image/svg+xml" href="assets/mu-bench-logo.svg"><link rel="stylesheet" href="assets/site.css?v=6">
-<meta property="og:title" content="μ-Bench: Many voices. One shared outcome."><meta property="og:description" content="Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents"><meta property="og:image" content="https://lqh1106.github.io/mu-bench/assets/intro-teaser.png">
-<link rel="stylesheet" href="assets/experience.css?v=2">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>μ-Bench · Benchmarking Multi-User Voice Agents</title>
+<meta name="description" content="Closed-loop, full-duplex benchmark for multi-user task completion in shared interaction voice agents. Explore 800 factorial cases across 20 domains, interactive traces, and the JTS / ATC leaderboard.">
+<meta name="theme-color" content="#f6f9fe">
+<link rel="icon" type="image/svg+xml" href="assets/mu-bench-logo.svg">
+<meta property="og:title" content="μ-Bench: Many voices. One shared outcome.">
+<meta property="og:description" content="Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents — Paper (arXiv:2611.34920), Dataset, Code & Leaderboard.">
+<meta property="og:image" content="https://lqh1106.github.io/mu-bench/assets/intro-teaser.png">
+<link rel="stylesheet" href="assets/site.css?v=18">
+<link rel="stylesheet" href="assets/experience.css?v=18">
 <script id="leaderboard-data" type="application/json">{
   "source": "Paper Table 2 supplied by the project author",
   "unit": "percent",
-  "metrics": [
-    "JTS",
-    "A",
-    "T",
-    "C"
-  ],
+  "metrics": ["JTS", "A", "T", "C"],
   "models": [
-    {
-      "name": "MiniCPM-o 4.5",
-      "family": "open",
-      "tool_free": [
-        19.39,
-        36.89,
-        35.95,
-        87.17
-      ],
-      "tool_augmented": null
-    },
-    {
-      "name": "Raon-Speech",
-      "family": "open",
-      "tool_free": [
-        7.14,
-        24.67,
-        15.89,
-        81.22
-      ],
-      "tool_augmented": null
-    },
-    {
-      "name": "PersonaPlex",
-      "family": "open",
-      "tool_free": [
-        3.57,
-        13.7,
-        8.07,
-        79.27
-      ],
-      "tool_augmented": null
-    },
-    {
-      "name": "Lychee-FD",
-      "family": "open",
-      "tool_free": [
-        3.32,
-        7.86,
-        5.97,
-        82.24
-      ],
-      "tool_augmented": null
-    },
-    {
-      "name": "Moshi",
-      "family": "open",
-      "tool_free": [
-        1.79,
-        5.07,
-        3.64,
-        77.78
-      ],
-      "tool_augmented": null
-    },
-    {
-      "name": "Voila",
-      "family": "open",
-      "tool_free": [
-        1.53,
-        4.14,
-        2.26,
-        79.49
-      ],
-      "tool_augmented": null
-    },
-    {
-      "name": "FLM-Audio",
-      "family": "open",
-      "tool_free": [
-        0,
-        1.49,
-        0.61,
-        79.33
-      ],
-      "tool_augmented": null
-    },
-    {
-      "name": "Freeze-Omni",
-      "family": "open",
-      "tool_free": [
-        0,
-        0.57,
-        0,
-        76.43
-      ],
-      "tool_augmented": null
-    },
-    {
-      "name": "MOSS-Live",
-      "family": "proprietary",
-      "tool_free": [
-        57.91,
-        62.63,
-        71.32,
-        94.81
-      ],
-      "tool_augmented": null
-    },
-    {
-      "name": "GPT-Realtime-2",
-      "family": "proprietary",
-      "tool_free": [
-        58.42,
-        68.61,
-        81.66,
-        96.87
-      ],
-      "tool_augmented": [
-        65.44,
-        84.61,
-        81.14,
-        83.29
-      ]
-    },
-    {
-      "name": "Gemini 3.8 Live",
-      "family": "proprietary",
-      "tool_free": [
-        53.32,
-        61.05,
-        78.87,
-        96.06
-      ],
-      "tool_augmented": [
-        64.95,
-        75.8,
-        82.89,
-        74.98
-      ]
-    },
-    {
-      "name": "Grok Voice 3.0",
-      "family": "proprietary",
-      "tool_free": [
-        62.24,
-        67.32,
-        77.82,
-        96.25
-      ],
-      "tool_augmented": [
-        57.6,
-        81.99,
-        82.5,
-        78.1
-      ]
-    },
-    {
-      "name": "Seeduplex 3.0",
-      "family": "proprietary",
-      "tool_free": [
-        37.5,
-        61.05,
-        78.67,
-        97.11
-      ],
-      "tool_augmented": [
-        50,
-        76.81,
-        61.9,
-        55.98
-      ]
-    }
+    {"name": "MiniCPM-o 4.5", "family": "open", "tool_free": [19.39, 36.89, 35.95, 87.17], "tool_augmented": null},
+    {"name": "Raon-Speech", "family": "open", "tool_free": [7.14, 24.67, 15.89, 81.22], "tool_augmented": null},
+    {"name": "PersonaPlex", "family": "open", "tool_free": [3.57, 13.7, 8.07, 79.27], "tool_augmented": null},
+    {"name": "Lychee-FD", "family": "open", "tool_free": [3.32, 7.86, 5.97, 82.24], "tool_augmented": null},
+    {"name": "Moshi", "family": "open", "tool_free": [1.79, 5.07, 3.64, 77.78], "tool_augmented": null},
+    {"name": "Voila", "family": "open", "tool_free": [1.53, 4.14, 2.26, 79.49], "tool_augmented": null},
+    {"name": "FLM-Audio", "family": "open", "tool_free": [0, 1.49, 0.61, 79.33], "tool_augmented": null},
+    {"name": "Freeze-Omni", "family": "open", "tool_free": [0, 0.57, 0, 76.43], "tool_augmented": null},
+    {"name": "MOSS-Live", "family": "proprietary", "tool_free": [57.91, 62.63, 71.32, 94.81], "tool_augmented": null},
+    {"name": "GPT-Realtime-2", "family": "proprietary", "tool_free": [58.42, 68.61, 81.66, 96.87], "tool_augmented": [65.44, 84.61, 81.14, 83.29], "pure_jts": 52.5, "unauth_episode_pct": 21.8},
+    {"name": "Gemini 3.8 Live", "family": "proprietary", "tool_free": [53.32, 61.05, 78.87, 96.06], "tool_augmented": [64.95, 75.8, 82.89, 74.98], "pure_jts": 46.8, "unauth_episode_pct": 35.5},
+    {"name": "Grok Voice 3.0", "family": "proprietary", "tool_free": [62.24, 67.32, 77.82, 96.25], "tool_augmented": [57.6, 81.99, 82.5, 78.1], "pure_jts": 46.6, "unauth_episode_pct": 30.9},
+    {"name": "Seeduplex 3.0", "family": "proprietary", "tool_free": [37.5, 61.05, 78.67, 97.11], "tool_augmented": [50, 76.81, 61.9, 55.98], "pure_jts": 26.0, "unauth_episode_pct": 71.8}
   ]
-}
-</script>
-<script src="assets/site.js?v=2" defer></script>
-<script src="assets/experience.js?v=8" defer></script>
+}</script>
+<script src="assets/site.js?v=18" defer></script>
+<script src="assets/experience.js?v=18" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="header"><nav class="nav shell" aria-label="Main navigation"><a class="brand" href="#"><img src="assets/mu-bench-logo.svg" alt="" width="30" height="28"><span>μ-Bench</span></a><div class="nav-links"><a href="#experience">Experience</a><a href="#leaderboard">Leaderboard</a><a href="#overview">Overview</a><a href="#framework">Framework</a><a href="#get-started">Get started</a></div><a class="nav-code" href="https://github.com/lqh1106/mu-bench">GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.82c.85 0 1.71.12 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg></a></nav></header>
+
+<header class="header">
+  <nav class="nav shell" aria-label="Main navigation">
+    <a class="brand" href="#">
+      <img src="assets/mu-bench-logo.svg" alt="" width="28" height="25">
+      <span>μ-Bench</span>
+    </a>
+    <div class="nav-links">
+      <a href="#experience">Experience</a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#diagnostics">Diagnostics</a>
+      <a href="#overview">Benchmark</a>
+      <a href="#framework">Framework</a>
+      <a href="#get-started">Quick Start</a>
+    </div>
+    <div class="nav-actions">
+      <a class="nav-pill" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener" title="Read paper on arXiv (2611.34920)">
+        <img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="15" height="15">
+        <span>arXiv</span>
+      </a>
+      <a class="nav-pill" href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener" title="Hugging Face Dataset (linqihao/mu-bench)">
+        <img class="brand-icon hf-icon" src="assets/hf-logo.png" alt="" width="17" height="17">
+        <span class="nav-hf-full">Hugging Face</span>
+        <span class="nav-hf-short">HF</span>
+      </a>
+      <a class="nav-code" href="https://github.com/lqh1106/mu-bench" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.82c.85 0 1.71.12 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+        <span>GitHub</span>
+      </a>
+    </div>
+  </nav>
+</header>
+
 <main id="main">
-<div class="hero-world">
-<div class="ambient-grid" aria-hidden="true"></div>
-<section class="hero shell">
-<div class="hero-copy">
-<div class="hero-emblem-wrap"><svg id="hero-emblem" viewBox="118 181 200 178" role="img" aria-label="Three mu symbols form the μ-Bench logo"><path data-identity="dad" d="M177.5 188.5C180.3 185.5 184.8 184.5 190.1 184.5H206.3V210.4C206.3 219.2 214.1 226.3 223.9 226.3C233.7 226.3 241.8 219.2 241.8 210.4V184.5H252.1C262.6 184.5 270.2 189.3 276 198.5L310.6 256.8C315.7 265.1 316.7 271.1 314.4 276.1L266.8 248.6C258.1 243.5 252.7 240.8 244.3 245L229.3 252.3C221.2 254.2 212.9 252.9 206.2 249.8V254.1L196.7 267.7L187.9 263C181.1 259.1 177.5 253.9 177.5 245.9V188.5Z"/><path data-identity="child" d="M171.7 190.3V246.4C171.7 257.3 176.7 264.2 187.1 269.7L195.3 274.2L199.8 284.3C201.5 288 202.3 290.8 202.5 293.2L205.5 291.9L222.8 293.1V306.5C222.8 313.2 219.4 317.5 212.4 321.5L162.5 347.9C159.2 349.3 157.6 346.6 155.5 343.5L146.1 327C145.6 326 145.6 325.3 146.6 324.6L166.3 313.2C175.8 308 177.6 301.8 174.5 292.8C171.5 284.2 162.6 278.3 154.4 281.9L129.7 294.3L125.1 286.4C119.8 277.9 119.7 267.6 124.3 259.5L163.3 200.3C166.1 196.1 168.8 192.8 171.7 190.3Z"/><path data-identity="agent" d="M233.3 258.4L245.9 251.7C251.4 248.7 255.6 248.7 261.6 251.6L311.4 280.6C314.5 282.1 312.3 286.8 310.5 289.8L299.8 305.1C299.4 305.9 299 305.9 298.2 305.4L279.9 294.5C270.9 289.2 265.6 289.4 259.3 295.1C249.2 304.4 250.9 317 260.9 323.6L280.1 335.3C281 335.9 281 336.2 280.2 337.3L274.3 346.9C269.3 353 262.8 356 252.6 356H180C173.8 356 169.6 354.8 165.3 352.3L214.7 325.5C224.9 319.7 228.7 313.3 228.8 302.4V293.2C231.9 287.7 234.7 283.1 237.9 279.1L244 273.9L239.6 270.4L233.3 258.4Z"/></svg><span class="emblem-caption">A shared space. Distinct identities.</span></div>
-<a class="release-pill" href="https://github.com/lqh1106/mu-bench"><span class="pill-icon" aria-hidden="true">μ</span> Open-source benchmark <span class="pill-divider"></span> Built for shared interaction</a>
-<h1>Many voices.<br><span>One shared outcome.</span></h1>
-<p class="hero-description">Real conversations don’t wait their turn.<br>Can your voice agent keep up with <em>everyone</em>?</p>
-<p class="paper-title">μ-Bench · Benchmarking Multi-User Task Completion<br>in Shared Interaction Voice Agents</p>
-<div class="actions"><a class="button primary" href="#experience"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="m7 4 9 6-9 6Z"/></svg>See an interaction</a><a class="button hero-secondary" href="https://github.com/lqh1106/mu-bench">Explore the benchmark</a></div>
-</div>
-<div class="hero-scale" aria-label="Benchmark scale"><span><strong>800</strong> cases</span><span><strong>100</strong> scenarios</span><span><strong>20</strong> domains</span><span class="scale-last">One shared audio channel.</span></div>
-</section>
-<section id="experience" class="experience shell" aria-labelledby="experience-title">
-<div class="experience-heading"><div><p class="eyebrow">Inside a shared interaction</p><h2 id="experience-title">A shared ride, in motion.</h2></div><p>Follow a request through interruptions,<br>approval, and a return to the shared task.</p></div>
-<div class="demo" id="demo" data-phase="0" data-playing="false">
-<div class="demo-top"><div class="demo-title"><strong>A shared ride to the airport</strong><span>Illustrated interaction · three participants</span></div><div class="demo-playback-info"><span id="demo-status" class="demo-status">Ready to play</span><span id="timeline-time">00:00 <span>/ 00:18</span></span></div></div>
-<div class="timeline-viewport" id="timeline-viewport" tabindex="0" role="region" aria-label="Scrollable conversation timeline">
-<div class="timeline-canvas" id="timeline-canvas"><div class="time-grid" aria-hidden="true"><i style="left:0%"></i><i style="left:25%"></i><i style="left:50%"></i><i style="left:75%"></i><i style="left:100%"></i></div>
-<div class="time-axis" id="time-axis" role="slider" tabindex="0" aria-label="Timeline position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="00:00 of 00:18"><div class="time-baseline"></div><div class="time-elapsed" id="time-elapsed"></div><div class="time-ticks"><span style="--tick:0%"><b>0s</b></span><span style="--tick:25%"><b>4.5s</b></span><span style="--tick:50%"><b>9s</b></span><span style="--tick:75%"><b>13.5s</b></span><span style="--tick:100%"><b>18s</b></span></div><div class="audio-strips" id="audio-strips" aria-hidden="true"></div><span class="axis-handle" id="axis-handle" aria-hidden="true"></span></div>
-<div class="time-cursor" id="time-cursor" aria-hidden="true"><i></i></div>
-<div class="timeline-lane lane-dad"><div class="lane-label"><span class="lane-avatar"><svg class="avatar-portrait" viewBox="0 0 40 40" aria-hidden="true"><path class="avatar-silhouette" d="M6 34C6 27 11 23 16 22V19C12 17 11 14 11 10C11 4 15 2 20 2C25 2 29 5 29 10C29 14 27 17 24 19V22C30 23 34 27 34 34Z"/><g class="portrait-detail"><path d="M11 10C16 10 17 7 20 6C22 9 26 10 29 10M16 22L20 26L24 22"/><circle cx="17" cy="13" r=".7"/><circle cx="23" cy="13" r=".7"/></g></svg></span><span>Dad</span></div><div class="lane-track" id="lane-dad"></div></div>
-<div class="timeline-lane lane-child"><div class="lane-label"><span class="lane-avatar"><svg class="avatar-portrait" viewBox="0 0 40 40" aria-hidden="true"><path class="avatar-silhouette" d="M8 34C8 27 12 24 17 23V20C13 18 12 15 12 11C12 6 15 4 20 4C25 4 28 7 28 11C28 15 26 18 23 20V23C28 24 32 28 32 34Z"/><g class="portrait-detail"><path d="M13 10C15 10 17 7 20 7C23 7 23 10 21 10M17 23Q20 26 23 23"/><circle cx="17" cy="14" r=".7"/><circle cx="23" cy="14" r=".7"/></g></svg></span><span>Child</span></div><div class="lane-track" id="lane-child"></div></div>
-<div class="timeline-lane lane-agent"><div class="lane-label"><span class="lane-avatar"><svg class="avatar-portrait" viewBox="0 0 40 40" aria-hidden="true"><path class="avatar-silhouette" d="M7 34V31C7 27 12 25 16 24V22H13C10 22 8 20 8 17V9C8 6 10 4 13 4H27C30 4 32 6 32 9V17C32 20 30 22 27 22H24V24C30 25 33 28 33 31V34Z"/><g class="portrait-detail"><path d="M8 11H5V17H8M32 11H35V17H32M20 4V1M16 18H24"/><circle cx="16" cy="12" r="1"/><circle cx="24" cy="12" r="1"/></g></svg></span><span>Agent</span></div><div class="lane-track" id="lane-agent"></div></div>
-</div></div>
-<div class="thread-retained"><span class="thread-pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 3 8 0-1 7 4 4H5l4-4Z M12 14v7"/></svg>Airport by 10:00</span><span class="thread-line"><i id="retained-progress"></i></span><span id="thread-status">Main thread</span></div>
-<div class="timeline-state"><span>Park stop <strong id="state-approval">Not requested</strong></span><span>ETA <strong id="state-eta">Not checked</strong></span><span id="tool-result">Waiting for a request</span></div>
-<div class="demo-insight"><span id="insight-axis" class="insight-axis">A</span><div><strong id="insight-title">Keep the request with its owner.</strong><p id="insight-text">Dad sets the destination and deadline. Both must stay attached to the task.</p></div><span id="step-count">01 / 08</span></div>
-<div class="demo-controls"><button type="button" id="demo-play" class="play-control" aria-label="Play walkthrough"><span id="play-symbol" aria-hidden="true">▶</span><span id="play-label">Play</span></button><div class="demo-timeline"><label class="sr-only" for="demo-progress">Walkthrough step</label><input id="demo-progress" type="range" min="0" max="100" value="0" step="0.1" aria-valuetext="Ready to play"><div class="timeline-labels"><span>Request</span><span>Interruption</span><span>Approval</span><span>Resume</span></div></div><button type="button" id="demo-replay" class="replay-control" aria-label="Restart walkthrough"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg></button></div>
-</div><p class="demo-disclaimer">An 18-second illustration from the paper teaser, not a model recording. Drag the timeline to explore; swipe horizontally on smaller screens.</p>
-</section></div>
-<section id="leaderboard" class="leaderboard-section section"><div class="shell">
-<div class="section-heading"><div><p class="eyebrow">Leaderboard</p><h2>Measured on shared outcomes.</h2></div><p>Joint Task Success is the primary outcome.<br>Explore Attribution, Threading and Coordination to diagnose it.</p></div>
-<div class="rank-board"><div class="rank-toolbar"><div class="segmented" role="group" aria-label="Evaluation track"><button type="button" data-chart-track="tool_free" aria-pressed="true">Tool-Free</button><button type="button" data-chart-track="tool_augmented" aria-pressed="false">Tool-Augmented</button></div><label class="metric-selector">Metric <select id="chart-metric" aria-label="Metric"><option value="0">JTS · primary outcome</option><option value="1">Attribution</option><option value="2">Threading</option><option value="3">Coordination</option></select></label></div>
-<div class="rank-filters"><label class="search"><input type="search" id="chart-search" placeholder="Find a model…" aria-label="Search models"></label><label class="rank-family">Family <select id="chart-family" aria-label="Model family"><option value="all">All systems</option><option value="open">Open-weight</option><option value="proprietary">Proprietary</option></select></label></div>
-<div class="rank-legend"><span><i class="legend-proprietary"></i>Proprietary</span><span><i class="legend-open"></i>Open-weight</span><span id="chart-caption">Joint Task Success (%)</span></div>
-<div id="rank-chart" class="rank-chart" aria-label="Model score bar chart"><div class="chart-ruler"><span>System</span><div class="chart-scale"><span style="left:0%">0</span><span style="left:25%">25</span><span style="left:50%">50</span><span style="left:75%">75</span><span style="left:100%">100</span></div></div><div id="chart-rows" class="chart-rows" role="list"></div></div>
-<div class="rank-footer"><span id="result-count" aria-live="polite"></span><button type="button" id="download" class="text-button">Download scores</button></div></div>
-<p class="rank-note" id="chart-note">Paper Table 2 snapshot. Scores are averaged over evaluated cases; higher is better.</p>
-</div></section>
-<section id="overview" class="overview shell section"><div class="section-heading"><div><p class="eyebrow">The challenge</p><h2>More than taking turns.</h2></div><p>A coherent reply is only the beginning. The agent must keep requests attached to their owners and bring interdependent tasks to a jointly valid result.</p></div><figure class="figure"><a href="assets/intro-teaser.pdf" aria-label="Open the benchmark overview as a vector PDF"><img src="assets/intro-teaser.png" alt="A shared airport ride illustrates interruptions, side-talk and backchannels. Attribution, Threading and Coordination explain how the agent must manage the interaction; a domain map shows the two benchmark tracks." width="1600" loading="eager"></a><figcaption>A shared task can contain multiple voices, competing constraints, and unfinished threads. <a href="assets/intro-teaser.pdf">View vector PDF</a></figcaption></figure><div class="track-grid"><article><span class="track-tag">Tool-Free</span><h3>Coordinate through conversation.</h3><p>Answer, clarify, refuse, and resume requests using spoken interaction.</p><p class="track-count"><b>49</b> scenarios <span>·</span> <b>392</b> cases</p></article><article><span class="track-tag">Tool-Augmented</span><h3>Follow through in the environment.</h3><p>Connect what was said to actual tool execution and the final business state.</p><p class="track-count"><b>51</b> scenarios <span>·</span> <b>408</b> cases</p></article></div><p class="factor-line">Every scenario has eight controlled variants: <strong>group size × acoustics × follow-up demands.</strong></p></section>
-<section id="framework" class="section framework"><div class="shell"><div class="section-heading"><div><p class="eyebrow">The framework</p><h2>Live interaction. Verified outcomes.</h2></div><p>Reactive user simulation shapes the conversation. Independent semantic reviews and programmatic checks establish what actually happened.</p></div><figure class="figure"><a href="assets/framework.pdf" aria-label="Open the framework as a vector PDF"><img src="assets/framework.png" alt="Independent participant simulators interact over a shared audio stream. Task specifications and recorded evidence feed two independent semantic reviews with arbitration and programmatic checks, producing JTS and ATC." width="1600" loading="lazy"></a><figcaption>Participants react to played audio and actual tool effects; evaluation follows the delivered evidence. <a href="assets/framework.pdf">View vector PDF</a></figcaption></figure><div class="metric-explainer"><div class="outcome"><span class="metric-label">Primary outcome</span><h3>Joint Task Success</h3><p>Applicable goals, tool effects, final state, and privacy must hold together in one trajectory.</p></div><div class="diagnostics"><span class="metric-label">ATC diagnostics</span><div class="axis"><b class="axis-a">A</b><div><strong>Attribution</strong><span>Who said it, to whom, and for whose request?</span></div></div><div class="axis"><b class="axis-t">T</b><div><strong>Threading</strong><span>Keep task state through interruptions and returns.</span></div></div><div class="axis"><b class="axis-c">C</b><div><strong>Coordination</strong><span>Respect boundaries and serve the participating users.</span></div></div></div></div><p class="method-note">Reviews use independent contexts, with arbitration for disagreements. Code aggregates verified items; authorization and caller-source incidents are reported separately from JTS. <a href="https://github.com/lqh1106/mu-bench/blob/main/docs/EVALUATION.md">Read the evaluation protocol</a></p></div></section>
-<section id="get-started" class="section get-started"><div class="shell start-grid"><div><p class="eyebrow">Reproduce &amp; build</p><h2>Bring your voice agent.</h2><p>Clone the benchmark, validate the included cases and voice assets, then configure your ASR, TTS, and model endpoints.</p><div class="start-links"><a href="https://github.com/lqh1106/mu-bench/blob/main/docs/INSTALL.md">Installation guide</a><a href="https://github.com/lqh1106/mu-bench/blob/main/docs/MODELS.md">Model adapters</a><a href="https://github.com/lqh1106/mu-bench/blob/main/AGENTS.md">Setup guide for agents</a></div></div><div class="code-panel"><div class="code-header"><span>Quick start · Linux · Python 3.10–3.12</span><button type="button" id="copy">Copy</button></div><pre><code id="quickstart">export MUBENCH_REPO="$HOME/mu-bench"
+  <div class="hero-world">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="ambient-grid" aria-hidden="true"></div>
+
+    <section class="hero shell">
+      <div class="hero-copy">
+        <div class="hero-emblem-wrap" title="Three voices, one shared space — scroll to watch identities unfold">
+          <div class="emblem-halo" aria-hidden="true"></div>
+          <span class="emblem-ring r1" aria-hidden="true"></span>
+          <span class="emblem-ring r2" aria-hidden="true"></span>
+          <svg id="hero-emblem" viewBox="118 181 200 178" role="img" aria-label="Three interlocking mu symbols form the μ-Bench logo">
+            <path data-identity="dad" d="M177.5 188.5C180.3 185.5 184.8 184.5 190.1 184.5H206.3V210.4C206.3 219.2 214.1 226.3 223.9 226.3C233.7 226.3 241.8 219.2 241.8 210.4V184.5H252.1C262.6 184.5 270.2 189.3 276 198.5L310.6 256.8C315.7 265.1 316.7 271.1 314.4 276.1L266.8 248.6C258.1 243.5 252.7 240.8 244.3 245L229.3 252.3C221.2 254.2 212.9 252.9 206.2 249.8V254.1L196.7 267.7L187.9 263C181.1 259.1 177.5 253.9 177.5 245.9V188.5Z"/>
+            <path data-identity="child" d="M171.7 190.3V246.4C171.7 257.3 176.7 264.2 187.1 269.7L195.3 274.2L199.8 284.3C201.5 288 202.3 290.8 202.5 293.2L205.5 291.9L222.8 293.1V306.5C222.8 313.2 219.4 317.5 212.4 321.5L162.5 347.9C159.2 349.3 157.6 346.6 155.5 343.5L146.1 327C145.6 326 145.6 325.3 146.6 324.6L166.3 313.2C175.8 308 177.6 301.8 174.5 292.8C171.5 284.2 162.6 278.3 154.4 281.9L129.7 294.3L125.1 286.4C119.8 277.9 119.7 267.6 124.3 259.5L163.3 200.3C166.1 196.1 168.8 192.8 171.7 190.3Z"/>
+            <path data-identity="agent" d="M233.3 258.4L245.9 251.7C251.4 248.7 255.6 248.7 261.6 251.6L311.4 280.6C314.5 282.1 312.3 286.8 310.5 289.8L299.8 305.1C299.4 305.9 299 305.9 298.2 305.4L279.9 294.5C270.9 289.2 265.6 289.4 259.3 295.1C249.2 304.4 250.9 317 260.9 323.6L280.1 335.3C281 335.9 281 336.2 280.2 337.3L274.3 346.9C269.3 353 262.8 356 252.6 356H180C173.8 356 169.6 354.8 165.3 352.3L214.7 325.5C224.9 319.7 228.7 313.3 228.8 302.4V293.2C231.9 287.7 234.7 283.1 237.9 279.1L244 273.9L239.6 270.4L233.3 258.4Z"/>
+          </svg>
+        </div>
+
+        <a class="release-pill hero-stagger s1" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">
+          <img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="14" height="14">
+          <span>arXiv:2611.34920</span>
+          <span class="pill-divider" aria-hidden="true"></span>
+          <span>Closed-Loop Full-Duplex Benchmark</span>
+        </a>
+
+        <h1 class="hero-stagger s2">Many voices.<br><span>One shared outcome.</span></h1>
+
+        <p class="hero-description hero-stagger s3">
+          Real conversations don’t wait their turn. Shared voice agents must track <em>who wants what</em>, survive barge-ins and side-talk, and bring interdependent goals to a jointly valid state.
+        </p>
+
+        <p class="paper-title hero-stagger s3">μ-Bench · Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents</p>
+
+        <div class="actions hero-stagger s4">
+          <a class="button primary" href="#experience">
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="m6.5 4.2 9.5 5.8-9.5 5.8Z"/></svg>
+            <span>Watch live trace</span>
+          </a>
+          <a class="button hero-secondary" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">
+            <img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="15" height="15">
+            <span>Paper (arXiv)</span>
+          </a>
+          <a class="button hero-ghost" href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener">
+            <img class="brand-icon hf-icon" src="assets/hf-logo.png" alt="" width="18" height="18">
+            <span>Hugging Face</span>
+          </a>
+          <a class="button hero-ghost" href="https://github.com/lqh1106/mu-bench" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.82c.85 0 1.71.12 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+            <span>GitHub Code</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-scale hero-stagger s5" aria-label="Benchmark scale">
+        <div class="scale-item">
+          <strong data-count="800">800</strong>
+          <span>Factorial cases</span>
+          <small>392 Tool-Free · 408 Tool-Aug</small>
+        </div>
+        <div class="scale-item">
+          <strong data-count="100">100</strong>
+          <span>Base scenarios</span>
+          <small>2 × 2 × 2 controlled grid</small>
+        </div>
+        <div class="scale-item">
+          <strong data-count="20">20</strong>
+          <span>Real domains</span>
+          <small>2–7 speakers · 3,200 voice refs</small>
+        </div>
+        <div class="scale-item">
+          <strong data-count="13">13</strong>
+          <span>Evaluated systems</span>
+          <small>5 proprietary · 8 open-weight</small>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="experience shell" aria-labelledby="experience-title">
+      <div class="experience-heading">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-num">01</span>Inside a shared interaction</p>
+          <h2 id="experience-title">A shared ride, in motion.</h2>
+        </div>
+        <p>Click any utterance or drag the timeline to inspect how <strong>Attribution</strong>, <strong>Threading</strong>, and <strong>Coordination</strong> govern a live multi-user audio stream.</p>
+      </div>
+
+      <div class="demo" id="demo" data-phase="0" data-playing="false">
+        <div class="demo-top">
+          <div class="demo-title">
+            <div class="demo-title-row">
+              <strong>Scenario · Shared Airport Ride</strong>
+              <span class="demo-badge">3 Participants · Full-Duplex Trace</span>
+            </div>
+            <span>Barge-in detour request, authority-gated ETA check, peer side-talk filtering, and main-thread resumption</span>
+          </div>
+          <div class="demo-playback-info">
+            <span id="demo-status" class="demo-status">Ready to play</span>
+            <span id="timeline-time">00:00 <span>/ 00:18</span></span>
+          </div>
+        </div>
+
+        <div class="timeline-viewport" id="timeline-viewport" tabindex="0" role="region" aria-label="Scrollable conversation timeline">
+          <div class="timeline-canvas" id="timeline-canvas">
+            <div class="time-grid" aria-hidden="true">
+              <i style="left:0%"></i>
+              <i style="left:25%"></i>
+              <i style="left:50%"></i>
+              <i style="left:75%"></i>
+              <i style="left:100%"></i>
+            </div>
+
+            <div class="overlap-zones" aria-hidden="true">
+              <div class="overlap-zone zone-barge" id="zone-barge" style="left:24%;width:8%">
+                <span>Barge-in overlap</span>
+              </div>
+              <div class="overlap-zone zone-sidetalk" id="zone-sidetalk" style="left:69%;width:11%">
+                <span>Peer side-talk</span>
+              </div>
+              <div class="overlap-zone zone-backchannel" id="zone-backchannel" style="left:89%;width:11%">
+                <span>Backchannel</span>
+              </div>
+            </div>
+
+            <div class="time-axis" id="time-axis" role="slider" tabindex="0" aria-label="Timeline position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="00:00 of 00:18">
+              <div class="time-baseline"></div>
+              <div class="time-elapsed" id="time-elapsed"></div>
+              <div class="time-ticks">
+                <span style="--tick:0%"><b>0s</b></span>
+                <span style="--tick:25%"><b>4.5s</b></span>
+                <span style="--tick:50%"><b>9.0s</b></span>
+                <span style="--tick:75%"><b>13.5s</b></span>
+                <span style="--tick:100%"><b>18.0s</b></span>
+              </div>
+              <div class="audio-strips" id="audio-strips" aria-hidden="true"></div>
+              <span class="axis-handle" id="axis-handle" aria-hidden="true"></span>
+            </div>
+
+            <div class="time-cursor" id="time-cursor" aria-hidden="true"><b id="cursor-clock">0.0s</b></div>
+
+            <div class="timeline-lane lane-dad">
+              <div class="lane-label">
+                <span class="lane-avatar">
+                  <svg class="avatar-portrait" viewBox="0 0 40 40" aria-hidden="true">
+                    <path class="avatar-silhouette" d="M6 34C6 27 11 23 16 22V19C12 17 11 14 11 10C11 4 15 2 20 2C25 2 29 5 29 10C29 14 27 17 24 19V22C30 23 34 27 34 34Z"/>
+                    <g class="portrait-detail">
+                      <path d="M11 10C16 10 17 7 20 6C22 9 26 10 29 10M16 22L20 26L24 22"/>
+                      <circle cx="17" cy="13" r=".8"/><circle cx="23" cy="13" r=".8"/>
+                    </g>
+                  </svg>
+                </span>
+                <strong>Dad</strong>
+                <small>Authority</small>
+              </div>
+              <div class="lane-track" id="lane-dad"></div>
+            </div>
+
+            <div class="timeline-lane lane-child">
+              <div class="lane-label">
+                <span class="lane-avatar">
+                  <svg class="avatar-portrait" viewBox="0 0 40 40" aria-hidden="true">
+                    <path class="avatar-silhouette" d="M8 34C8 27 12 24 17 23V20C13 18 12 15 12 11C12 6 15 4 20 4C25 4 28 7 28 11C28 15 26 18 23 20V23C28 24 32 28 32 34Z"/>
+                    <g class="portrait-detail">
+                      <path d="M13 10C15 10 17 7 20 7C23 7 23 10 21 10M17 23Q20 26 23 23"/>
+                      <circle cx="17" cy="14" r=".8"/><circle cx="23" cy="14" r=".8"/>
+                    </g>
+                  </svg>
+                </span>
+                <strong>Child</strong>
+                <small>Passenger</small>
+              </div>
+              <div class="lane-track" id="lane-child"></div>
+            </div>
+
+            <div class="timeline-lane lane-agent">
+              <div class="lane-label">
+                <span class="lane-avatar">
+                  <svg class="avatar-portrait" viewBox="0 0 40 40" aria-hidden="true">
+                    <path class="avatar-silhouette" d="M7 34V31C7 27 12 25 16 24V22H13C10 22 8 20 8 17V9C8 6 10 4 13 4H27C30 4 32 6 32 9V17C32 20 30 22 27 22H24V24C30 25 33 28 33 31V34Z"/>
+                    <g class="portrait-detail">
+                      <path d="M8 11H5V17H8M32 11H35V17H32M20 4V1M16 18H24"/>
+                      <circle cx="16" cy="12" r="1"/><circle cx="24" cy="12" r="1"/>
+                    </g>
+                  </svg>
+                </span>
+                <strong>Agent</strong>
+                <small>Voice AI</small>
+              </div>
+              <div class="lane-track" id="lane-agent"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-hud">
+          <div class="state-chip thread-chip">
+            <span class="thread-pin">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m8 3 8 0-1 7 4 4H5l4-4Z M12 14v7"/></svg>
+              <span>Goal: <b>Airport ≤ 10:00</b></span>
+            </span>
+            <span class="thread-line" aria-hidden="true"><i id="retained-progress"></i></span>
+            <strong id="thread-status" class="thread-badge">Active</strong>
+          </div>
+          <div class="state-chip"><span>Detour</span><strong id="state-approval">Not requested</strong></div>
+          <div class="state-chip"><span>ETA</span><strong id="state-eta">Not checked</strong></div>
+          <div class="state-chip state-mono"><span>Trace</span><strong id="tool-result">Click play or any card</strong></div>
+        </div>
+
+        <div class="demo-insight">
+          <span id="insight-axis" class="insight-axis">A</span>
+          <div class="insight-body">
+            <strong id="insight-title">Keep the request with its owner.</strong>
+            <p id="insight-text">Dad sets the destination and deadline. Both must stay attached to the shared task across interruptions.</p>
+          </div>
+          <div class="step-pills" id="step-pills" role="group" aria-label="Jump to conversation event"></div>
+          <span id="step-count" class="step-counter">01 / 08</span>
+        </div>
+
+        <div class="demo-controls">
+          <button type="button" id="demo-play" class="play-control" aria-label="Play walkthrough">
+            <span id="play-symbol" aria-hidden="true">▶</span>
+            <span id="play-label">Play</span>
+          </button>
+          <div class="demo-timeline">
+            <label class="sr-only" for="demo-progress">Walkthrough step</label>
+            <input id="demo-progress" type="range" min="0" max="100" value="0" step="0.1" aria-valuetext="Ready to play">
+            <div class="timeline-labels">
+              <span>0s · Goal &amp; Deadline</span>
+              <span>4.3s · Child Barge-in</span>
+              <span>11.0s · Authority Approval &amp; Side-talk</span>
+              <span>14.4s · Resumed Plan</span>
+            </div>
+          </div>
+          <button type="button" id="demo-replay" class="replay-control" aria-label="Restart walkthrough" title="Restart walkthrough">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1.3 7.5M4 4v6h6"/></svg>
+          </button>
+        </div>
+      </div>
+      <p class="demo-disclaimer">An 18-second interactive trace of the paper teaser scenario. Click any card, step button, or timeline position to scrub; swipe horizontally on compact screens.</p>
+    </section>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <section id="leaderboard" class="leaderboard-section section">
+    <div class="shell">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span class="eyebrow-num">02</span>Leaderboard · 13 Voice Systems</p>
+          <h2>Measured on shared outcomes.</h2>
+        </div>
+        <p><strong>Joint Task Success (JTS)</strong> verifies whether every applicable user goal, tool effect, final business state, and privacy boundary holds together in one live session.</p>
+      </div>
+
+      <div class="finding-strip" aria-label="Headline benchmark findings">
+        <article class="finding-card spotlight-card" data-reveal style="--stagger:0ms">
+          <span class="finding-kicker axis-kicker-a">Capability Tier Gap</span>
+          <strong>62.24% <span>vs.</span> 19.39%</strong>
+          <p>Top proprietary vs. strongest open-weight Tool-Free JTS. Six of eight open speech models score ≤ 3.57% despite low-latency turn-taking.</p>
+        </article>
+        <article class="finding-card spotlight-card" data-reveal style="--stagger:70ms">
+          <span class="finding-kicker axis-kicker-t">The Coordination Illusion</span>
+          <strong>76.4%–87.2% <span>Coord.</span></strong>
+          <p>Models with 0% JTS and collapsed Threading (&lt; 1%) still score high on Coordination by dropping prior context and staying passive.</p>
+        </article>
+        <article class="finding-card spotlight-card" data-reveal style="--stagger:140ms">
+          <span class="finding-kicker axis-kicker-c">Accountable Execution</span>
+          <strong>−11.0 <span>to</span> −24.0 pp</strong>
+          <p>Requiring zero unauthorized <code>caller_id</code> or scope violations (<strong>Pure JTS</strong>) sharply lowers Tool-Augmented scores and separates near-ties.</p>
+        </article>
+      </div>
+
+      <div class="rank-board" data-reveal style="--stagger:180ms">
+        <div class="rank-toolbar">
+          <div class="toolbar-group">
+            <div class="segmented" role="group" aria-label="Evaluation track">
+              <button type="button" data-chart-track="tool_free" aria-pressed="true">Tool-Free <small>392</small></button>
+              <button type="button" data-chart-track="tool_augmented" aria-pressed="false">Tool-Augmented <small>408</small></button>
+            </div>
+            <button type="button" id="pure-jts-toggle" class="pure-toggle" aria-pressed="false" title="Compare standard Tool-Augmented JTS against Pure JTS (zero unauthorized tool executions)">
+              <span class="pure-dot" aria-hidden="true"></span>
+              <span>Pure JTS (0 unauthorized calls)</span>
+            </button>
+          </div>
+
+          <div class="toolbar-group">
+            <label class="metric-selector" id="metric-selector-wrap">
+              <span>Metric</span>
+              <select id="chart-metric" aria-label="Metric">
+                <option value="0">JTS · Primary outcome</option>
+                <option value="1">A · Attribution</option>
+                <option value="2">T · Threading</option>
+                <option value="3">C · Coordination</option>
+              </select>
+            </label>
+            <div class="segmented view-segmented" role="group" aria-label="Leaderboard presentation">
+              <button type="button" data-board-view="chart" aria-pressed="true">Chart</button>
+              <button type="button" data-board-view="table" aria-pressed="false">Table 2</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="rank-filters">
+          <label class="search">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg>
+            <input type="search" id="chart-search" placeholder="Filter evaluated systems…" aria-label="Search models">
+          </label>
+          <div class="filter-right">
+            <label class="rank-family">
+              <span>Family</span>
+              <select id="chart-family" aria-label="Model family">
+                <option value="all">All systems (13)</option>
+                <option value="proprietary">Proprietary (5)</option>
+                <option value="open">Open-weight (8)</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div id="chart-view-pane">
+          <div class="rank-legend">
+            <span><i class="legend-proprietary"></i>Proprietary agent</span>
+            <span><i class="legend-open"></i>Open-weight speech model</span>
+            <span id="pure-legend-item" class="pure-legend" hidden><i class="legend-pure-ghost"></i>Unpenalized JTS → Accountable Pure JTS</span>
+            <span id="chart-caption" class="legend-caption">Joint Task Success (%) · Tool-Free (392 cases)</span>
+          </div>
+
+          <div id="rank-chart" class="rank-chart" aria-label="Model score bar chart">
+            <div class="chart-ruler">
+              <span class="ruler-sys">Rank &amp; System</span>
+              <div class="chart-scale">
+                <span style="left:0%">0</span>
+                <span style="left:25%">25</span>
+                <span style="left:50%">50</span>
+                <span style="left:75%">75</span>
+                <span style="left:100%">100%</span>
+              </div>
+              <span class="ruler-diag">ATC Diagnostics (%)</span>
+            </div>
+            <div id="chart-rows" class="chart-rows" role="list"></div>
+          </div>
+        </div>
+
+        <div id="table-view-pane" class="table-view-pane" hidden>
+          <div class="table-scroll">
+            <table class="matrix-table" aria-label="Full Paper Table 2 results">
+              <thead>
+                <tr>
+                  <th rowspan="2" class="model-heading">System</th>
+                  <th colspan="4" class="group-heading">Tool-Free Track (392 Cases)</th>
+                  <th colspan="5" class="group-heading track-separator">Tool-Augmented Track (408 Cases)</th>
+                </tr>
+                <tr>
+                  <th class="jts-head"><button type="button" class="metric-sort active" data-sort="tf_0">JTS <span class="sort-mark">↓</span></button></th>
+                  <th><button type="button" class="metric-sort" data-sort="tf_1">A <span class="sort-mark">↕</span></button></th>
+                  <th><button type="button" class="metric-sort" data-sort="tf_2">T <span class="sort-mark">↕</span></button></th>
+                  <th><button type="button" class="metric-sort" data-sort="tf_3">C <span class="sort-mark">↕</span></button></th>
+                  <th class="jts-head track-separator"><button type="button" class="metric-sort" data-sort="ta_0">JTS <span class="sort-mark">↕</span></button></th>
+                  <th class="pure-head"><button type="button" class="metric-sort" data-sort="pure">Pure JTS <span class="sort-mark">↕</span></button></th>
+                  <th><button type="button" class="metric-sort" data-sort="ta_1">A <span class="sort-mark">↕</span></button></th>
+                  <th><button type="button" class="metric-sort" data-sort="ta_2">T <span class="sort-mark">↕</span></button></th>
+                  <th><button type="button" class="metric-sort" data-sort="ta_3">C <span class="sort-mark">↕</span></button></th>
+                </tr>
+              </thead>
+              <tbody id="matrix-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="rank-footer">
+          <span id="result-count" aria-live="polite">13 evaluated systems · scores in %</span>
+          <div class="export-actions">
+            <button type="button" id="download" class="text-button">Export CSV ↓</button>
+            <a href="assets/leaderboard.json" download="mu-bench-leaderboard.json" class="text-button">JSON ↓</a>
+          </div>
+        </div>
+      </div>
+      <p class="rank-note" id="chart-note">Paper Table 2 snapshot (<a href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">arXiv:2611.34920</a>). Scores are averaged over evaluated cases; higher is better. Eight open-weight speech models lack native tool-calling interfaces, and MOSS-Live’s tool-calling support arrived after the evaluation cutoff.</p>
+    </div>
+  </section>
+
+  <!-- DIAGNOSTIC INSIGHTS -->
+  <section id="diagnostics" class="section diagnostics-section">
+    <div class="shell">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span class="eyebrow-num">03</span>Diagnostic Analyses</p>
+          <h2>Why multi-user sessions break down.</h2>
+        </div>
+        <p>Controlled ablations, caller-provenance audits, and factorial stress tests separate real-time acoustic overlap from deeper multi-party state tracking and permission enforcement.</p>
+      </div>
+
+      <div class="diag-grid">
+        <!-- Card 1: Cumulative Capability Ablation -->
+        <article class="diag-card spotlight-card" data-reveal style="--stagger:0ms">
+          <div class="diag-card-top">
+            <div>
+              <span class="card-tag">Cumulative Capability Ablation · MiniCPM-o 4.5</span>
+              <h3>Removing overlap helps — yet 68.6% still fail.</h3>
+            </div>
+            <span class="gain-pill">+11.99 pp JTS</span>
+          </div>
+          <p class="diag-desc">Three turn-by-turn interventions cumulatively remove concurrency and perception bottlenecks on the 392 Tool-Free cases while preserving spoken inputs and joint completion criteria:</p>
+
+          <div class="ablation-stepper" role="tablist" aria-label="Ablation intervention stage">
+            <button type="button" class="ablation-btn active" role="tab" aria-selected="true" data-stage="0">0 · Full-Duplex</button>
+            <button type="button" class="ablation-btn" role="tab" aria-selected="false" data-stage="1">1 · + Serialized</button>
+            <button type="button" class="ablation-btn" role="tab" aria-selected="false" data-stage="2">2 · + Identity</button>
+            <button type="button" class="ablation-btn" role="tab" aria-selected="false" data-stage="3">3 · + Semantics</button>
+          </div>
+
+          <div class="ablation-visual">
+            <svg viewBox="0 0 520 218" class="ablation-svg" role="img" aria-label="Dual-axis chart of MiniCPM-o 4.5 cumulative ablation stages from 19.39% to 31.38% JTS">
+              <line x1="44" y1="24" x2="486" y2="24" stroke="#eaeef6"/>
+              <line x1="44" y1="76" x2="486" y2="76" stroke="#eaeef6"/>
+              <line x1="44" y1="128" x2="486" y2="128" stroke="#eaeef6"/>
+              <line x1="44" y1="180" x2="486" y2="180" stroke="#cbd5e6"/>
+              <text x="36" y="28" text-anchor="end" class="svg-axis">40%</text>
+              <text x="36" y="80" text-anchor="end" class="svg-axis">26%</text>
+              <text x="36" y="132" text-anchor="end" class="svg-axis">13%</text>
+              <text x="36" y="184" text-anchor="end" class="svg-axis">0%</text>
+              <text x="494" y="28" class="svg-axis">100</text>
+              <text x="494" y="104" class="svg-axis">50</text>
+              <text x="494" y="184" class="svg-axis">0</text>
+
+              <!-- JTS Bars (scale 0..40% -> y 180..24) -->
+              <g class="ablation-bars">
+                <g data-bar="0" class="active">
+                  <rect x="74" y="104.4" width="52" height="75.6" rx="6"/>
+                  <text x="100" y="96" text-anchor="middle" class="bar-num">19.39%</text>
+                </g>
+                <g data-bar="1">
+                  <rect x="180" y="75.5" width="52" height="104.5" rx="6"/>
+                  <text x="206" y="67" text-anchor="middle" class="bar-num">26.79%</text>
+                </g>
+                <g data-bar="2">
+                  <rect x="286" y="64.6" width="52" height="115.4" rx="6"/>
+                  <text x="312" y="56" text-anchor="middle" class="bar-num">29.59%</text>
+                </g>
+                <g data-bar="3">
+                  <rect x="392" y="57.6" width="52" height="122.4" rx="6"/>
+                  <text x="418" y="49" text-anchor="middle" class="bar-num">31.38%</text>
+                </g>
+              </g>
+
+              <!-- Unified Triadic ATC Lines -->
+              <!-- Coordination (Rose): 87.17, 89.92, 89.65, 90.24 -->
+              <polyline class="ablation-line" fill="none" stroke="#b84a5c" stroke-width="2.3" points="100,44.0 206,39.7 312,40.1 418,39.2"/>
+              <!-- Attribution (Cobalt): 36.89, 53.61, 63.35, 61.83 -->
+              <polyline class="ablation-line" fill="none" stroke="#2557f0" stroke-width="2.3" points="100,122.5 206,96.4 312,81.2 418,83.5"/>
+              <!-- Threading (Champagne Gold): 35.95, 51.03, 53.53, 52.11 -->
+              <polyline class="ablation-line" fill="none" stroke="#b57b1c" stroke-width="2.3" points="100,123.9 206,100.4 312,96.5 418,98.7"/>
+
+              <g class="ablation-dots">
+                <circle cx="100" cy="44.0" r="3.6" fill="#b84a5c"/><circle cx="206" cy="39.7" r="3.6" fill="#b84a5c"/><circle cx="312" cy="40.1" r="3.6" fill="#b84a5c"/><circle cx="418" cy="39.2" r="3.6" fill="#b84a5c"/>
+                <circle cx="100" cy="122.5" r="3.6" fill="#2557f0"/><circle cx="206" cy="96.4" r="3.6" fill="#2557f0"/><circle cx="312" cy="81.2" r="3.6" fill="#2557f0"/><circle cx="418" cy="83.5" r="3.6" fill="#2557f0"/>
+                <circle cx="100" cy="123.9" r="3.6" fill="#b57b1c"/><circle cx="206" cy="100.4" r="3.6" fill="#b57b1c"/><circle cx="312" cy="96.5" r="3.6" fill="#b57b1c"/><circle cx="418" cy="98.7" r="3.6" fill="#b57b1c"/>
+              </g>
+
+              <text x="100" y="202" text-anchor="middle" class="svg-stage">Full-duplex</text>
+              <text x="206" y="202" text-anchor="middle" class="svg-stage">+ Serialized</text>
+              <text x="312" y="202" text-anchor="middle" class="svg-stage">+ Identity</text>
+              <text x="418" y="202" text-anchor="middle" class="svg-stage">+ Semantics</text>
+            </svg>
+            <div class="ablation-legend">
+              <span><i class="swatch-jts"></i>JTS (left axis)</span>
+              <span><i class="swatch-a"></i>Attribution</span>
+              <span><i class="swatch-t"></i>Threading</span>
+              <span><i class="swatch-c"></i>Coordination (right axis)</span>
+            </div>
+          </div>
+
+          <div class="ablation-callout" id="ablation-callout">
+            <strong>Stage 0 · Full-Duplex Baseline (19.39% JTS)</strong>
+            <p>Overlapping speech and barge-ins severely depress Attribution (36.89%) and Threading (35.95%), even though passive Coordination reaches 87.17%.</p>
+          </div>
+        </article>
+
+        <!-- Card 2: Caller Provenance & Factorial Stressors -->
+        <article class="diag-card spotlight-card" data-reveal style="--stagger:90ms">
+          <div class="diag-card-top">
+            <div>
+              <span class="card-tag">Caller Provenance &amp; 2³ Stress Testing</span>
+              <h3>Hidden authorization violations &amp; group scaling.</h3>
+            </div>
+          </div>
+          <p class="diag-desc">Agents frequently reach a valid terminal state by invoking tools under the wrong user’s <code>caller_id</code> or beyond granted scope — masked unless audited for <strong>Pure JTS</strong>:</p>
+
+          <div class="provenance-list" aria-label="Unauthorized tool execution audit">
+            <div class="prov-header">
+              <span>Tool-Capable Agent</span>
+              <span>Episodes w/ ≥1 Unauth. Call</span>
+              <span>JTS → Pure JTS</span>
+            </div>
+            <div class="prov-row">
+              <strong>GPT-Realtime-2</strong>
+              <div class="prov-mini-bar"><i style="width:21.8%"></i><span>21.8%</span></div>
+              <span class="prov-drop">65.4 → <b>52.5%</b> <em>−12.9</em></span>
+            </div>
+            <div class="prov-row">
+              <strong>Gemini 3.8 Live</strong>
+              <div class="prov-mini-bar"><i style="width:35.5%"></i><span>35.5%</span></div>
+              <span class="prov-drop">65.0 → <b>46.8%</b> <em>−18.2</em></span>
+            </div>
+            <div class="prov-row">
+              <strong>Grok Voice 3.0</strong>
+              <div class="prov-mini-bar"><i style="width:30.9%"></i><span>30.9%</span></div>
+              <span class="prov-drop">57.6 → <b>46.6%</b> <em>−11.0</em></span>
+            </div>
+            <div class="prov-row">
+              <strong>Seeduplex 3.0</strong>
+              <div class="prov-mini-bar warn"><i style="width:71.8%"></i><span>71.8%</span></div>
+              <span class="prov-drop">50.0 → <b>26.0%</b> <em>−24.0</em></span>
+            </div>
+          </div>
+
+          <div class="stressor-summary">
+            <h4>2 × 2 × 2 Controlled Condition Contrasts</h4>
+            <div class="stressor-items">
+              <div>
+                <span class="stressor-badge neg">Universal Bottleneck</span>
+                <strong>Population (2–3 → 4–7 users)</strong>
+                <p>Degrades every capable model: −19.6% to −29.5% relative Overall JTS on proprietary agents and −48.0% on MiniCPM-o 4.5.</p>
+              </div>
+              <div>
+                <span class="stressor-badge split">Divergent Effect</span>
+                <strong>Follow-up Demands &amp; Acoustics</strong>
+                <p>Repeated clarification helps top agents recover outcomes (+3.1% to +14.6% JTS) while taxing weaker context windows (−27.3% on MiniCPM-o 4.5).</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENCHMARK OVERVIEW & 20 DOMAINS -->
+  <section id="overview" class="overview section">
+    <div class="shell">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span class="eyebrow-num">04</span>Benchmark Design</p>
+          <h2>More than taking turns.</h2>
+        </div>
+        <p>100 base scenarios across 20 everyday and professional domains expand across a matched <strong>2 × 2 × 2</strong> condition grid into 800 deterministic audio evaluation cases.</p>
+      </div>
+
+      <div class="track-grid">
+        <article class="track-card spotlight-card" data-reveal style="--stagger:0ms">
+          <div class="track-card-head">
+            <span class="track-tag">Tool-Free Track</span>
+            <span class="track-pill">49 Scenarios · 392 Cases</span>
+          </div>
+          <h3>Coordinate through spoken dialogue.</h3>
+          <p>Resolve competing preferences, filter peer side-talk and public announcements, enforce verbal privacy boundaries, and resume interrupted threads without backend writes.</p>
+        </article>
+        <article class="track-card spotlight-card" data-reveal style="--stagger:80ms">
+          <div class="track-card-head">
+            <span class="track-tag">Tool-Augmented Track</span>
+            <span class="track-pill">51 Scenarios · 408 Cases</span>
+          </div>
+          <h3>Follow through in executable state.</h3>
+          <p>Bind explicit public <code>caller_id</code> permissions, execute virtual domain tools, revise actions when authorized speakers update constraints, and reach a verified final business state.</p>
+        </article>
+      </div>
+
+      <div class="factorial-strip" aria-label="2 by 2 by 2 controlled factors">
+        <div class="factor-box" data-reveal style="--stagger:0ms">
+          <span>Factor 1 · Group Size</span>
+          <strong>Small (2–3) vs. Large (4–7)</strong>
+          <small>Tests speaker attribution &amp; floor equity</small>
+        </div>
+        <div class="factor-box" data-reveal style="--stagger:60ms">
+          <span>Factor 2 · Acoustic Profile</span>
+          <strong>Clean vs. Realistic</strong>
+          <small>Tests disfluencies &amp; acoustic robustness</small>
+        </div>
+        <div class="factor-box" data-reveal style="--stagger:120ms">
+          <span>Factor 3 · Follow-up Demands</span>
+          <strong>Direct vs. Repeated</strong>
+          <small>Tests multi-turn thread persistence</small>
+        </div>
+      </div>
+
+      <figure class="figure research-plate" data-reveal>
+        <div class="plate-bar">
+          <span class="plate-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="plate-title">Plate 01 · Shared-Space Interaction Topology &amp; 20-Domain Sunburst</span>
+          <a class="pdf-chip" href="assets/intro-teaser.pdf" target="_blank" rel="noopener">Vector PDF ↗</a>
+        </div>
+        <div class="plate-canvas">
+          <img src="assets/intro-teaser.png" alt="A shared airport ride illustrates interruptions, side-talk and backchannels. Attribution, Threading and Coordination explain how the agent must manage the interaction; a domain sunburst shows the 20 domains across Tool-Augmented and Tool-Free tracks." width="5600" height="1500" loading="lazy">
+        </div>
+        <figcaption>
+          Left: barge-in, side-talk, and backchannels unpacked through Attribution, Threading, and Coordination. Right: 100 base scenarios across 20 domains split into Tool-Augmented (TA) and Tool-Free (TF) tracks.
+        </figcaption>
+      </figure>
+
+      <div class="domain-explorer" data-reveal>
+        <div class="domain-explorer-head">
+          <div>
+            <h3>Explore all 20 domains &amp; 100 base scenarios</h3>
+            <p>Filter by macro-cluster to inspect Tool-Augmented (TA) and Tool-Free (TF) scenario splits.</p>
+          </div>
+          <div class="domain-filters" role="group" aria-label="Filter domains by cluster">
+            <button type="button" class="domain-chip active" data-cluster="all">All (20)</button>
+            <button type="button" class="domain-chip" data-cluster="mobility">Travel &amp; Mobility</button>
+            <button type="button" class="domain-chip" data-cluster="commerce">Commerce &amp; Services</button>
+            <button type="button" class="domain-chip" data-cluster="home">Home, Care &amp; Social</button>
+            <button type="button" class="domain-chip" data-cluster="work">Work, Tech &amp; Safety</button>
+          </div>
+        </div>
+        <div id="domain-grid" class="domain-grid" role="list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRAMEWORK & EVALUATION PROTOCOL -->
+  <section id="framework" class="section framework">
+    <div class="shell">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span class="eyebrow-num">05</span>Architecture &amp; Protocol</p>
+          <h2>Live interaction. Verified outcomes.</h2>
+        </div>
+        <p>Isolated user simulators react dynamically to what was actually played and executed; dual semantic audits and deterministic state checks score strictly against delivered evidence.</p>
+      </div>
+
+      <div class="arch-pillars">
+        <article class="pillar-card spotlight-card" data-reveal style="--stagger:0ms">
+          <span class="pillar-step">Stage A · Closed-Loop Multi-User Simulator</span>
+          <h3>Independent people over one audio stream.</h3>
+          <ul>
+            <li><strong>Playbook &amp; 200 ms Orchestrator:</strong> Schedules events, authority scopes, and bounded follow-ups from live playback and tool state.</li>
+            <li><strong>Isolated Audible History:</strong> Each participant’s scriptwriter (<code>gpt-6-luna</code>) sees only their own profile, private materials, and played audio.</li>
+            <li><strong>Deterministic Voice Bindings:</strong> <code>CosyVoice3</code> synthesizes character-consistent 16 kHz speech across 3,200 reference recordings.</li>
+          </ul>
+        </article>
+        <article class="pillar-card spotlight-card" data-reveal style="--stagger:80ms">
+          <span class="pillar-step">Stage B · Evidence-Grounded Verification</span>
+          <h3>Itemized auditing + deterministic state checks.</h3>
+          <ul>
+            <li><strong>Dual Isolated Semantic Reviews:</strong> Two independent passes score every goal, privacy boundary, and capability item, with conflict arbitration.</li>
+            <li><strong>Targeted Source Grounding:</strong> Automatically inspects delivered startup/turn materials whenever fabrication or missing-source flags arise.</li>
+            <li><strong>Programmatic Validators:</strong> Enforces runtime ACLs, causal ordering, caller provenance, and final business-state equivalence in code.</li>
+          </ul>
+        </article>
+      </div>
+
+      <figure class="figure research-plate" data-reveal>
+        <div class="plate-bar">
+          <span class="plate-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="plate-title">Plate 02 · Closed-Loop Simulation &amp; Dual-Audit Verification Pipeline</span>
+          <a class="pdf-chip" href="assets/framework.pdf" target="_blank" rel="noopener">Vector PDF ↗</a>
+        </div>
+        <div class="plate-canvas">
+          <img src="assets/framework.png" alt="Left: Playbook and Orchestrator drive isolated user simulators through audible history, scriptwriter and voice actor over an audio streaming channel. Right: Recorded evidence and Task Contract feed two independent semantic reviews with arbitration and programmatic checks to produce JTS and ATC." width="5600" height="1410" loading="lazy">
+        </div>
+        <figcaption>
+          Code aggregates verified itemized verdicts into JTS and ATC without single-pass holistic LLM grading; technical interruptions retain evidence for recovery rather than penalizing model scores.
+        </figcaption>
+      </figure>
+
+      <div class="metric-explainer" data-reveal>
+        <div class="outcome-card spotlight-card">
+          <span class="metric-label">Primary Binary Session Outcome</span>
+          <h3>Joint Task Success (JTS)</h3>
+          <p>Equals <code>1</code> iff all contract goals, required tool executions, valid terminal business state, and privacy boundaries hold simultaneously in the same trajectory. Paired with <strong>Pure JTS</strong> (requiring <code>n = 0</code> unauthorized tool calls).</p>
+          <div class="outcome-links">
+            <a class="protocol-link" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">Paper §3–4 (arXiv) →</a>
+            <a class="protocol-link" href="https://github.com/lqh1106/mu-bench/blob/main/docs/EVALUATION.md" target="_blank" rel="noopener">Evaluation spec →</a>
+          </div>
+        </div>
+        <div class="diagnostics-cards">
+          <div class="axis-card">
+            <b class="axis-a">A</b>
+            <div>
+              <strong>Attribution <span>· Routing</span></strong>
+              <p>Who spoke, whom did they address, and whose goal or constraint is being updated?</p>
+            </div>
+          </div>
+          <div class="axis-card">
+            <b class="axis-t">T</b>
+            <div>
+              <strong>Threading <span>· Continuity</span></strong>
+              <p>Preserve, pause, revise, and resume interleaved task threads across interruptions and follow-ups.</p>
+            </div>
+          </div>
+          <div class="axis-card">
+            <b class="axis-c">C</b>
+            <div>
+              <strong>Coordination <span>· Avg*(Isolation, Equity)</span></strong>
+              <p>Enforce cross-user permission &amp; privacy boundaries while serving applicable participants equitably.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GET STARTED & CITATION -->
+  <section id="get-started" class="section get-started">
+    <div class="shell">
+      <div class="start-grid">
+        <div class="start-intro" data-reveal>
+          <p class="eyebrow"><span class="eyebrow-num">06</span>Reproduce &amp; Integrate</p>
+          <h2>Bring your voice agent.</h2>
+          <p>Clone the open-source runner, download or verify the <a href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener">Hugging Face dataset</a> and 3,200 voice references, then evaluate native GPU speech models, cloud realtime APIs, or streaming text agents.</p>
+
+          <div class="resource-badges">
+            <a class="res-badge" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">
+              <span class="res-badge-top"><img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="13" height="13">Paper</span>
+              <strong>arXiv:2611.34920 ↗</strong>
+            </a>
+            <a class="res-badge" href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener">
+              <span class="res-badge-top"><img class="brand-icon hf-icon" src="assets/hf-logo.png" alt="" width="15" height="15">Dataset</span>
+              <strong>HF · linqihao/mu-bench ↗</strong>
+            </a>
+            <a class="res-badge" href="https://github.com/lqh1106/mu-bench" target="_blank" rel="noopener">
+              <span class="res-badge-top"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.82c.85 0 1.71.12 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>Repository</span>
+              <strong>GitHub · lqh1106/mu-bench ↗</strong>
+            </a>
+          </div>
+
+          <div class="doc-grid" aria-label="Documentation directory">
+            <a href="https://github.com/lqh1106/mu-bench/blob/main/docs/INSTALL.md" target="_blank" rel="noopener">
+              <strong>Installation &amp; Services</strong>
+              <span>Runner, Faster-Whisper ASR &amp; CosyVoice3 TTS</span>
+            </a>
+            <a href="https://github.com/lqh1106/mu-bench/blob/main/docs/MODELS.md" target="_blank" rel="noopener">
+              <strong>Model Adapters</strong>
+              <span>8 native GPU environments &amp; 5 cloud providers</span>
+            </a>
+            <a href="https://github.com/lqh1106/mu-bench/blob/main/docs/PROTOCOL.md" target="_blank" rel="noopener">
+              <strong>Interaction Protocol</strong>
+              <span>Logical clock, channels &amp; auxiliary ablations</span>
+            </a>
+            <a href="https://github.com/lqh1106/mu-bench/blob/main/docs/TEXT_TRACK.md" target="_blank" rel="noopener">
+              <strong>Streaming Text Track</strong>
+              <span>GPU-free prefix-interruption diagnostics</span>
+            </a>
+            <a href="https://github.com/lqh1106/mu-bench/blob/main/docs/USAGE.md" target="_blank" rel="noopener">
+              <strong>Campaigns &amp; Recovery</strong>
+              <span>Parallel workers, offline judge &amp; cleanup</span>
+            </a>
+            <a href="https://github.com/lqh1106/mu-bench/blob/main/AGENTS.md" target="_blank" rel="noopener">
+              <strong>AGENTS.md</strong>
+              <span>Automated setup guide for coding agents</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="terminal-stack" data-reveal style="--stagger:90ms">
+          <div class="code-panel">
+            <div class="code-header">
+              <div class="code-tabs" role="tablist" aria-label="Quick start command recipes">
+                <button type="button" class="code-tab active" role="tab" aria-selected="true" data-snippet="install">1. Bootstrap</button>
+                <button type="button" class="code-tab" role="tab" aria-selected="false" data-snippet="native">2. Native Audio</button>
+                <button type="button" class="code-tab" role="tab" aria-selected="false" data-snippet="cloud">3. Tool-Aug Cloud</button>
+                <button type="button" class="code-tab" role="tab" aria-selected="false" data-snippet="text">4. Text Track</button>
+              </div>
+              <button type="button" id="copy" class="copy-btn">Copy</button>
+            </div>
+            <pre><code id="quickstart">export MUBENCH_REPO="$HOME/mu-bench"
 git clone https://github.com/lqh1106/mu-bench.git "$MUBENCH_REPO"
 cd "$MUBENCH_REPO"
 bash scripts/bootstrap.sh
-.venv/bin/python -m mubench validate --assets</code></pre><p>Next: deploy speech services and configure a model before running a smoke case.</p><span class="sr-only" id="copy-status" aria-live="polite"></span></div></div></section>
-</main><footer class="shell footer"><a class="brand" href="#"><img src="assets/mu-bench-logo.svg" alt="" width="26" height="24">μ-Bench</a><p>Benchmarking the outcome of a shared conversation.</p><div><a href="https://github.com/lqh1106/mu-bench">GitHub</a><a href="https://huggingface.co/datasets/linqihao/mu-bench">Hugging Face</a><a href="https://github.com/lqh1106/mu-bench/blob/main/LICENSE">Apache-2.0</a></div></footer>
-</body></html>
+.venv/bin/python -m mubench validate --assets</code></pre>
+            <p id="code-caption">Linux · Python 3.10–3.12 · Validates all 800 cases, deterministic voice bindings, and runtime contracts.</p>
+            <span class="sr-only" id="copy-status" aria-live="polite"></span>
+          </div>
+
+          <div class="cite-panel" id="cite">
+            <div class="code-header">
+              <span>BibTeX Citation · arXiv:2611.34920</span>
+              <button type="button" id="copy-bib" class="copy-btn">Copy BibTeX</button>
+            </div>
+            <pre><code id="bibtex-code">@article{lin2026mubench,
+  author        = {Lin, Qihao},
+  title         = {$\mu$-Bench: Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents},
+  journal       = {arXiv preprint arXiv:2611.34920},
+  year          = {2026},
+  eprint        = {2611.34920},
+  archivePrefix = {arXiv},
+  url           = {https://arxiv.org/abs/2611.34920}
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer-wrap">
+  <div class="shell footer">
+    <a class="brand" href="#">
+      <img src="assets/mu-bench-logo.svg" alt="" width="26" height="24">
+      <span>μ-Bench</span>
+    </a>
+    <p>Closed-loop evaluation for voice agents serving multiple users in a shared acoustic space.</p>
+    <div class="footer-links">
+      <a href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">arXiv</a>
+      <a href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener">Hugging Face</a>
+      <a href="https://github.com/lqh1106/mu-bench" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/lqh1106/mu-bench/blob/main/README.zh-CN.md" target="_blank" rel="noopener">中文文档</a>
+      <a href="https://github.com/lqh1106/mu-bench/blob/main/LICENSE" target="_blank" rel="noopener">Apache-2.0</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

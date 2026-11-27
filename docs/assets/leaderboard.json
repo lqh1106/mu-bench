@@ -121,7 +121,9 @@
         84.61,
         81.14,
         83.29
-      ]
+      ],
+      "pure_jts": 52.5,
+      "unauth_episode_pct": 21.8
     },
     {
       "name": "Gemini 3.8 Live",
@@ -137,7 +139,9 @@
         75.8,
         82.89,
         74.98
-      ]
+      ],
+      "pure_jts": 46.8,
+      "unauth_episode_pct": 35.5
     },
     {
       "name": "Grok Voice 3.0",
@@ -153,7 +157,9 @@
         81.99,
         82.5,
         78.1
-      ]
+      ],
+      "pure_jts": 46.6,
+      "unauth_episode_pct": 30.9
     },
     {
       "name": "Seeduplex 3.0",
@@ -169,7 +175,9 @@
         76.81,
         61.9,
         55.98
-      ]
+      ],
+      "pure_jts": 26.0,
+      "unauth_episode_pct": 71.8
     }
   ]
 }

@@ -6,13 +6,16 @@
 
 ### Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents
 
+[![arXiv: 2611.34920](https://img.shields.io/badge/arXiv-2611.34920-b31b1b.svg?logo=arxiv&logoColor=white)](https://arxiv.org/abs/2611.34920)
+[![Dataset: Hugging Face](https://img.shields.io/badge/Dataset-mu--bench-ffd21e.svg?logo=huggingface&logoColor=black)](https://huggingface.co/datasets/linqihao/mu-bench)
+[![Project Page](https://img.shields.io/badge/Project-Homepage-2557f0.svg)](https://lqh1106.github.io/mu-bench/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Python: 3.10–3.12](https://img.shields.io/badge/Python-3.10--3.12-3776ab.svg)](pyproject.toml)
 [![Cases: 800](https://img.shields.io/badge/Cases-800-10b981.svg)](cases/)
 
 **Closed-loop, full-duplex evaluation for voice agents serving multiple users over a shared audio channel.**
 
-[Overview](#benchmark-overview) · [Framework](#how-it-works) · [Evaluation](#evaluation) · [Quick Start](#quick-start) · [Models](#supported-models-and-tracks) · [中文](README.zh-CN.md)
+[Paper (arXiv)](https://arxiv.org/abs/2611.34920) · [Dataset (Hugging Face)](https://huggingface.co/datasets/linqihao/mu-bench) · [Project Page](https://lqh1106.github.io/mu-bench/) · [Overview](#benchmark-overview) · [Framework](#how-it-works) · [Evaluation](#evaluation) · [Quick Start](#quick-start) · [Models](#supported-models-and-tracks) · [中文](README.zh-CN.md)
 
 </div>
 
@@ -231,6 +234,21 @@ Automatic cleanup runs only after the required scores and final stereo audio are
 
 ## Citation and license
 
-Author and maintainer: [Lin Qihao (@lqh1106)](https://github.com/lqh1106). Software citation metadata is in [CITATION.cff](CITATION.cff).
+- **Paper:** [μ-Bench: Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents (arXiv:2611.34920)](https://arxiv.org/abs/2611.34920)
+- **Dataset:** [huggingface.co/datasets/linqihao/mu-bench](https://huggingface.co/datasets/linqihao/mu-bench)
+- **Project Page:** [lqh1106.github.io/mu-bench](https://lqh1106.github.io/mu-bench/)
+- **Author & maintainer:** [Lin Qihao (@lqh1106)](https://github.com/lqh1106) · Software citation metadata in [CITATION.cff](CITATION.cff)
+
+```bibtex
+@article{lin2026mubench,
+  author        = {Lin, Qihao},
+  title         = {$\mu$-Bench: Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents},
+  journal       = {arXiv preprint arXiv:2611.34920},
+  year          = {2026},
+  eprint        = {2611.34920},
+  archivePrefix = {arXiv},
+  url           = {https://arxiv.org/abs/2611.34920}
+}
+```
 
 Original benchmark code and case content use [Apache-2.0](LICENSE). Third-party code, voice assets and external weights retain their respective licenses; see [NOTICE](NOTICE) and [Third-party components](docs/THIRD_PARTY.md).

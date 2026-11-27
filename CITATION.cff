@@ -1,9 +1,21 @@
 cff-version: 1.2.0
-message: "Please cite the μ-Bench benchmark and the upstream models/datasets used."
-title: "μ-Bench: Shared Multi-User Voice Assistant Evaluation"
+message: "Please cite the μ-Bench paper and benchmark, along with upstream models/datasets used."
+title: "μ-Bench: Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents"
 type: software
 version: 1.0.0
 license: Apache-2.0
+url: "https://lqh1106.github.io/mu-bench/"
+repository-code: "https://github.com/lqh1106/mu-bench"
+repository-artifact: "https://huggingface.co/datasets/linqihao/mu-bench"
 authors:
   - family-names: "Lin"
     given-names: "Qihao"
+preferred-citation:
+  type: article
+  title: "μ-Bench: Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents"
+  authors:
+    - family-names: "Lin"
+      given-names: "Qihao"
+  year: 2026
+  journal: "arXiv preprint arXiv:2611.34920"
+  url: "https://arxiv.org/abs/2611.34920"
