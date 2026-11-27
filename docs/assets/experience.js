@@ -26,25 +26,25 @@
           tag: '对智能体 · 主目标',
           text: '10 点前送我们到机场。',
           axis: 'A',
-          title: '共享任务正式建立。',
-          insight: '爸爸设定了目的地与 10:00 的硬性截止时间，两者在整个会话中必须始终绑定到他本人。',
-          eta: '尚未查询',
-          approval: '尚未请求',
-          result: '主任务已登记（爸爸）'
+          title: '建立主任务',
+          insight: '爸爸提出目的地和 10:00 的截止时间，这两项约束后续都要一直记在他名下。',
+          eta: '未查询',
+          approval: '未请求',
+          result: '已记录主任务（爸爸）'
         },
         {
           at: 0.17,
           end: 0.32,
           who: 'agent',
           tag: '规划初始路线',
-          text: '前往机场最快路线是……',
+          text: '去机场最快路线是……',
           tool: 'route_planner()',
           axis: 'T',
-          title: '智能体开启主任务线索。',
-          insight: '初始路线规划刚刚启动——就在此时，第二位参与者中途开口打断了回复。',
-          eta: '尚未查询',
-          approval: '尚未请求',
-          result: '已调用 route_planner()'
+          title: '开始规划路线',
+          insight: '模型刚开始按主任务规划路线，紧接着就被第二位用户打断。',
+          eta: '未查询',
+          approval: '未请求',
+          result: '调用 route_planner()'
         },
         {
           at: 0.24,
@@ -54,38 +54,38 @@
           tag: '中途打断 · 对智能体',
           text: '能顺路去趟公园吗？',
           axis: 'A',
-          title: '另一位用户在回复中途打断。',
-          insight: '孩子提出绕道请求，智能体必须结合爸爸的 10:00 时间约束和决策权限进行核查。',
-          eta: '正在核查…',
-          approval: '等待爸爸授权',
-          result: '捕获打断 · 主目标保持激活'
+          title: '另一位用户中途插话',
+          insight: '孩子想顺路去公园，但这个改动不能违反爸爸 10:00 到机场的要求，也需要他同意。',
+          eta: '查询中…',
+          approval: '待爸爸确认',
+          result: '收到插话 · 保留主目标'
         },
         {
           at: 0.4,
           end: 0.61,
           who: 'agent',
-          tag: '可行性与权限确认',
-          text: '绕道后 9:52 也能到机场，要加上公园经停吗？',
+          tag: '核查时间并确认权限',
+          text: '绕道后 9:52 也能到机场，要加这个经停点吗？',
           tool: 'check_eta(via="park") → 09:52',
           axis: 'C',
-          title: '先验证可行性，再申请权限。',
-          insight: '预计到达时间 09:52 满足 10:00 截止要求，智能体据此向有决策权的爸爸请求批准。',
+          title: '先算时间，再问授权人',
+          insight: '查到预计 09:52 到达、满足 10:00 限制后，再向有决定权的爸爸确认是否改道。',
           eta: '09:52（≤ 10:00）',
-          approval: '等待爸爸授权',
+          approval: '待爸爸确认',
           result: 'check_eta() → 09:52 < 10:00'
         },
         {
           at: 0.61,
           end: 0.8,
           who: 'dad',
-          tag: '条件授权 · 约束保留',
+          tag: '附条件同意',
           text: '可以，只要 10 点前能到。',
           axis: 'C',
-          title: '授权人给出附带条件的批准。',
-          insight: '爸爸同意增加公园经停点，同时明确重申 10:00 前抵达机场的约束继续有效。',
+          title: '授权人同意绕道',
+          insight: '爸爸批准顺路去公园，同时再次强调 10:00 前到机场的条件不能变。',
           eta: '09:52（≤ 10:00）',
-          approval: '爸爸已批准',
-          result: '已获授权 · 截止 ≤ 10:00'
+          approval: '爸爸已同意',
+          result: '已授权 · 截止 ≤ 10:00'
         },
         {
           at: 0.69,
@@ -95,38 +95,38 @@
           tag: '用户间旁白 · 对爸爸',
           text: '太好啦！谢谢爸爸！',
           axis: 'A',
-          title: '用户间旁白并非对智能体的指令。',
-          insight: '孩子是在向爸爸道谢而非发出新请求，智能体必须过滤旁白且不偏离主线。',
+          title: '过滤用户之间的闲聊',
+          insight: '孩子是在跟爸爸道谢，不是给模型下新指令，模型不需要响应，也不能打乱主线。',
           eta: '09:52（≤ 10:00）',
-          approval: '爸爸已批准',
-          result: '旁白已过滤 · 无多余工具调用'
+          approval: '爸爸已同意',
+          result: '忽略旁白 · 无多余调用'
         },
         {
           at: 0.8,
           end: 1.0,
           who: 'agent',
-          tag: '主线索恢复并提交',
-          text: '好的，我们先去公园……然后直奔机场。',
+          tag: '回到主线并执行',
+          text: '好的，先去公园……然后直接去机场。',
           tool: 'route_planner(via="park")',
           axis: 'T',
-          title: '恢复主线并提交联合有效方案。',
-          insight: '智能体在保留机场目的地与时间约束的前提下，正式提交包含公园经停的新路线。',
+          title: '恢复主线，更新路线',
+          insight: '模型在保留机场目的地和 10:00 限制的前提下，提交带公园经停的新路线。',
           eta: '09:52（≤ 10:00）',
-          approval: '爸爸已批准',
-          result: 'route_planner(via="park") 已提交'
+          approval: '爸爸已同意',
+          result: '已执行 route_planner(via="park")'
         },
         {
           at: 0.89,
           end: 1.0,
           who: 'dad',
           stacked: true,
-          tag: '附和信号',
+          tag: '简短附和',
           text: '嗯哼。',
           axis: 'C',
-          title: '简短附和不破坏最终状态。',
-          insight: '听众的自然附和不会引入新义务；所有用户目标、工具效果与约束同时成立。',
+          title: '简短附和不改变状态',
+          insight: '用户的随口回应不会增加新需求；各方目标、工具执行和约束全部满足。',
           eta: '09:52（≤ 10:00）',
-          approval: '爸爸已批准',
+          approval: '爸爸已同意',
           result: '联合任务成功 (JTS) ✓'
         }
       ]
@@ -262,7 +262,7 @@
     el.title = isZh ? `跳转至 ${(s.at * durationSeconds).toFixed(1)}s — ${s.title}` : `Jump to ${(s.at * durationSeconds).toFixed(1)}s — ${s.title}`;
     el.innerHTML = `<span class="event-tag">${esc(s.tag)}</span>${s.tool ? `<code>${esc(s.tool)}</code>` : ''}<p class="spoken-text" aria-label="${esc(s.text)}"><span aria-hidden="true">“</span>${wordsArr
       .map((word, wi) => `<span class="spoken-word" aria-hidden="true">${esc(word)}${!isZh && wi < wordsArr.length - 1 ? ' ' : ''}</span>`)
-      .join('')}<span class="closing-quote" aria-hidden="true">”</span></p>${i === 1 ? `<span class="interrupted-tag">${isZh ? '4.3s 处被打断' : 'Interrupted at 4.3s'}</span>` : ''}`;
+      .join('')}<span class="closing-quote" aria-hidden="true">”</span></p>${i === 1 ? `<span class="interrupted-tag">${isZh ? '4.3s 被打断' : 'Interrupted at 4.3s'}</span>` : ''}`;
     document.getElementById(`lane-${s.who}`).append(el);
 
     const strip = document.createElement('span');
@@ -404,12 +404,12 @@
       const updates = {
         'state-eta': s.eta,
         'state-approval': s.approval,
-        'tool-result': index < 0 ? (isZh ? '点击播放或任意话语卡片查看' : 'Click play or any card to inspect') : s.result,
-        'insight-title': index < 0 ? (isZh ? '追踪共享全双工音频流。' : 'Follow the shared full-duplex stream.') : s.title,
+        'tool-result': index < 0 ? (isZh ? '点击播放或任意对话卡片' : 'Click play or any card to inspect') : s.result,
+        'insight-title': index < 0 ? (isZh ? '查看全双工对话过程' : 'Follow the shared full-duplex stream.') : s.title,
         'insight-text':
           index < 0
             ? (isZh
-              ? '虚线卡片预览后续轮次；点击播放或任意话语，即可实时查看归属（A）、线索（T）与协调（C）的作用过程。'
+              ? '虚线卡片是尚未说出的轮次；点击播放或任意话语，查看归属（A）、线索（T）与协调（C）的具体判断。'
               : 'Ghosted blocks preview upcoming turns; play or click any utterance to inspect real-time Attribution, Threading, and Coordination.')
             : s.insight,
         'step-count': `${String(activeIdx + 1).padStart(2, '0')} / 08`

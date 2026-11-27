@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>μ-Bench · 共享交互场景下的多用户语音智能体评测基准</title>
-<meta name="description" content="面向共享交互场景的全双工闭环多用户语音智能体评测基准。涵盖 20 个真实领域、800 个因子化音频用例、交互式轨迹演示以及 JTS / ATC 评测榜单。">
+<meta name="description" content="面向共享交互场景的全双工闭环多用户语音智能体评测基准，包含 20 个真实领域、800 个音频用例、交互式轨迹示例和 JTS / ATC 评测榜单。">
 <meta name="theme-color" content="#f6f9fe">
 <link rel="icon" type="image/svg+xml" href="assets/mu-bench-logo.svg">
-<meta property="og:title" content="μ-Bench：多人同场，一局共成。">
+<meta property="og:title" content="μ-Bench · 多人同场，一局共成">
 <meta property="og:description" content="共享交互语音智能体多用户任务完成评测基准 — 论文 (arXiv:2611.34920)、数据集、代码与榜单。">
 <meta property="og:image" content="https://lqh1106.github.io/mu-bench/assets/intro-teaser.png">
-<link rel="stylesheet" href="assets/site.css?v=22">
-<link rel="stylesheet" href="assets/experience.css?v=22">
+<link rel="stylesheet" href="assets/site.css?v=23">
+<link rel="stylesheet" href="assets/experience.css?v=23">
 <script id="leaderboard-data" type="application/json">{
   "source": "Paper Table 2 supplied by the project author",
   "unit": "percent",
@@ -32,8 +32,8 @@
     {"name": "Seeduplex 3.0", "family": "proprietary", "tool_free": [37.5, 61.05, 78.67, 97.11], "tool_augmented": [50, 76.81, 61.9, 55.98], "pure_jts": 26.0, "unauth_episode_pct": 71.8}
   ]
 }</script>
-<script src="assets/site.js?v=22" defer></script>
-<script src="assets/experience.js?v=22" defer></script>
+<script src="assets/site.js?v=23" defer></script>
+<script src="assets/experience.js?v=23" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">跳至正文</a>
@@ -45,7 +45,7 @@
       <span>μ-Bench</span>
     </a>
     <div class="nav-links">
-      <a href="#experience">交互演示</a>
+      <a href="#experience">交互示例</a>
       <a href="#leaderboard">评测榜单</a>
       <a href="#diagnostics">诊断分析</a>
       <a href="#overview">基准设计</a>
@@ -77,7 +77,7 @@
     <div class="ambient-grid" aria-hidden="true"></div>
 
     <section class="hero shell">
-      <div class="hero-emblem-wrap hero-stagger s1" title="多方语音，同场协作 — 悬停或向下滚动查看三方身份展开">
+      <div class="hero-emblem-wrap hero-stagger s1" title="悬停或向下滚动查看三方角色展开">
         <span class="emblem-wave wave-left" aria-hidden="true">
           <i class="w-dad" style="--h:10px;--d:0ms"></i>
           <i class="w-child" style="--h:18px;--d:180ms"></i>
@@ -110,10 +110,10 @@
         <span>闭环全双工多用户语音评测基准</span>
       </a>
 
-      <h1 class="hero-stagger s2">多人同场。<br><span>一局共成。</span></h1>
+      <h1 class="hero-stagger s2">多人同场<br><span>一局共成</span></h1>
 
       <p class="hero-description hero-stagger s3">
-        真实对话从不排队发言。共享空间语音智能体必须准确追踪<em>谁提出了什么诉求</em>，经受住中途打断与用户旁白，将相互依赖的多方目标推进到联合有效状态。
+        真实对话不会轮流发言。多人场景下的语音智能体需要分清<em>谁提了什么需求</em>，处理好中途插话和用户间的闲聊，最终让各方的目标同时满足。
       </p>
 
       <p class="paper-title hero-stagger s3">μ-Bench · Benchmarking Multi-User Task Completion in Shared Interaction Voice Agents</p>
@@ -121,7 +121,7 @@
       <div class="actions hero-stagger s4">
         <a class="button primary" href="#experience">
           <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="m6.5 4.2 9.5 5.8-9.5 5.8Z"/></svg>
-          <span>查看交互轨迹</span>
+          <span>查看交互示例</span>
         </a>
         <a class="button hero-secondary" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">
           <img class="brand-icon" src="assets/arxiv-logo.svg" alt="" width="15" height="15">
@@ -164,10 +164,10 @@
     <section id="experience" class="experience shell" aria-labelledby="experience-title">
       <div class="experience-heading">
         <div>
-          <p class="eyebrow"><span class="eyebrow-num">01</span>共享交互实景</p>
-          <h2 id="experience-title">一段实时进行的共享行程。</h2>
+          <p class="eyebrow"><span class="eyebrow-num">01</span>交互示例</p>
+          <h2 id="experience-title">共享机场行程中的实时对话</h2>
         </div>
-        <p>点击任意话语卡片或拖动时间轴，观察<strong>归属（Attribution）</strong>、<strong>线索（Threading）</strong>与<strong>协调（Coordination）</strong>如何在一条共享音频流中协同运作。</p>
+        <p>点击任意对话卡片或拖动时间轴，查看<strong>归属（Attribution）</strong>、<strong>线索（Threading）</strong>与<strong>协调（Coordination）</strong>在多用户音频流中的具体判断。</p>
       </div>
 
       <div class="demo" id="demo" data-phase="0" data-playing="false">
@@ -177,7 +177,7 @@
               <strong>场景 · 共享机场接送行程</strong>
               <span class="demo-badge">3 方参与 · 全双工轨迹</span>
             </div>
-            <span>中途打断绕道请求、权限校验与预计到达时间核查、用户间旁白过滤、主任务恢复提交</span>
+            <span>中途插话改道、权限与预计到达时间核查、用户间旁白过滤、主任务恢复</span>
           </div>
           <div class="demo-playback-info">
             <span id="demo-status" class="demo-status">准备就绪</span>
@@ -197,13 +197,13 @@
 
             <div class="overlap-zones" aria-hidden="true">
               <div class="overlap-zone zone-barge" id="zone-barge" style="left:24%;width:8%">
-                <span>中途打断重叠</span>
+                <span>打断重叠</span>
               </div>
               <div class="overlap-zone zone-sidetalk" id="zone-sidetalk" style="left:69%;width:11%">
-                <span>用户间旁白</span>
+                <span>用户旁白</span>
               </div>
               <div class="overlap-zone zone-backchannel" id="zone-backchannel" style="left:89%;width:11%">
-                <span>附和信号</span>
+                <span>附和</span>
               </div>
             </div>
 
@@ -285,16 +285,16 @@
             <span class="thread-line" aria-hidden="true"><i id="retained-progress"></i></span>
             <strong id="thread-status" class="thread-badge">进行中</strong>
           </div>
-          <div class="state-chip"><span>绕道审批</span><strong id="state-approval">尚未请求</strong></div>
-          <div class="state-chip"><span>预计抵达</span><strong id="state-eta">尚未查询</strong></div>
-          <div class="state-chip state-mono"><span>轨迹事件</span><strong id="tool-result">点击播放或任意话语卡片查看</strong></div>
+          <div class="state-chip"><span>绕道审批</span><strong id="state-approval">未请求</strong></div>
+          <div class="state-chip"><span>预计抵达</span><strong id="state-eta">未查询</strong></div>
+          <div class="state-chip state-mono"><span>轨迹事件</span><strong id="tool-result">点击播放或任意对话卡片</strong></div>
         </div>
 
         <div class="demo-insight">
           <span id="insight-axis" class="insight-axis">A</span>
           <div class="insight-body">
-            <strong id="insight-title">将诉求与提出者准确绑定。</strong>
-            <p id="insight-text">爸爸设定了目的地与截止时间，二者必须在多轮打断与旁白中始终保持有效。</p>
+            <strong id="insight-title">把需求和提出者对应清楚</strong>
+            <p id="insight-text">爸爸设定了目的地和截止时间，这两项约束在打断和旁白之后仍然有效。</p>
           </div>
           <div class="step-pills" id="step-pills" role="group" aria-label="跳转至对话事件"></div>
           <span id="step-count" class="step-counter">01 / 08</span>
@@ -310,9 +310,9 @@
             <input id="demo-progress" type="range" min="0" max="100" value="0" step="0.1" aria-valuetext="准备就绪">
             <div class="timeline-labels">
               <span>0s · 主目标与截止时间</span>
-              <span>4.3s · 孩子中途打断</span>
-              <span>11.0s · 权限审批与旁白</span>
-              <span>14.4s · 恢复提交方案</span>
+              <span>4.3s · 孩子中途插话</span>
+              <span>11.0s · 权限确认与旁白</span>
+              <span>14.4s · 恢复执行路线</span>
             </div>
           </div>
           <button type="button" id="demo-replay" class="replay-control" aria-label="重新播放" title="重新播放">
@@ -320,7 +320,7 @@
           </button>
         </div>
       </div>
-      <p class="demo-disclaimer">基于论文开篇示例构建的 18 秒交互式轨迹。点击任意卡片、步骤按钮或时间轴即可定位，移动端支持横向滑动查看。</p>
+      <p class="demo-disclaimer">对应论文开篇案例的 18 秒交互轨迹。点击卡片、步骤编号或拖动时间轴即可跳转，移动端支持横向滑动。</p>
     </section>
   </div>
 
@@ -330,26 +330,26 @@
       <div class="section-heading" data-reveal>
         <div>
           <p class="eyebrow"><span class="eyebrow-num">02</span>评测榜单 · 13 个语音系统</p>
-          <h2>以共享任务的最终结果为准。</h2>
+          <h2>以多方任务最终完成度为准</h2>
         </div>
-        <p><strong>联合任务成功率（JTS）</strong>严格检验单次实时会话中所有适用用户的目标、工具副作用、最终业务状态与隐私边界是否同时成立。</p>
+        <p><strong>联合任务成功率（JTS）</strong>检查单次实时会话里，所有相关用户的目标、工具调用结果、最终业务状态和隐私边界是否同时达标。</p>
       </div>
 
       <div class="finding-strip" aria-label="核心评测发现">
         <article class="finding-card spotlight-card" data-reveal style="--stagger:0ms">
-          <span class="finding-kicker axis-kicker-a">能力代差显著</span>
+          <span class="finding-kicker axis-kicker-a">闭源与开源差距</span>
           <strong>62.24% <span>vs.</span> 19.39%</strong>
-          <p>无工具赛道（Tool-Free）最高闭源与最强开源 JTS 对比。8 个开源语音模型中有 6 个 JTS ≤ 3.57%，尽管它们具备低延迟轮流发言能力。</p>
+          <p>无工具赛道最高闭源与最强开源 JTS 对比。8 个开源语音模型里有 6 个 JTS ≤ 3.57%，虽然能做到低延迟轮流发言，但很难完成多方任务。</p>
         </article>
         <article class="finding-card spotlight-card" data-reveal style="--stagger:70ms">
           <span class="finding-kicker axis-kicker-t">协调分假象</span>
           <strong>76.4%–87.2% <span>Coord.</span></strong>
-          <p>即使 JTS 为 0% 且线索保持（Threading）跌破 1%，模型只要丢弃历史上下文、保持被动沉默，依然能拿到很高的协调分。</p>
+          <p>哪怕 JTS 为 0%、线索保持（Threading）不到 1%，模型只要丢掉前文、少说话不越界，依然能拿到很高的协调分。</p>
         </article>
         <article class="finding-card spotlight-card" data-reveal style="--stagger:140ms">
-          <span class="finding-kicker axis-kicker-c">可追责执行审计</span>
+          <span class="finding-kicker axis-kicker-c">越权调用扣分</span>
           <strong>−11.0 <span>至</span> −24.0 pp</strong>
-          <p>一旦要求零越权 <code>caller_id</code> 或超范围调用（<strong>Pure JTS</strong>），工具增强赛道得分普遍大幅下滑，并拉开原本接近的系统差距。</p>
+          <p>加上零越权 <code>caller_id</code> 和范围检查（<strong>Pure JTS</strong>）后，工具增强赛道的分数普遍明显回落，原本接近的系统也拉开差距。</p>
         </article>
       </div>
 
@@ -370,7 +370,7 @@
             <label class="metric-selector" id="metric-selector-wrap">
               <span>指标</span>
               <select id="chart-metric" aria-label="指标选择">
-                <option value="0">JTS · 核心联合结果</option>
+                <option value="0">JTS · 联合任务成功率</option>
                 <option value="1">A · 归属 (Attribution)</option>
                 <option value="2">T · 线索 (Threading)</option>
                 <option value="3">C · 协调 (Coordination)</option>
@@ -390,8 +390,8 @@
           </label>
           <div class="filter-right">
             <label class="rank-family">
-              <span>阵营</span>
-              <select id="chart-family" aria-label="模型阵营筛选">
+              <span>类别</span>
+              <select id="chart-family" aria-label="模型类别筛选">
                 <option value="all">全部系统 (13)</option>
                 <option value="proprietary">闭源实时系统 (5)</option>
                 <option value="open">开源语音模型 (8)</option>
@@ -458,7 +458,7 @@
           </div>
         </div>
       </div>
-      <p class="rank-note" id="chart-note">数据同步自论文 Table 2（<a href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">arXiv:2611.34920</a>），所有得分均为评测用例均值，越高越好。8 个开源语音模型暂不具备原生工具调用接口；MOSS-Live 的工具调用能力在本次评测截稿后发布。</p>
+      <p class="rank-note" id="chart-note">数据对应论文 Table 2（<a href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">arXiv:2611.34920</a>），为各用例平均分，越高越好。8 个开源语音模型暂不支持原生工具调用；MOSS-Live 的工具调用功能在评测截稿后发布。</p>
     </div>
   </section>
 
@@ -468,9 +468,9 @@
       <div class="section-heading" data-reveal>
         <div>
           <p class="eyebrow"><span class="eyebrow-num">03</span>诊断分析</p>
-          <h2>多用户会话究竟为何崩溃。</h2>
+          <h2>多人对话为什么容易出错</h2>
         </div>
-        <p>通过递进式能力消融、调用方溯源审计与 2³ 因子化压力测试，将实时声学重叠与更深层的多方状态追踪及权限执行解耦开来。</p>
+        <p>通过递进消融、调用方权限核查和 2³ 因子对比实验，把实时语音重叠问题与多方状态追踪、权限控制分开来看。</p>
       </div>
 
       <div class="diag-grid">
@@ -479,11 +479,11 @@
           <div class="diag-card-top">
             <div>
               <span class="card-tag">递进式能力消融 · MiniCPM-o 4.5</span>
-              <h3>移除重叠有帮助——但仍有 68.6% 失败。</h3>
+              <h3>去掉语音重叠后，仍有 68.6% 失败</h3>
             </div>
             <span class="gain-pill">+11.99 pp JTS</span>
           </div>
-          <p class="diag-desc">在 392 条无工具用例上保持语音输入与联合判定标准不变，逐层移除并发与感知瓶颈：</p>
+          <p class="diag-desc">在 392 条无工具用例上保持语音输入和判定标准不变，分三步去掉并发和感知层面的干扰：</p>
 
           <div class="ablation-stepper" role="tablist" aria-label="消融实验阶段">
             <button type="button" class="ablation-btn active" role="tab" aria-selected="true" data-stage="0">0 · 全双工基线</button>
@@ -550,7 +550,7 @@
 
           <div class="ablation-callout" id="ablation-callout">
             <strong>阶段 0 · 全双工基线（19.39% JTS）</strong>
-            <p>语音重叠与中途打断显著拉低归属（36.89%）和线索（35.95%），尽管被动保持沉默仍可拿到 87.17% 的协调分。</p>
+            <p>语音重叠和中途打断把归属（36.89%）和线索（35.95%）压得很低，不过被动不插嘴依然能让协调分达到 87.17%。</p>
           </div>
         </article>
 
@@ -558,15 +558,15 @@
         <article class="diag-card spotlight-card" data-reveal style="--stagger:90ms">
           <div class="diag-card-top">
             <div>
-              <span class="card-tag">调用方溯源与 2³ 因子压力测试</span>
-              <h3>隐性越权调用与人数扩张瓶颈。</h3>
+              <span class="card-tag">调用方核查与 2³ 因子对比</span>
+              <h3>越权工具调用与人数增加的影响</h3>
             </div>
           </div>
-          <p class="diag-desc">许多智能体虽然达到了合法的最终业务状态，但在过程中借用了错误用户的 <code>caller_id</code> 或超范围调用工具——唯有在 <strong>Pure JTS</strong> 审计下才会暴露：</p>
+          <p class="diag-desc">不少模型虽然把最终状态改对了，但中途用错了 <code>caller_id</code> 或超范围调用工具——只有检查 <strong>Pure JTS</strong> 时才能看出来：</p>
 
           <div class="provenance-list" aria-label="越权工具调用审计">
             <div class="prov-header">
-              <span>支持工具的智能体</span>
+              <span>支持工具的系统</span>
               <span>含 ≥1 次越权调用的会话占比</span>
               <span>JTS → Pure JTS</span>
             </div>
@@ -593,17 +593,17 @@
           </div>
 
           <div class="stressor-summary">
-            <h4>2 × 2 × 2 受控条件对比效应</h4>
+            <h4>2 × 2 × 2 受控条件对比结果</h4>
             <div class="stressor-items">
               <div>
-                <span class="stressor-badge neg">普遍瓶颈</span>
-                <strong>参与人数（2–3 人 → 4–7 人）</strong>
-                <p>所有强模型均显著退化：闭源系统综合 JTS 相对下降 −19.6% 至 −29.5%，MiniCPM-o 4.5 相对下降 −48.0%。</p>
+                <span class="stressor-badge neg">普遍下降</span>
+                <strong>人数增加（2–3 人 → 4–7 人）</strong>
+                <p>所有模型都会掉分：闭源系统整体 JTS 相对下降 19.6%–29.5%，MiniCPM-o 4.5 相对下降 48.0%。</p>
               </div>
               <div>
-                <span class="stressor-badge split">分化效应</span>
-                <strong>追问压力与真实声学条件</strong>
-                <p>多次澄清追问有助于头部系统挽回任务结果（JTS +3.1% 至 +14.6%），却会拖垮上下文较弱的模型（MiniCPM-o 4.5 下降 −27.3%）。</p>
+                <span class="stressor-badge split">分化明显</span>
+                <strong>反复追问与真实声学条件</strong>
+                <p>用户多次追问能帮强模型补回结果（JTS +3.1% 至 +14.6%），但对上下文弱的模型反而扣分（MiniCPM-o 4.5 −27.3%）。</p>
               </div>
             </div>
           </div>
@@ -618,9 +618,9 @@
       <div class="section-heading" data-reveal>
         <div>
           <p class="eyebrow"><span class="eyebrow-num">04</span>基准设计</p>
-          <h2>不止于轮流发言。</h2>
+          <h2>不只是轮流说话</h2>
         </div>
-        <p>覆盖 20 个日常与专业领域的 100 个基础场景，按配对的 <strong>2 × 2 × 2</strong> 受控条件网格扩展为 800 个确定性音频评测用例。</p>
+        <p>覆盖 20 个日常与专业领域的 100 个基础场景，按 <strong>2 × 2 × 2</strong> 受控条件组合扩展成 800 个音频评测用例。</p>
       </div>
 
       <div class="track-grid">
@@ -629,56 +629,56 @@
             <span class="track-tag">Tool-Free 无工具赛道</span>
             <span class="track-pill">49 个场景 · 392 个用例</span>
           </div>
-          <h3>在纯口语对话中完成多方协调。</h3>
-          <p>无需后端写入，重点考察冲突偏好调解、用户旁白与公共广播过滤、口头隐私边界执行，以及被打断后的主任务恢复。</p>
+          <h3>纯语音对话中的多方协调</h3>
+          <p>不涉及后端写入，重点测冲突偏好协商、用户旁白与公共广播过滤、口头隐私控制，以及被打断后的主任务恢复。</p>
         </article>
         <article class="track-card spotlight-card" data-reveal style="--stagger:80ms">
           <div class="track-card-head">
             <span class="track-tag">Tool-Augmented 工具增强赛道</span>
             <span class="track-pill">51 个场景 · 408 个用例</span>
           </div>
-          <h3>将共识落地到可执行业务状态。</h3>
-          <p>显式校验公开的 <code>caller_id</code> 权限，调用虚拟领域工具，在授权说话人修订约束时正确变更操作，并达成可程序验证的终态。</p>
+          <h3>把对话结果落到工具执行与状态更新</h3>
+          <p>按公开的 <code>caller_id</code> 权限调用领域工具，在授权用户改动条件时同步修正操作，最终由代码检查业务状态是否一致。</p>
         </article>
       </div>
 
       <div class="factorial-strip" aria-label="2 × 2 × 2 受控条件因子">
         <div class="factor-box" data-reveal style="--stagger:0ms">
-          <span>因子 1 · 参与规模</span>
+          <span>因子 1 · 参与人数</span>
           <strong>小规模（2–3 人）vs. 大规模（4–7 人）</strong>
-          <small>检验说话人归属与发言公平性</small>
+          <small>测试说话人归属与发言公平性</small>
         </div>
         <div class="factor-box" data-reveal style="--stagger:60ms">
-          <span>因子 2 · 声学画像</span>
+          <span>因子 2 · 声学条件</span>
           <strong>清晰（Clean）vs. 真实（Realistic）</strong>
-          <small>检验口语停顿、重复与声学鲁棒性</small>
+          <small>测试口语停顿、重复与噪声鲁棒性</small>
         </div>
         <div class="factor-box" data-reveal style="--stagger:120ms">
           <span>因子 3 · 追问强度</span>
           <strong>直接（Direct）vs. 反复（Repeated）</strong>
-          <small>检验多轮线索保持与压力恢复能力</small>
+          <small>测试多轮线索保持与纠偏能力</small>
         </div>
       </div>
 
       <figure class="figure research-plate" data-reveal>
         <div class="plate-bar">
           <span class="plate-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="plate-title">图 01 · 共享空间交互拓扑与 20 领域旭日分布图</span>
+          <span class="plate-title">图 01 · 共享空间交互示例与 20 领域分布</span>
           <a class="pdf-chip" href="assets/intro-teaser.pdf" target="_blank" rel="noopener">矢量 PDF ↗</a>
         </div>
         <div class="plate-canvas">
           <img src="assets/intro-teaser.png" alt="左图以共享机场行程为例展示中途打断、用户旁白与附和信号，以及归属、线索、协调三项机制；右图以旭日图展示覆盖工具增强与无工具两大赛道的 20 个领域与 100 个基础场景。" width="5600" height="1500" loading="lazy">
         </div>
         <figcaption>
-          左：以归属（Attribution）、线索（Threading）与协调（Coordination）拆解中途打断、旁白与附和现象。右：20 个领域的 100 个基础场景在工具增强（TA）与无工具（TF）赛道上的分布。
+          左：用归属（Attribution）、线索（Threading）和协调（Coordination）拆解打断、旁白与附和。右：20 个领域的 100 个基础场景在工具增强（TA）与无工具（TF）赛道上的分布。
         </figcaption>
       </figure>
 
       <div class="domain-explorer" data-reveal>
         <div class="domain-explorer-head">
           <div>
-            <h3>浏览全部 20 个领域与 100 个基础场景</h3>
-            <p>按大类筛选，查看各领域在工具增强（TA）与无工具（TF）赛道上的场景分配。</p>
+            <h3>全部 20 个领域与 100 个基础场景</h3>
+            <p>按大类筛选，查看各领域在工具增强（TA）与无工具（TF）赛道上的场景数。</p>
           </div>
           <div class="domain-filters" role="group" aria-label="按大类筛选领域">
             <button type="button" class="domain-chip active" data-cluster="all">全部 (20)</button>
@@ -699,28 +699,28 @@
       <div class="section-heading" data-reveal>
         <div>
           <p class="eyebrow"><span class="eyebrow-num">05</span>架构与评测协议</p>
-          <h2>实时交互，证据核验。</h2>
+          <h2>闭环交互，按证据评分</h2>
         </div>
-        <p>相互隔离的用户模拟器基于实际播放音频与工具执行结果动态响应；双路独立语义审计与确定性程序校验严格依据已交付证据打分。</p>
+        <p>相互隔离的用户模拟器根据实际播放的音频和工具状态实时反应；双路独立语义复核加程序状态检查，严格按已发生的证据打分。</p>
       </div>
 
       <div class="arch-pillars">
         <article class="pillar-card spotlight-card" data-reveal style="--stagger:0ms">
-          <span class="pillar-step">阶段 A · 闭环多用户模拟器</span>
-          <h3>同一条音频流上的独立参与者。</h3>
+          <span class="pillar-step">阶段 A · 闭环多用户模拟</span>
+          <h3>共用一条音频流的独立参与者</h3>
           <ul>
-            <li><strong>剧本与 200 ms 编排器：</strong>基于实时播放进度与工具状态动态调度事件、权限边界与有界追问。</li>
-            <li><strong>隔离的可听历史：</strong>每位参与者的台词生成器（<code>gpt-6-luna</code>）仅能看到自身人设、私有材料与实际听到的音频内容。</li>
-            <li><strong>确定性音色绑定：</strong><code>CosyVoice3</code> 从 3,200 条参考录音中合成角色一致的 16 kHz 语音流。</li>
+            <li><strong>剧本与 200 ms 编排器：</strong>按实时播放进度和工具状态触发事件、控制权限边界并安排有界追问。</li>
+            <li><strong>隔离的可听历史：</strong>每位参与者的台词生成（<code>gpt-6-luna</code>）只看到自己的人设、私有信息和实际听到的声音。</li>
+            <li><strong>固定音色绑定：</strong>由 <code>CosyVoice3</code> 从 3,200 条参考录音合成角色稳定的 16 kHz 语音。</li>
           </ul>
         </article>
         <article class="pillar-card spotlight-card" data-reveal style="--stagger:80ms">
-          <span class="pillar-step">阶段 B · 证据驱动的核验管线</span>
-          <h3>逐项语义审计 + 确定性状态校验。</h3>
+          <span class="pillar-step">阶段 B · 证据驱动核验</span>
+          <h3>逐项核验 + 代码状态检查</h3>
           <ul>
-            <li><strong>双路隔离语义复核：</strong>两路独立评审逐项核查目标达成、隐私边界与能力项，分歧项自动进入仲裁流程。</li>
-            <li><strong>定向源材料核查：</strong>一旦出现疑似编造或缺失信息标记，自动回溯已交付的初始及轮次材料进行核验。</li>
-            <li><strong>程序化确定性校验：</strong>由代码严格验证运行时 ACL、因果顺序、调用方溯源以及最终业务状态等价性。</li>
+            <li><strong>双路独立语义复核：</strong>两路评审分别检查每个目标、隐私边界和能力项，有分歧时自动进入仲裁。</li>
+            <li><strong>源材料回溯核查：</strong>只要标出疑似编造或遗漏，就自动调出当轮实际交付的原始材料复检。</li>
+            <li><strong>确定性程序校验：</strong>用代码直接验证运行时 ACL、因果顺序、调用方来源和最终业务状态。</li>
           </ul>
         </article>
       </div>
@@ -728,22 +728,22 @@
       <figure class="figure research-plate" data-reveal>
         <div class="plate-bar">
           <span class="plate-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="plate-title">图 02 · 闭环多用户模拟与双路审计核验管线</span>
+          <span class="plate-title">图 02 · 闭环多用户模拟与双路核验流程</span>
           <a class="pdf-chip" href="assets/framework.pdf" target="_blank" rel="noopener">矢量 PDF ↗</a>
         </div>
         <div class="plate-canvas">
           <img src="assets/framework.png" alt="左图展示剧本与编排器如何通过可听历史、台词生成与语音合成驱动隔离的多用户模拟器在同一音频流上交互；右图展示录制证据与任务契约如何经过双路独立语义复核、仲裁与程序校验汇总产出 JTS 与 ATC。" width="5600" height="1410" loading="lazy">
         </div>
         <figcaption>
-          最终由确定性代码将逐项核验结论汇总为 JTS 与 ATC，避免单次粗粒度 LLM 整体打分偏差；技术性中断保留现场证据用于恢复重跑，不误扣模型得分。
+          最后由代码把逐项结果汇总成 JTS 和 ATC，不做单次粗粒度 LLM 整体打分；遇到技术性中断会保留现场用于重跑，不误扣模型分。
         </figcaption>
       </figure>
 
       <div class="metric-explainer" data-reveal>
         <div class="outcome-card spotlight-card">
-          <span class="metric-label">核心二值会话结果指标</span>
+          <span class="metric-label">核心二值结果指标</span>
           <h3>联合任务成功率 (JTS)</h3>
-          <p>当且仅当同一会话轨迹中所有契约目标、必需工具执行、最终有效业务状态及隐私边界同时满足时记为 <code>1</code>。配套指标 <strong>Pure JTS</strong> 进一步要求 <code>n = 0</code> 次越权工具调用。</p>
+          <p>同一会话里所有契约目标、必需工具调用、最终业务状态和隐私边界全部满足才记 <code>1</code>。配套指标 <strong>Pure JTS</strong> 额外要求 <code>n = 0</code> 次越权工具调用。</p>
           <div class="outcome-links">
             <a class="protocol-link" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">论文 §3–4 (arXiv) →</a>
             <a class="protocol-link" href="https://github.com/lqh1106/mu-bench/blob/main/docs/EVALUATION.md" target="_blank" rel="noopener">评测规范文档 →</a>
@@ -754,21 +754,21 @@
             <b class="axis-a">A</b>
             <div>
               <strong>归属 (Attribution) <span>· 身份与路由</span></strong>
-              <p>分辨谁在发言、对着谁说，以及正在提出或修改哪位用户的目标与约束。</p>
+              <p>分清谁在说话、对谁说话，以及正在提出或修改哪位用户的需求。</p>
             </div>
           </div>
           <div class="axis-card">
             <b class="axis-t">T</b>
             <div>
               <strong>线索 (Threading) <span>· 任务连续性</span></strong>
-              <p>在打断、旁白与多轮追问之间保持、挂起、修订并恢复交错的任务线索。</p>
+              <p>在插话、旁白和多轮追问之间保持、挂起、修改并回到原任务。</p>
             </div>
           </div>
           <div class="axis-card">
             <b class="axis-c">C</b>
             <div>
               <strong>协调 (Coordination) <span>· 隔离与公平</span></strong>
-              <p>严格执行跨用户权限与隐私边界，同时公平照顾所有适用参与者的合理诉求。</p>
+              <p>守住跨用户权限与隐私边界，同时公平照顾各方的合理需求。</p>
             </div>
           </div>
         </div>
@@ -782,8 +782,8 @@
       <div class="start-grid">
         <div class="start-intro" data-reveal>
           <p class="eyebrow"><span class="eyebrow-num">06</span>复现与接入</p>
-          <h2>接入你的语音智能体。</h2>
-          <p>克隆开源评测框架，从 <a href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener">Hugging Face 数据集</a> 获取 800 个用例与 3,200 条参考音色，即可评测本地 GPU 全双工模型、云端实时 API 或流式文本智能体。</p>
+          <h2>接入你的语音模型</h2>
+          <p>克隆评测代码，从 <a href="https://huggingface.co/datasets/linqihao/mu-bench" target="_blank" rel="noopener">Hugging Face 数据集</a> 下载 800 个用例和 3,200 条参考音色，即可评测本地 GPU 语音模型、云端实时 API 或流式文本模型。</p>
 
           <div class="resource-badges">
             <a class="res-badge" href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">
@@ -875,7 +875,7 @@ bash scripts/bootstrap.sh
       <img src="assets/mu-bench-logo.svg" alt="" width="26" height="24">
       <span>μ-Bench</span>
     </a>
-    <p>面向共享声学空间多用户语音智能体的闭环全双工评测基准。</p>
+    <p>共享声学空间下的多用户语音智能体全双工闭环评测基准。</p>
     <div class="footer-links">
       <a href="index.html" class="lang-switch-link">English</a>
       <a href="https://arxiv.org/abs/2611.34920" target="_blank" rel="noopener">arXiv</a>
